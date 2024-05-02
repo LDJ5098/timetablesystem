@@ -32,9 +32,34 @@ var recent_choice_index = null;
 //classroomDB
 var classroomDB = [];
 
+function randomCODE(){
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var code = '';
+  while(1){
+    for (var i = 0; i < 10; i++) {
+      code += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+
+    var error = 0;
+    for(var i = 0; i < classroomDB.length; i++){
+      if(code===classroomDB[i].object_code){
+        error = 1;
+        console.log('중복된 코드 생성 오류 발생');
+        break;
+      }
+    }
+
+    if(error === 0)break;
+  }
+  console.log('코드 정상 생성 완료');
+  return code;
+}
+
 //객체 정보 추가 함수
 function push_classroomDB(Which_, floor_, number, name, code, width, height, other, WIFI, Top, Left){
   var object = {
+    object_code:randomCODE(),
+
     which_select:Which_.value,
     floor_select:floor_.value,
 
@@ -118,11 +143,12 @@ function show_floor(){
     element.remove();
   });
 
-  classroomDB.forEach(function(db){
+  classroomDB.forEach(function(db, index){
     if(db.which_select===which.value&&db.floor_select===floor.value){
       var show_classroom = document.createElement("div");
     
       show_classroom.classList.add("class_info_panel");
+      show_classroom.id = classroomDB[index].object_code;
       show_classroom.style.width = db.width;
       show_classroom.style.height = db.height;
       show_classroom.style.top = db.top;
@@ -338,12 +364,10 @@ function fix_classroom(){
 var refresh_remember_class = [];
 function refresh_class_rember(){
   var refresh_class = document.querySelectorAll(".class_info_panel");
-  refresh_remember_class.forEach(function(val){
-    for(var i=0; i < refresh_class.length; i++){
-      if(val===refresh_class[i].querySelector('label').textContent&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
-        refresh_class[i].classList.add("choice_panel");
-        break;
-      }
+  refresh_class.forEach(function(val){
+    for(var i=0; i<refresh_remember_class.length;i++){
+      if(val.id===refresh_remember_class[i])val.classList.add('choice_panel');
+      break;
     }
   });
 }
@@ -379,7 +403,7 @@ function move_class(){
           for(var i=0;i<classroomDB.length;i++){
             if(element.querySelector('label').textContent === classroomDB[i].class_number&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
               classroomDB[i].top = String(parseFloat(classroomDB[i].top) - keyboard_speed)+'px';
-              refresh_remember_class.push(classroomDB[i].class_number);   
+              refresh_remember_class.push(classroomDB[i].object_code);   
               break;
             }
           }
@@ -394,7 +418,7 @@ function move_class(){
           for(var i=0;i<classroomDB.length;i++){
             if(element.querySelector('label').textContent === classroomDB[i].class_number&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
               classroomDB[i].top = String(parseFloat(classroomDB[i].top) + keyboard_speed)+'px';
-              refresh_remember_class.push(classroomDB[i].class_number);   
+              refresh_remember_class.push(classroomDB[i].object_code);   
               break;
             }
           }
@@ -409,7 +433,7 @@ function move_class(){
           for(var i=0;i<classroomDB.length;i++){
             if(element.querySelector('label').textContent === classroomDB[i].class_number&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
               classroomDB[i].left = String(parseFloat(classroomDB[i].left) - keyboard_speed)+'px';
-              refresh_remember_class.push(classroomDB[i].class_number);   
+              refresh_remember_class.push(classroomDB[i].object_code);   
               break;
             }
           }
@@ -424,7 +448,7 @@ function move_class(){
           for(var i=0;i<classroomDB.length;i++){
             if(element.querySelector('label').textContent === classroomDB[i].class_number&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
               classroomDB[i].left = String(parseFloat(classroomDB[i].left) + keyboard_speed)+'px';
-              refresh_remember_class.push(classroomDB[i].class_number);   
+              refresh_remember_class.push(classroomDB[i].object_code);   
               break;
             }
           }
@@ -444,7 +468,6 @@ function mouse_move_class(){
       bX=event.clientX;
       bY=event.clientY;
       mouse_info='down';
-      console.log('다운 이벤트가 발생했습니다');
   });
 
   // 드래그 종료 지점을 기록하고 이벤트 리스너를 제거합니다.
@@ -458,13 +481,12 @@ function mouse_move_class(){
       aX=event.clientX;
       aY=event.clientY;
 
-      console.log(String(aX-bX)+'px');
       choice_classrooms.forEach(function(element){
         for(var i=0;i<classroomDB.length;i++){
           if(element.querySelector('label').textContent === classroomDB[i].class_number&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
             classroomDB[i].left = String(parseFloat(classroomDB[i].left) + (aX-bX))+'px';
             classroomDB[i].top = String(parseFloat(classroomDB[i].top) + (aY-bY))+'px';
-            refresh_remember_class.push(classroomDB[i].class_number);
+            refresh_remember_class.push(classroomDB[i].object_code);
             break;
           }
         }
