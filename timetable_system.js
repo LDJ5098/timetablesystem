@@ -24,6 +24,7 @@ var floor_background = document.getElementById('background');
 
 var which = document.getElementById("which");
 var floor = document.getElementById("floor");
+var background_DIV = document.getElementById("background");
 
 var activeButton = null;
 var recent_choice_index = null;
@@ -78,7 +79,7 @@ function click_classroom() {
       var label = element.querySelector('label');
       if(activeButton===document.querySelectorAll('.menu_button')[1]){
         for(var i=0; i<classroomDB.length; i++){
-          if(classroomDB[i].class_number===label.textContent){
+          if(classroomDB[i].class_number===label.textContent&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
             fix_number.value=classroomDB[i].class_number;
             fix_name.value=classroomDB[i].class_name;
             fix_classroom_device_code.value=classroomDB[i].device_code;
@@ -137,8 +138,6 @@ function show_floor(){
   });
 
   click_classroom();
-
-  console.log(classroomDB);
 }
 
 
@@ -195,6 +194,7 @@ function Menu_Operation(){
     document.getElementById('delete_button').style.display='none';
     cancel_choice();
     move_class();
+    mouse_move_class();
   }
 
   else if(activeButton===document.querySelectorAll('.menu_button')[3]){
@@ -340,7 +340,10 @@ function refresh_class_rember(){
   var refresh_class = document.querySelectorAll(".class_info_panel");
   refresh_remember_class.forEach(function(val){
     for(var i=0; i < refresh_class.length; i++){
-      if(val===refresh_class[i].querySelector('label').textContent) refresh_class[i].classList.add("choice_panel");
+      if(val===refresh_class[i].querySelector('label').textContent&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
+        refresh_class[i].classList.add("choice_panel");
+        break;
+      }
     }
   });
 }
@@ -374,7 +377,7 @@ function move_class(){
         // 위쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
           for(var i=0;i<classroomDB.length;i++){
-            if(element.querySelector('label').textContent === classroomDB[i].class_number){
+            if(element.querySelector('label').textContent === classroomDB[i].class_number&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
               classroomDB[i].top = String(parseFloat(classroomDB[i].top) - keyboard_speed)+'px';
               refresh_remember_class.push(classroomDB[i].class_number);   
               break;
@@ -389,7 +392,7 @@ function move_class(){
         // 아래쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
           for(var i=0;i<classroomDB.length;i++){
-            if(element.querySelector('label').textContent === classroomDB[i].class_number){
+            if(element.querySelector('label').textContent === classroomDB[i].class_number&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
               classroomDB[i].top = String(parseFloat(classroomDB[i].top) + keyboard_speed)+'px';
               refresh_remember_class.push(classroomDB[i].class_number);   
               break;
@@ -404,7 +407,7 @@ function move_class(){
         // 왼쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
           for(var i=0;i<classroomDB.length;i++){
-            if(element.querySelector('label').textContent === classroomDB[i].class_number){
+            if(element.querySelector('label').textContent === classroomDB[i].class_number&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
               classroomDB[i].left = String(parseFloat(classroomDB[i].left) - keyboard_speed)+'px';
               refresh_remember_class.push(classroomDB[i].class_number);   
               break;
@@ -419,7 +422,7 @@ function move_class(){
         // 오른쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
           for(var i=0;i<classroomDB.length;i++){
-            if(element.querySelector('label').textContent === classroomDB[i].class_number){
+            if(element.querySelector('label').textContent === classroomDB[i].class_number&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
               classroomDB[i].left = String(parseFloat(classroomDB[i].left) + keyboard_speed)+'px';
               refresh_remember_class.push(classroomDB[i].class_number);   
               break;
@@ -434,8 +437,47 @@ function move_class(){
 
 }
 
+var bX, bY, aX, aY, mouse_info='up';
+function mouse_move_class(){
+  document.addEventListener('mousedown', function(event){
+      choice_classrooms=document.querySelectorAll('.choice_panel');
+      bX=event.clientX;
+      bY=event.clientY;
+      mouse_info='down';
+      console.log('다운 이벤트가 발생했습니다');
+  });
 
+  // 드래그 종료 지점을 기록하고 이벤트 리스너를 제거합니다.
+  document.addEventListener('mouseup', function(){
+      mouse_info='up';
 
+  });
+
+  document.addEventListener('mousemove', function(event){
+    if(activeButton===document.querySelectorAll('.menu_button')[2]&&mouse_info==='down'){
+      aX=event.clientX;
+      aY=event.clientY;
+
+      console.log(String(aX-bX)+'px');
+      choice_classrooms.forEach(function(element){
+        for(var i=0;i<classroomDB.length;i++){
+          if(element.querySelector('label').textContent === classroomDB[i].class_number&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
+            classroomDB[i].left = String(parseFloat(classroomDB[i].left) + (aX-bX))+'px';
+            classroomDB[i].top = String(parseFloat(classroomDB[i].top) + (aY-bY))+'px';
+            refresh_remember_class.push(classroomDB[i].class_number);
+            break;
+          }
+        }
+      });
+      bX=aX;
+      bY=aY;
+
+      show_floor();
+      refresh_class_rember();
+      refresh_remember_class = [];
+    }
+  });
+}
 
 
 //교실 삭제
@@ -447,8 +489,7 @@ function delete_class(){
     choice_classrooms.forEach(function(element){
       var label = element.querySelector('label');
       for(var i=0; i<classroomDB.length; i++){
-        if(label.textContent===classroomDB[i].class_number){
-          console.log(classroomDB[i].class_number);
+        if(label.textContent===classroomDB[i].class_number&&which.value==classroomDB[i].which_select&&floor.value==classroomDB[i].floor_select){
           remove_classroomDB(i);
           break;
         }
@@ -465,3 +506,4 @@ Menu_Operation();//메뉴 버튼들 실행 판단
 changeBackground();//배경 변경 함수
 create_classroom_checkbox();//새 교실 추가 WIFI체크함수
 fix_classroom_checkbox();//수정하기 WIFI체크함수
+mouse_move_class();
