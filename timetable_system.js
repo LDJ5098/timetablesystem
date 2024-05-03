@@ -159,7 +159,7 @@ function loadDataPHP(){
       if(element.wifi===true) tf = true;
 
       var object = {
-        object_code:randomCODE(),
+        object_code:element.object_code,
     
         which_select:element.which,
         floor_select:element.floor,
