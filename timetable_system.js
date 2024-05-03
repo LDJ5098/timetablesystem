@@ -154,20 +154,27 @@ function loadDataPHP(){
   .then(data => {
     console.log(data); // 여기서 데이터를 활용하거나 처리합니다.
     classroomDB=[];
-    data.forEach(function(element, i){
-      classroomDB[i].which_select = element.which;
-      classroomDB[i].floor_select = element.floor;
-      classroomDB[i].class_number = element.class_number;
-      classroomDB[i].class_name = element.class_name;
-      classroomDB[i].device_code = element.device_code;
-      classroomDB[i].width = element.width;
-      classroomDB[i].height = element.height;
-      classroomDB[i].other = element.other;
-      classroomDB[i].left = element.left_value;
-      classroomDB[i].top = element.top_value;
+    data.forEach(function(element){
+      var tf=false;
+      if(element.wifi===true) tf = true;
 
-      if(classroomDB[i].wifi===true) classroomDB[i].wifi = true;
-      else classroomDB[i].wifi = false;
+      var object = {
+        object_code:randomCODE(),
+    
+        which_select:element.which,
+        floor_select:element.floor,
+    
+        class_number:element.class_number,
+        class_name:element.class_name,
+        device_code:element.device_code,
+        width:element.width,
+        height:element.height,
+        other:element.other,
+        wifi:tf,
+        top:element.top_value,
+        left:element.left_value
+      }
+      classroomDB.push(object);
     });
   })
   .catch(error => {
