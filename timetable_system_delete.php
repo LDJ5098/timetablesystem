@@ -1,15 +1,16 @@
 <?php
 // MySQL 계정 정보
-$servername = "http://192.168.88.128/";
+$servername = "192.168.88.128";
 $username = "ser";
 $password = "0000";
 $dbname = "timetable_systemDB";
 
-// POST로 받은 데이터 디코딩
-$data = json_decode(file_get_contents('php://input'), true);
+//디코딩
+$jsonData = file_get_contents('php://input');
+$object = json_decode($jsonData);
+// 객체 생성
+$object_code = $object->object_code;
 
-// randomCODE 가져오기
-$object_code = $_POST['object_code'];
 // 데이터베이스 연결
 $conn = new mysqli($servername, $username, $password, $dbname);
 

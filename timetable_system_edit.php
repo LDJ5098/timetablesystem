@@ -1,23 +1,25 @@
 <?php
 // MySQL 계정 정보
-$servername = "http://192.168.88.128/";
+$servername = "192.168.88.128";
 $username = "ser";
 $password = "0000";
 $dbname = "timetable_systemDB";
 
+$jsonData = file_get_contents('php://input');
+$object = json_decode($jsonData);
 // 객체 생성
-$object_code = $_POST['object_code'];
-$which_select = $_POST['which_select'];
-$floor_select = $_POST['floor_select'];
-$class_number = $_POST['class_number'];
-$class_name = $_POST['class_name'];
-$device_code = $_POST['device_code'];
-$width = $_POST['width'];
-$height = $_POST['height'];
-$other = $_POST['other'];
-$wifi = $_POST['wifi'];
-$top = $_POST['top'];
-$left = $_POST['left'];
+$object_code = $object->object_code;
+$which_select = $object->which_select;
+$floor_select = $object->floor_select;
+$class_number = $object->class_number;
+$class_name = $object->class_name;
+$device_code = $object->device_code;
+$width = $object->width;
+$height = $object->height;
+$other = $object->other;
+$wifi = $object->wifi;
+$top = $object->top;
+$left = $object->left;
 
 // 데이터베이스 연결
 $conn = new mysqli($servername, $username, $password, $dbname);

@@ -139,6 +139,7 @@ function EditDataToPHP(data) {
     return response.text();
   })
   .then(text => {
+    console.log(jsonData);
     console.log(text); // 서버로부터 받은 응답 출력
   })
   .catch(error => {
