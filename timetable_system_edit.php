@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
 // MySQL 계정 정보
 $servername = "localhost";
 $username = "ser";
@@ -30,7 +31,7 @@ if ($conn->connect_error) {
 }
 
 // SQL 쿼리 작성
-$sql = "UPDATE classroom_DB SET 
+$sql = "UPDATE classroomDB SET 
         which = '$which_select',
         floor = '$floor_select',
         class_number = '$class_number',

@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
 // MySQL 계정 정보
 $servername = "localhost";
 $username = "ser";
@@ -20,7 +21,7 @@ if ($conn->connect_error) {
 }
 
 // SQL 쿼리 작성
-$sql = "DELETE FROM classroom_DB WHERE object_code='$object_code'";
+$sql = "DELETE FROM classroomDB WHERE object_code='$object_code'";
 
 // 쿼리 실행
 if ($conn->query($sql) === TRUE) {
