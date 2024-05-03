@@ -153,6 +153,22 @@ function loadDataPHP(){
   .then(response => response.json())
   .then(data => {
     console.log(data); // 여기서 데이터를 활용하거나 처리합니다.
+    classroomDB=[];
+    data.forEach(function(element, i){
+      classroomDB[i].which_select = element.which;
+      classroomDB[i].floor_select = element.floor;
+      classroomDB[i].class_number = element.class_number;
+      classroomDB[i].class_name = element.class_name;
+      classroomDB[i].device_code = element.device_code;
+      classroomDB[i].width = element.width;
+      classroomDB[i].height = element.height;
+      classroomDB[i].other = element.other;
+      classroomDB[i].left = element.left_value;
+      classroomDB[i].top = element.top_value;
+
+      if(classroomDB[i].wifi===true) classroomDB[i].wifi = true;
+      else classroomDB[i].wifi = false;
+    });
   })
   .catch(error => {
     console.error('Error:', error);
@@ -644,6 +660,7 @@ function delete_class(){
 }
 
 // 페이지가 로드될 때 실행할 함수들
+loadDataPHP();
 show_floor();
 move_class();
 Menu_Operation();//메뉴 버튼들 실행 판단
@@ -651,4 +668,3 @@ changeBackground();//배경 변경 함수
 create_classroom_checkbox();//새 교실 추가 WIFI체크함수
 fix_classroom_checkbox();//수정하기 WIFI체크함수
 mouse_move_class();
-loadDataPHP();
