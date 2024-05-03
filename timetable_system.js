@@ -60,77 +60,92 @@ function randomCODE(){
 ///////////////////////////////////////////////////////////////////////////////////서버 영역/////////////////////////////////////////////////////////////////////////
 //서버에 변경된 데이터를 전송하기
 function sendDataToPHP(data) {
-  // XMLHttpRequest 객체 생성
-  var xhr = new XMLHttpRequest();
-  
-  // POST 요청을 보낼 PHP 파일 경로 설정
+  // PHP 파일 경로 설정
   var url = "timetable_system_add.php";
   
-  // POST 요청 설정
-  xhr.open("POST", url, true);
-  
   // 전송할 데이터 포맷 설정 (JSON 형태로 전송)
-  xhr.setRequestHeader("Content-Type", "application/json");
-  
-  // PHP로 전송할 데이터 변환
   var jsonData = JSON.stringify(data);
-  xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log(xhr.responseText);
-      }
-  };
-  xhr.send(jsonData);
+
+  // fetch를 사용하여 POST 요청 보내기
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: jsonData
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.text();
+  })
+  .then(text => {
+    console.log(text); // 서버로부터 받은 응답 출력
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
+  });
 }
 
 //서버에 데이터를 제거하기
 function deleteDataInPHP(randomCODE) {
-  // XMLHttpRequest 객체 생성
-  var xhr = new XMLHttpRequest();
-  
-  // POST 요청을 보낼 PHP 파일 경로 설정
+  // PHP 파일 경로 설정
   var url = "timetable_system_delete.php";
-  
-  // POST 요청 설정
-  xhr.open("POST", url, true);
-  
-  // 전송할 데이터 포맷 설정 (JSON 형태로 전송)
-  xhr.setRequestHeader("Content-Type", "application/json");
-  
-  // 요청 완료 시 콜백 함수 설정
-  xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-          // 응답 출력 (필요한 경우)
-          console.log(xhr.responseText);
-      }
-  };
-  
-  // 데이터 전송
-  xhr.send(JSON.stringify({ randomCODE: randomCODE }));
+
+  // fetch를 사용하여 POST 요청 보내기
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ randomCODE: randomCODE })
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.text();
+  })
+  .then(text => {
+    console.log(text); // 서버로부터 받은 응답 출력
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
+  });
 }
 
 
+//데이터 수정
 function EditDataToPHP(data) {
-  // XMLHttpRequest 객체 생성
-  var xhr = new XMLHttpRequest();
-  
-  // POST 요청을 보낼 PHP 파일 경로 설정
-  var url = "timetable_system_add.php";
-  
-  // POST 요청 설정
-  xhr.open("POST", url, true);
-  
+  // PHP 파일 경로 설정
+  var url = "timetable_system_edit.php";
+
   // 전송할 데이터 포맷 설정 (JSON 형태로 전송)
-  xhr.setRequestHeader("Content-Type", "application/json");
-  
-  // PHP로 전송할 데이터 변환
   var jsonData = JSON.stringify(data);
-  xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-          console.log(xhr.responseText);
-      }
-  };
-  xhr.send(jsonData);
+
+  // fetch를 사용하여 POST 요청 보내기
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: jsonData
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.text();
+  })
+  .then(text => {
+    console.log(text); // 서버로부터 받은 응답 출력
+  })
+  .catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
+  });
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
