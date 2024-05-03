@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "ser";
 $password = "0000";
-$dbname = "timetable_systemDB";
+$dbname = "timetable_system";
 
 $data = json_decode(file_get_contents('php://input'), true);
 
@@ -30,7 +30,7 @@ if ($conn->connect_error) {
 }
 
 // SQL 쿼리 작성
-$sql = "UPDATE classroomDB SET 
+$sql = "UPDATE classroom_DB SET 
         which = '$which_select',
         floor = '$floor_select',
         class_number = '$class_number',

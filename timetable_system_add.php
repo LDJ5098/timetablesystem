@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "ser";
 $password = "0000";
-$dbname = "timetable_systemDB";
+$dbname = "timetable_system";
 
 
 $data = json_decode(file_get_contents('php://input'), true);
@@ -31,7 +31,7 @@ if ($conn->connect_error) {
 }
 
 // SQL 쿼리 작성
-$sql = "INSERT INTO classroomDB (object_code, which, floor, class_number, class_name, device_code, width, height, other, wifi, top_value, left_value) VALUES ('$object_code', '$which_select', '$floor_select', '$class_number', '$class_name', '$device_code', '$width', '$height', '$other', '$wifi', '$top', '$left')";
+$sql = "INSERT INTO classroom_DB (object_code, which, floor, class_number, class_name, device_code, width, height, other, wifi, top_value, left_value) VALUES ('$object_code', '$which_select', '$floor_select', '$class_number', '$class_name', '$device_code', '$width', '$height', '$other', '$wifi', '$top', '$left')";
 
 // 쿼리 실행
 if ($conn->query($sql) === TRUE) {

@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "ser";
 $password = "0000";
-$dbname = "timetable_systemDB";
+$dbname = "timetable_system";
 
 //디코딩
 $data = json_decode(file_get_contents('php://input'), true);
@@ -20,7 +20,7 @@ if ($conn->connect_error) {
 }
 
 // SQL 쿼리 작성
-$sql = "DELETE FROM classroomDB WHERE object_code='$object_code'";
+$sql = "DELETE FROM classroom_DB WHERE object_code='$object_code'";
 
 // 쿼리 실행
 if ($conn->query($sql) === TRUE) {
