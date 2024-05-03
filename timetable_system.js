@@ -29,6 +29,7 @@ var background_DIV = document.getElementById("background");
 var activeButton = null;
 var recent_choice_index = null;
 
+
 //classroomDB
 var classroomDB = [];
 
@@ -55,6 +56,86 @@ function randomCODE(){
   return code;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////서버 영역/////////////////////////////////////////////////////////////////////////
+//서버에 변경된 데이터를 전송하기
+function sendDataToPHP(data) {
+  // XMLHttpRequest 객체 생성
+  var xhr = new XMLHttpRequest();
+  
+  // POST 요청을 보낼 PHP 파일 경로 설정
+  var url = "timetable_system_add.php";
+  
+  // POST 요청 설정
+  xhr.open("POST", url, true);
+  
+  // 전송할 데이터 포맷 설정 (JSON 형태로 전송)
+  xhr.setRequestHeader("Content-Type", "application/json");
+  
+  // PHP로 전송할 데이터 변환
+  var jsonData = JSON.stringify(data);
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log(xhr.responseText);
+      }
+  };
+  xhr.send(jsonData);
+}
+
+//서버에 데이터를 제거하기
+function deleteDataInPHP(randomCODE) {
+  // XMLHttpRequest 객체 생성
+  var xhr = new XMLHttpRequest();
+  
+  // POST 요청을 보낼 PHP 파일 경로 설정
+  var url = "timetable_system_delete.php";
+  
+  // POST 요청 설정
+  xhr.open("POST", url, true);
+  
+  // 전송할 데이터 포맷 설정 (JSON 형태로 전송)
+  xhr.setRequestHeader("Content-Type", "application/json");
+  
+  // 요청 완료 시 콜백 함수 설정
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          // 응답 출력 (필요한 경우)
+          console.log(xhr.responseText);
+      }
+  };
+  
+  // 데이터 전송
+  xhr.send(JSON.stringify({ randomCODE: randomCODE }));
+}
+
+
+function EditDataToPHP(data) {
+  // XMLHttpRequest 객체 생성
+  var xhr = new XMLHttpRequest();
+  
+  // POST 요청을 보낼 PHP 파일 경로 설정
+  var url = "timetable_system_add.php";
+  
+  // POST 요청 설정
+  xhr.open("POST", url, true);
+  
+  // 전송할 데이터 포맷 설정 (JSON 형태로 전송)
+  xhr.setRequestHeader("Content-Type", "application/json");
+  
+  // PHP로 전송할 데이터 변환
+  var jsonData = JSON.stringify(data);
+  xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          console.log(xhr.responseText);
+      }
+  };
+  xhr.send(jsonData);
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 //객체 정보 추가 함수
 function push_classroomDB(Which_, floor_, number, name, code, width, height, other, WIFI, Top, Left){
   var object = {
@@ -74,6 +155,8 @@ function push_classroomDB(Which_, floor_, number, name, code, width, height, oth
     left:Left
   }
   classroomDB.push(object);
+
+  sendDataToPHP(object);
 }
 
 
@@ -88,10 +171,14 @@ function fix_classroomDB(i, Which_, floor_, number, name, code, width, height, o
   classroomDB[i].height = height.value;
   classroomDB[i].other = other.value;
   classroomDB[i].wifi = WIFI.checked;
+
+
+  EditDataToPHP(classroomDB[i]);
 }
 
 //객체 정보 삭제 함수
 function remove_classroomDB(index){
+  deleteDataInPHP(classroomDB[index].object_code);
   classroomDB.splice(index, 1);
   console.log('삭제되었습니다');
 }
@@ -139,33 +226,32 @@ function click_classroom() {
 
 //mainDB에 들어있는 값을 화면에 나타내주는 함수
 function show_floor(){
-  document.querySelectorAll('.class_info_panel').forEach(function(element){
-    element.remove();
-  });
+    document.querySelectorAll('.class_info_panel').forEach(function(element){
+      element.remove();
+    });
 
-  classroomDB.forEach(function(db, index){
-    if(db.which_select===which.value&&db.floor_select===floor.value){
-      var show_classroom = document.createElement("div");
-    
-      show_classroom.classList.add("class_info_panel");
-      show_classroom.id = classroomDB[index].object_code;
-      show_classroom.style.width = db.width;
-      show_classroom.style.height = db.height;
-      show_classroom.style.top = db.top;
-      show_classroom.style.left = db.left;
+    classroomDB.forEach(function(db, index){
+      if(db.which_select===which.value&&db.floor_select===floor.value){
+        var show_classroom = document.createElement("div");
+      
+        show_classroom.classList.add("class_info_panel");
+        show_classroom.id = classroomDB[index].object_code;
+        show_classroom.style.width = db.width;
+        show_classroom.style.height = db.height;
+        show_classroom.style.top = db.top;
+        show_classroom.style.left = db.left;
 
-      var in_text = document.createElement('label');
+        var in_text = document.createElement('label');
 
-      in_text.textContent =  db.class_number;
+        in_text.textContent =  db.class_number;
 
-      floor_background.appendChild(show_classroom);
-      show_classroom.appendChild(in_text);
-    }
-  });
+        floor_background.appendChild(show_classroom);
+        show_classroom.appendChild(in_text);
+      }
+    });
 
-  click_classroom();
+    click_classroom();
 }
-
 
 
 //floor 배경 이미지 변경 함수
