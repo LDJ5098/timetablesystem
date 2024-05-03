@@ -147,6 +147,17 @@ function EditDataToPHP(data) {
   });
 }
 
+
+function loadDataPHP(){
+  fetch('timetable_system_load.php')
+  .then(response => response.json())
+  .then(data => {
+    console.log(data); // 여기서 데이터를 활용하거나 처리합니다.
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -188,6 +199,13 @@ function fix_classroomDB(i, Which_, floor_, number, name, code, width, height, o
   classroomDB[i].other = other.value;
   classroomDB[i].wifi = WIFI.checked;
 
+
+  EditDataToPHP(classroomDB[i]);
+}
+
+function move_classroomDB(i, Left, Top){
+  classroomDB[i].left = Left.value;
+  classroomDB[i].top = Top.value;
 
   EditDataToPHP(classroomDB[i]);
 }
@@ -245,6 +263,8 @@ function show_floor(){
     document.querySelectorAll('.class_info_panel').forEach(function(element){
       element.remove();
     });
+
+    EditDataToPHP();
 
     classroomDB.forEach(function(db, index){
       if(db.which_select===which.value&&db.floor_select===floor.value){
@@ -631,3 +651,4 @@ changeBackground();//배경 변경 함수
 create_classroom_checkbox();//새 교실 추가 WIFI체크함수
 fix_classroom_checkbox();//수정하기 WIFI체크함수
 mouse_move_class();
+loadDataPHP();
