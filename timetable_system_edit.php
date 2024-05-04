@@ -38,7 +38,7 @@ $sql = "UPDATE classroomDB SET
         width = '$width',
         height = '$height',
         other = '$other',
-        wifi = '$wifi',
+        wifi = '$wifi'
         WHERE object_code = '$object_code'";
 
 // 쿼리 실행
