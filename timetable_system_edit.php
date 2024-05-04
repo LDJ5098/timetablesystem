@@ -19,8 +19,6 @@ $width = $data['width'];
 $height = $data['height'];
 $other = $data['other'];
 $wifi = $data['wifi'];
-$top = $data['top'];
-$left = $data['left'];
 
 // 데이터베이스 연결
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -41,8 +39,6 @@ $sql = "UPDATE classroomDB SET
         height = '$height',
         other = '$other',
         wifi = '$wifi',
-        top_value = '$top',
-        left_value = '$left'
         WHERE object_code = '$object_code'";
 
 // 쿼리 실행
