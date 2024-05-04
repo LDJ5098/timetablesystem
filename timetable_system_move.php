@@ -11,15 +11,8 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 // 객체 생성
 $object_code = $data['object_code'];
-$which_select = $data['which_select'];
-$floor_select = $data['floor_select'];
-$class_number = $data['class_number'];
-$class_name = $data['class_name'];
-$device_code = $data['device_code'];
-$width = $data['width'];
-$height = $data['height'];
-$other = $data['other'];
-$wifi = $data['wifi'];
+$top = $data['top'];
+$left = $data['left'];
 
 // 데이터베이스 연결
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -30,8 +23,10 @@ if ($conn->connect_error) {
 }
 
 // SQL 쿼리 작성
-$sql = "INSERT INTO classroomDB (object_code, which, floor, class_number, class_name, device_code, width, height, other, wifi) 
-VALUES ('$object_code', '$which_select', '$floor_select', '$class_number', '$class_name', '$device_code', '$width', '$height', '$other', '$wifi')";
+$sql = "UPDATE classroomDB SET 
+top_value = '$top',
+left_value = '$left'
+WHERE object_code = '$object_code'";
 
 // 쿼리 실행
 if ($conn->query($sql) === TRUE) {
