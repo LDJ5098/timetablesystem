@@ -345,8 +345,8 @@ function show_floor(){
     document.querySelectorAll('.class_info_panel').forEach(function(element){
       element.remove();
     });
-
-    load_database_code().forEach(function(db, index){
+    var show_arry = load_database_code();
+    show_arry.forEach(function(db, index){
       if(db.which_select===which.value&&db.floor_select===floor.value){
         var show_classroom = document.createElement("div");
       
