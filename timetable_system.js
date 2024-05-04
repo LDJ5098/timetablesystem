@@ -461,7 +461,7 @@ function create_new_classroom(){
   var error_log = "";
 
   for (let i = 0; i < load_database_code().length; i++) {
-    if(load_database_code()[i].floor===floor.value&&load_database_code()[i].which===which.value&&load_database_code()[i].class_number===fix_number&&recent_choice_code!==load_database_code()[i].object_code){
+    if(load_database_code()[i].floor===floor.value&&load_database_code()[i].which===which.value&&load_database_code()[i].class_number===create_number.value&&recent_choice_code!==load_database_code()[i].object_code){
       error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)";
       break;
     }
@@ -497,7 +497,7 @@ function fix_classroom(){
   var error_log = "";
 
   for (let i = 0; i < load_database_code().length; i++) {
-    if(load_database_code()[i].floor===floor.value&&load_database_code()[i].which===which.value&&load_database_code()[i].class_number===fix_number&&recent_choice_code!==load_database_code()[i].object_code){
+    if(load_database_code()[i].floor===floor.value&&load_database_code()[i].which===which.value&&load_database_code()[i].class_number===fix_number.value&&recent_choice_code!==load_database_code()[i].object_code){
       error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)";
       break;
     }
