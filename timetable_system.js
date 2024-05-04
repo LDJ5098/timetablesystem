@@ -174,7 +174,7 @@ function load_database_code() {
 //서버에서 특정 데이터만 가져오기
 function classroomDB(objectcode) {
   var data = {
-      object_code: objectcode,
+      object_code: objectcode
   }
 
   var jsonData = JSON.stringify(data);
@@ -526,13 +526,10 @@ function fix_classroom(){
 //교실 위치 이동 기억 했다가 새로고침 때 다시 테두리 추가 해주는 함수
 var refresh_remember_class = [];
 function refresh_class_rember(){
-  var refresh_class = document.querySelectorAll(".class_info_panel");
-  refresh_class.forEach(function(val){
-    for(var i=0; i<refresh_remember_class.length;i++){
-      if(val.id===refresh_remember_class[i])val.classList.add('choice_panel');
-      break;
-    }
-  });
+  for(var i=0; i<refresh_remember_class.length; i++) {
+    var element = document.getElementById(refresh_remember_class[i]);
+    element.classList.add('choice_panel');
+  }
 }
 
 
@@ -587,7 +584,7 @@ function move_class(){
     else if (event.key === "ArrowLeft"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 왼쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var Left = String(parseFloat(classroomDB(element.id).left_value) - keyboard_speed)-'px';
+            var Left = String(parseFloat(classroomDB(element.id).left_value) - keyboard_speed)+'px';
             var Top = classroomDB(element.id).top_value;
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top); 
@@ -599,7 +596,7 @@ function move_class(){
     else if (event.key === "ArrowRight"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 오른쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var Left = String(parseFloat(classroomDB(element.id).left_value) - keyboard_speed)-'px';
+            var Left = String(parseFloat(classroomDB(element.id).left_value) + keyboard_speed)+'px';
             var Top = classroomDB(element.id).top_value;
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top);
