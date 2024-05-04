@@ -83,14 +83,14 @@ function sendDataToPHP(data) {
 
 
 //서버에 데이터를 제거하기
-function deleteDataInPHP(randomCODE) {
+function deleteDataInPHP(data) {
   var url = "timetable_system_delete.php";
   var request = new XMLHttpRequest();
   request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
   request.setRequestHeader("Content-Type", "application/json");
 
   try {
-      var jsonData = JSON.stringify({ randomCODE: randomCODE });
+      var jsonData = JSON.stringify(data);
       request.send(jsonData);
 
       if (request.status === 200) { // 요청이 성공한 경우
@@ -243,7 +243,7 @@ function fix_classroomDB(objectcode ,Which_, floor_, number, name, code, width, 
     width:width.value,
     height:height.value,
     other:other.value,
-    wifi:WIFI.checked,
+    wifi:WIFI.checked
   }
   EditDataToPHP(object);
 }
@@ -261,7 +261,7 @@ function move_classroomDB(objectcode, Left, Top){
 //객체 정보 삭제 함수
 function remove_classroomDB(code){
   var object = {
-    object_code:code,
+    object_code:code
   }
   deleteDataInPHP(object);
   console.log('삭제되었습니다');
