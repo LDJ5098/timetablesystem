@@ -670,5 +670,12 @@ fix_classroom_checkbox();//수정하기 WIFI체크함수
 mouse_move_class();
 
 setInterval(function() {
+  choice_classrooms=document.querySelectorAll('.choice_panel');
+  choice_classrooms.forEach(function(element){
+    refresh_remember_class.push(element.id);
+  });
+
   show_floor();
+  refresh_class_rember();
+  refresh_remember_class = [];
 }, 500); // 50밀리초(0.5초)마다 함수 호출
