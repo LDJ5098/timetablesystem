@@ -182,26 +182,25 @@ function MoveDataToPHP(data) {
 }
 
 //서버에서 모든 데이터 다 가져오기
-function load_database_code(){
-  // PHP 스크립트의 URL 설정
-  var url = 'timetable_system_load.php'; // your_php_script.php에는 실제 PHP 파일의 경로를 넣어주세요.
-  var result;
-  // fetch를 사용하여 데이터를 가져옵니다.
-  fetch(url)
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
-          return response.json(); // JSON 형식으로 응답을 파싱합니다.
-      })
-      .then(data => {
-          result=data;
-          // 여기에 데이터를 처리하는 로직을 추가하세요.
-      })
-      .catch(error => {
-          console.error('There was a problem with the fetch operation:', error);
-      });
-    return result;
+function load_database_code() {
+  var url = 'timetable_system_load.php';
+  var request = new XMLHttpRequest();
+  request.open('GET', url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.send();
+
+  if (request.status === 200) { // 요청이 성공한 경우
+      try {
+          var data = JSON.parse(request.responseText);
+          // 데이터 처리 로직 추가
+          return data;
+      } catch (error) {
+          console.error('Error parsing JSON data:', error);
+          return null;
+      }
+  } else { // 요청이 실패한 경우
+      console.error('Request failed with status:', request.status);
+      return null;
+  }
 }
 
 //서버에서 특정 데이터만 가져오기
