@@ -62,123 +62,91 @@ function randomCODE(){
 ///////////////////////////////////////////////////////////////////////////////////서버 영역/////////////////////////////////////////////////////////////////////////
 //서버에 변경된 데이터를 전송하기
 function sendDataToPHP(data) {
-  // PHP 파일 경로 설정
   var url = "timetable_system_add.php";
-  
-  // 전송할 데이터 포맷 설정 (JSON 형태로 전송)
-  var jsonData = JSON.stringify(data);
+  var request = new XMLHttpRequest();
+  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.setRequestHeader("Content-Type", "application/json");
 
-  // fetch를 사용하여 POST 요청 보내기
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: jsonData
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.text();
-  })
-  .then(text => {
-    console.log(text); // 서버로부터 받은 응답 출력
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-  });
+  try {
+      var jsonData = JSON.stringify(data);
+      request.send(jsonData);
+
+      if (request.status === 200) { // 요청이 성공한 경우
+          console.log(request.responseText); // 서버로부터 받은 응답 출력
+      } else { // 요청이 실패한 경우
+          console.error('Request failed with status:', request.status);
+      }
+  } catch (error) {
+      console.error('There was a problem with the request:', error);
+  }
 }
+
 
 //서버에 데이터를 제거하기
 function deleteDataInPHP(randomCODE) {
-  // PHP 파일 경로 설정
   var url = "timetable_system_delete.php";
+  var request = new XMLHttpRequest();
+  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.setRequestHeader("Content-Type", "application/json");
 
-  // fetch를 사용하여 POST 요청 보내기
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ randomCODE: randomCODE })
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.text();
-  })
-  .then(text => {
-    console.log(text); // 서버로부터 받은 응답 출력
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-  });
+  try {
+      var jsonData = JSON.stringify({ randomCODE: randomCODE });
+      request.send(jsonData);
+
+      if (request.status === 200) { // 요청이 성공한 경우
+          console.log(request.responseText); // 서버로부터 받은 응답 출력
+      } else { // 요청이 실패한 경우
+          console.error('Request failed with status:', request.status);
+      }
+  } catch (error) {
+      console.error('There was a problem with the request:', error);
+  }
 }
 
 
-//데이터 수정
+
 function EditDataToPHP(data) {
-  // PHP 파일 경로 설정
   var url = "timetable_system_edit.php";
+  var request = new XMLHttpRequest();
+  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.setRequestHeader("Content-Type", "application/json");
 
-  // 전송할 데이터 포맷 설정 (JSON 형태로 전송)
-  var jsonData = JSON.stringify(data);
+  try {
+      var jsonData = JSON.stringify(data);
+      request.send(jsonData);
 
-  // fetch를 사용하여 POST 요청 보내기
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: jsonData
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.text();
-  })
-  .then(text => {
-    console.log(jsonData);
-    console.log(text); // 서버로부터 받은 응답 출력
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-  });
+      if (request.status === 200) { // 요청이 성공한 경우
+          console.log(jsonData);
+          console.log(request.responseText); // 서버로부터 받은 응답 출력
+      } else { // 요청이 실패한 경우
+          console.error('Request failed with status:', request.status);
+      }
+  } catch (error) {
+      console.error('There was a problem with the request:', error);
+  }
 }
 
 
-//이동하기
+
 function MoveDataToPHP(data) {
-  // PHP 파일 경로 설정
   var url = "timetable_system_move.php";
+  var request = new XMLHttpRequest();
+  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.setRequestHeader("Content-Type", "application/json");
 
-  // 전송할 데이터 포맷 설정 (JSON 형태로 전송)
-  var jsonData = JSON.stringify(data);
+  try {
+      var jsonData = JSON.stringify(data);
+      request.send(jsonData);
 
-  // fetch를 사용하여 POST 요청 보내기
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: jsonData
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.text();
-  })
-  .then(text => {
-    console.log(jsonData);
-    console.log(text); // 서버로부터 받은 응답 출력
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-  });
+      if (request.status === 200) { // 요청이 성공한 경우
+          console.log(jsonData);
+          console.log(request.responseText); // 서버로부터 받은 응답 출력
+      } else { // 요청이 실패한 경우
+          console.error('Request failed with status:', request.status);
+      }
+  } catch (error) {
+      console.error('There was a problem with the request:', error);
+  }
 }
 
 //서버에서 모든 데이터 다 가져오기
@@ -204,40 +172,36 @@ function load_database_code() {
 }
 
 //서버에서 특정 데이터만 가져오기
-function classroomDB(objectcode){
+function classroomDB(objectcode) {
   var data = {
-    object_code:objectcode,
+      object_code: objectcode,
   }
 
   var jsonData = JSON.stringify(data);
 
+  // PHP 파일 경로 설정
+  var url = 'timetable_system_select_load.php';
+  var request = new XMLHttpRequest();
+  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.setRequestHeader("Content-Type", "application/json");
 
-  // PHP 스크립트의 URL 설정
-  var url = 'timetable_system_select_load.php'; // your_php_script.php에는 실제 PHP 파일의 경로를 넣어주세요.
-  var result;
-  // fetch를 사용하여 데이터를 가져옵니다.
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: jsonData
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.text();
-  })
-  .then(text => {
-    result = text;
-    console.log(text); // 서버로부터 받은 응답 출력
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-  });
-  return result;
+  try {
+      request.send(jsonData);
+
+      if (request.status === 200) { // 요청이 성공한 경우
+          var result = request.responseText;
+          console.log(result); // 서버로부터 받은 응답 출력
+          return result;
+      } else { // 요청이 실패한 경우
+          console.error('Request failed with status:', request.status);
+          return null;
+      }
+  } catch (error) {
+      console.error('There was a problem with the request:', error);
+      return null;
+  }
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
