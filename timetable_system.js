@@ -668,3 +668,7 @@ changeBackground();//배경 변경 함수
 create_classroom_checkbox();//새 교실 추가 WIFI체크함수
 fix_classroom_checkbox();//수정하기 WIFI체크함수
 mouse_move_class();
+
+setInterval(function() {
+  show_floor();
+}, 500); // 50밀리초(0.5초)마다 함수 호출
