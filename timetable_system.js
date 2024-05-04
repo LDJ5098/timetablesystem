@@ -184,7 +184,7 @@ function MoveDataToPHP(data) {
 //서버에서 모든 데이터 다 가져오기
 function load_database_code(){
   // PHP 스크립트의 URL 설정
-  var url = 'timetable_system_load'; // your_php_script.php에는 실제 PHP 파일의 경로를 넣어주세요.
+  var url = 'timetable_system_load.php'; // your_php_script.php에는 실제 PHP 파일의 경로를 넣어주세요.
   var result;
   // fetch를 사용하여 데이터를 가져옵니다.
   fetch(url)
@@ -214,7 +214,7 @@ function classroomDB(objectcode){
 
 
   // PHP 스크립트의 URL 설정
-  var url = 'timetable_system_select_load'; // your_php_script.php에는 실제 PHP 파일의 경로를 넣어주세요.
+  var url = 'timetable_system_select_load.php'; // your_php_script.php에는 실제 PHP 파일의 경로를 넣어주세요.
   var result;
   // fetch를 사용하여 데이터를 가져옵니다.
   fetch(url, {
