@@ -453,7 +453,6 @@ function fix_classroom_checkbox(){
 function creating_classroom(){
   push_classroomDB(which, floor, create_number, create_name, create_classroom_device_code, create_width, create_height, create_class_detail, create_classroom_WIFI_check, String(563/2) + "px", "500px");
   show_floor();
-  console.log(classroomDB);
 }
 
 
@@ -461,10 +460,10 @@ function creating_classroom(){
 function create_new_classroom(){
   var error_log = "";
 
-  for (let i = 0; i < classroomDB.length; i++) {
-    if (classroomDB[i].which_select === which.value && classroomDB[i].floor_select === floor.value && classroomDB[i].class_number === create_number.value) {
-        error_log += '같은 건물에 같은 호수는 존재할 수 없습니다.(중복발생)\n';
-        break;
+  for (let i = 0; i < load_database_code()[i].length; i++) {
+    if(load_database_code()[i].floor_select===floor.value&&load_database_code()[i].which_select===which.value&&load_database_code()[i].class_number===fix_number&&recent_choice_code!==load_database_code()[i].object_code){
+      error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)";
+      break;
     }
   }
 
@@ -496,8 +495,6 @@ function fixing_classroom(){
 //수정하기 전 검사
 function fix_classroom(){
   var error_log = "";
-
-  document.querySelectorAll(".class_info_panel")
 
   for (let i = 0; i < load_database_code()[i].length; i++) {
     if(load_database_code()[i].floor_select===floor.value&&load_database_code()[i].which_select===which.value&&load_database_code()[i].class_number===fix_number&&recent_choice_code!==load_database_code()[i].object_code){
