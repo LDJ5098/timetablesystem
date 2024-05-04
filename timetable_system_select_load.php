@@ -24,9 +24,18 @@ $sql = "SELECT which, floor, class_number, class_name, device_code, width, heigh
 // 쿼리 실행
 $result = $conn->query($sql);
 
+if ($result->num_rows > 0) {
+    // 결과 가져오기
+    $row = $result->fetch_assoc();
+    
+    // JSON 형식으로 출력
+    header('Content-Type: application/json; charset=utf-8'); // UTF-8로 JSON 형식 설정
+    echo json_encode((object)$row, JSON_UNESCAPED_UNICODE);
+} else {
+    echo json_encode(array()); // 빈 배열 출력
+}
+
 // JSON 형식으로 출력
-header('Content-Type: application/json; charset=utf-8'); // UTF-8로 JSON 형식 설정
-echo json_encode($result, JSON_UNESCAPED_UNICODE); // JSON_UNESCAPED_UNICODE 옵션을 사용하여 유니코드 문자를 이스케이프하지 않도록 설정
 
 // 연결 종료
 $conn->close();
