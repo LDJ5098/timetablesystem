@@ -19,7 +19,7 @@ if ($conn->connect_error) {
 }
 
 // 쿼리 작성
-$sql = "SELECT which, floor, class_number, class_name, device_code, width, height, other, wifi, top_value, left_value FROM classroomDB WHERE object_code = $object_code";
+$sql = "SELECT * FROM classroomDB WHERE object_code = '$object_code'";
 
 // 쿼리 실행
 $result = $conn->query($sql);
@@ -30,7 +30,7 @@ if ($result->num_rows > 0) {
     
     // JSON 형식으로 출력
     header('Content-Type: application/json; charset=utf-8'); // UTF-8로 JSON 형식 설정
-    echo json_encode((object)$row, JSON_UNESCAPED_UNICODE);
+    echo json_encode($row, JSON_UNESCAPED_UNICODE);
 } else {
     echo json_encode(array()); // 빈 배열 출력
 }
