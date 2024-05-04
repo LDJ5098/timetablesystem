@@ -191,7 +191,7 @@ function classroomDB(objectcode) {
       if (request.status === 200) { // 요청이 성공한 경우
           var result = request.responseText;
           console.log(result); // 서버로부터 받은 응답 출력
-          return result;
+          return JSON.parse(result);
       } else { // 요청이 실패한 경우
           console.error('Request failed with status:', request.status);
           return null;
@@ -273,13 +273,13 @@ function click_classroom() {
   elements.forEach(function(element) {
     element.addEventListener('click', function() {
       if(activeButton===document.querySelectorAll('.menu_button')[1]){
-        fix_number.value=classroomDB(this.id).class_number;
-        fix_name.value=classroomDB(this.id).class_name;
-        fix_classroom_device_code.value=classroomDB(this.id).device_code;
-        fix_width.value=classroomDB(this.id).width;
-        fix_height.value=classroomDB(this.id).height;
-        fix_class_detail.value=classroomDB(this.id).other;
-        fix_classroom_WIFI_check.checked=classroomDB(this.id).wifi;
+        fix_number.value=classroomDB(element.id).class_number;
+        fix_name.value=classroomDB(element.id).class_name;
+        fix_classroom_device_code.value=classroomDB(element.id).device_code;
+        fix_width.value=classroomDB(element.id).width;
+        fix_height.value=classroomDB(element.id).height;
+        fix_class_detail.value=classroomDB(element.id).other;
+        fix_classroom_WIFI_check.checked=classroomDB(element.id).wifi;
         document.getElementById('fix_classroom_background').style.display='flex';
         recent_choice_code = element.id;
       }
