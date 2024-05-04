@@ -19,7 +19,7 @@ if ($conn->connect_error) {
 }
 
 // 쿼리 작성
-$sql = "SELECT which, floor, class_number, class_name, device_code, width, height, other, wifi, top_value, left_value FROM classroomDB WHERE = $object_code";
+$sql = "SELECT which, floor, class_number, class_name, device_code, width, height, other, wifi, top_value, left_value FROM classroomDB WHERE object_code = $object_code";
 
 // 쿼리 실행
 $result = $conn->query($sql);
