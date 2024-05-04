@@ -309,16 +309,16 @@ function show_floor(){
       element.remove();
     });
     var show_arry = load_database_code();
-    show_arry.forEach(function(db, index){
-      if(db.which_select===which.value&&db.floor_select===floor.value){
+    show_arry.forEach(function(db){
+      if(db.which===which.value&&db.floor===floor.value){
         var show_classroom = document.createElement("div");
       
         show_classroom.classList.add("class_info_panel");
-        show_classroom.id = classroomDB[index].object_code;
+        show_classroom.id = db.object_code;
         show_classroom.style.width = db.width;
         show_classroom.style.height = db.height;
-        show_classroom.style.top = db.top;
-        show_classroom.style.left = db.left;
+        show_classroom.style.top = db.top_value;
+        show_classroom.style.left = db.left_value;
 
         var in_text = document.createElement('label');
 
@@ -460,8 +460,8 @@ function creating_classroom(){
 function create_new_classroom(){
   var error_log = "";
 
-  for (let i = 0; i < load_database_code()[i].length; i++) {
-    if(load_database_code()[i].floor_select===floor.value&&load_database_code()[i].which_select===which.value&&load_database_code()[i].class_number===fix_number&&recent_choice_code!==load_database_code()[i].object_code){
+  for (let i = 0; i < load_database_code().length; i++) {
+    if(load_database_code()[i].floor===floor.value&&load_database_code()[i].which===which.value&&load_database_code()[i].class_number===fix_number&&recent_choice_code!==load_database_code()[i].object_code){
       error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)";
       break;
     }
@@ -496,8 +496,8 @@ function fixing_classroom(){
 function fix_classroom(){
   var error_log = "";
 
-  for (let i = 0; i < load_database_code()[i].length; i++) {
-    if(load_database_code()[i].floor_select===floor.value&&load_database_code()[i].which_select===which.value&&load_database_code()[i].class_number===fix_number&&recent_choice_code!==load_database_code()[i].object_code){
+  for (let i = 0; i < load_database_code().length; i++) {
+    if(load_database_code()[i].floor===floor.value&&load_database_code()[i].which===which.value&&load_database_code()[i].class_number===fix_number&&recent_choice_code!==load_database_code()[i].object_code){
       error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)";
       break;
     }
@@ -563,8 +563,8 @@ function move_class(){
     if (event.key === "ArrowUp"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 위쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var Left = classroomDB(element.id).left;
-            var Top = String(parseFloat(classroomDB(element.id).top) - keyboard_speed)+'px';
+            var Left = classroomDB(element.id).left_value;
+            var Top = String(parseFloat(classroomDB(element.id).top_value) - keyboard_speed)+'px';
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top);
         });
@@ -575,8 +575,8 @@ function move_class(){
     else if (event.key === "ArrowDown"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 아래쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var Left = classroomDB(element.id).left;
-            var Top = String(parseFloat(classroomDB(element.id).top) + keyboard_speed)+'px';
+            var Left = classroomDB(element.id).left_value;
+            var Top = String(parseFloat(classroomDB(element.id).top_value) + keyboard_speed)+'px';
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top);  
         });
@@ -587,8 +587,8 @@ function move_class(){
     else if (event.key === "ArrowLeft"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 왼쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var Left = String(parseFloat(classroomDB(element.id).left) - keyboard_speed)-'px';
-            var Top = classroomDB(element.id).Top;
+            var Left = String(parseFloat(classroomDB(element.id).left_value) - keyboard_speed)-'px';
+            var Top = classroomDB(element.id).top_value;
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top); 
         });
@@ -599,8 +599,8 @@ function move_class(){
     else if (event.key === "ArrowRight"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 오른쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var Left = String(parseFloat(classroomDB(element.id).left) - keyboard_speed)-'px';
-            var Top = classroomDB(element.id).Top;
+            var Left = String(parseFloat(classroomDB(element.id).left_value) - keyboard_speed)-'px';
+            var Top = classroomDB(element.id).top_value;
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top);
         });
@@ -634,8 +634,8 @@ function mouse_move_class(){
       aY=event.clientY;
 
       choice_classrooms.forEach(function(element){
-        var Left = String(parseFloat(classroomDB(element.id).left) + (aX-bX))+'px';
-        var Top = String(parseFloat(classroomDB(element.id).top) + (aY-bY))+'px';
+        var Left = String(parseFloat(classroomDB(element.id).left_value) + (aX-bX))+'px';
+        var Top = String(parseFloat(classroomDB(element.id).top_value) + (aY-bY))+'px';
         move_classroomDB(element.id, Left, Top);
         refresh_remember_class.push(element.id);
       });
