@@ -270,8 +270,9 @@ function remove_classroomDB(code){
 //교실 데이터가 변경이 생길 경우 기록용 함수
 var remember_change_classroom_DB = [];
 function remember_change_classroom(){
+  remember_change_classroom_DB = [];
   document.querySelectorAll('.class_info_panel').forEach(function(element){
-    remember_change_classroom_DB =  classroomDB(element.id);
+    remember_change_classroom_DB.push(classroomDB(element.id));
   });
 }
 
