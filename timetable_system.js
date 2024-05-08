@@ -369,9 +369,6 @@ function changeBackground() {
     document.getElementById("background").style.backgroundImage = "url('" + imagePath + "')";
 
     document.getElementById('floor_info').textContent = which.value + "-" + floor.value;
-
-    
-    show_floor();
 }
 
 //처음에 데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
@@ -394,10 +391,10 @@ function first_show_floor(){
 
       floor_background.appendChild(show_classroom);
       show_classroom.appendChild(in_text);
+
+      click_classroom(show_classroom);
     }
   });
-
-  click_classroom();
   remember_change_classroom();
 }
 
@@ -508,7 +505,6 @@ function fix_classroom_checkbox(){
 //새 교실 데이터 전송
 function creating_classroom(){
   push_classroomDB(which, floor, create_number, create_name, create_classroom_device_code, create_width, create_height, create_class_detail, create_classroom_WIFI_check, String(563/2) + "px", "500px");
-  show_floor();
 }
 
 
@@ -621,9 +617,6 @@ function move_class(){
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top);
         });
-        show_floor();
-        refresh_class_rember();
-        refresh_remember_class = [];
     } 
     else if (event.key === "ArrowDown"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 아래쪽 방향키를 눌렀을 때의 동작
@@ -633,9 +626,6 @@ function move_class(){
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top);  
         });
-        show_floor();
-        refresh_class_rember();
-        refresh_remember_class = [];
     }
     else if (event.key === "ArrowLeft"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 왼쪽 방향키를 눌렀을 때의 동작
@@ -645,9 +635,6 @@ function move_class(){
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top); 
         });
-        show_floor();
-        refresh_class_rember();
-        refresh_remember_class = [];
     }
     else if (event.key === "ArrowRight"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 오른쪽 방향키를 눌렀을 때의 동작
@@ -657,9 +644,6 @@ function move_class(){
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top);
         });
-        show_floor();
-        refresh_class_rember();
-        refresh_remember_class = [];
     }
   });
 
@@ -694,10 +678,6 @@ function mouse_move_class(){
       });
       bX=aX;
       bY=aY;
-
-      show_floor();
-      refresh_class_rember();
-      refresh_remember_class = [];
     }
   });
 }
@@ -712,7 +692,6 @@ function delete_class(){
     choice_classrooms.forEach(function(element){
       remove_classroomDB(element.id);
     });
-    show_floor();
   }
 }
 
@@ -734,4 +713,4 @@ setInterval(function() {
   show_floor();
   refresh_class_rember();
   refresh_remember_class = [];
-}, 200); // 16fps 16/1000
+}, 62.5); // 16fps 16/1000
