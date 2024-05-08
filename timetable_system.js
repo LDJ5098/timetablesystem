@@ -272,6 +272,7 @@ var remember_change_classroom_DB = [];
 function remember_change_classroom(){
   remember_change_classroom_DB = [];
   document.querySelectorAll('.class_info_panel').forEach(function(element){
+    console.log("함수 : " + classroomDB(element.id));
     remember_change_classroom_DB.push(classroomDB(element.id));
   });
 }
@@ -340,7 +341,6 @@ function show_floor(){
     document.querySelectorAll('.class_info_panel').forEach(function(element){
       var TF=false;
       var show_array = classroomDB(element.id);
-      console.log("코드 값들 : " + remember_change_classroom_DB[i].object_code,show_array.object_code);
       for(var i=0;i<remember_change_classroom_DB.length;i++){
         if(object_compare(remember_change_classroom_DB[i], show_array)===true&&remember_change_classroom_DB[i].object_code===show_array.object_code){
           TF=true;
