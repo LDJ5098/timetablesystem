@@ -328,8 +328,8 @@ function object_compare(A, B){
 function show_floor(){
     document.querySelectorAll('.class_info_panel').forEach(function(element){
       var TF=false;
+      var show_array = classroomDB(element.id);
       for(var i=0;i<remember_change_classroom_DB.length;i++){
-        var show_array = classroomDB(element.id);
         if(object_compare(remember_change_classroom_DB[i], show_array&&remember_change_classroom_DB[i].object_code===show_array.object_code)===true){
           TF=true;
           break;
