@@ -645,7 +645,11 @@ function move_class(){
 
 //마우스로 이동시키기
 var bX, bY, aX, aY, mouse_info='up';
+//휴대폰 터치로 이동시키기
+var p_bX, p_bY, p_aX, p_aY, touch_info='up';
+
 function mouse_move_class(){
+  //마우스 이동
   document.addEventListener('mousedown', function(event){
       choice_classrooms=document.querySelectorAll('.choice_panel');
       bX=event.clientX;
@@ -672,6 +676,37 @@ function mouse_move_class(){
       });
       bX=aX;
       bY=aY;
+    }
+  });
+
+  //터치 이동
+  document.addEventListener('touchstart', function(event){
+    choice_classrooms=document.querySelectorAll('.choice_panel');
+    var touch = event.touches[0];
+    p_bX = touch.clientX;
+    p_bY = touch.clientY;
+    touch_info='down';
+  });
+
+  document.addEventListener('touchend', function(){
+    touch_info='up';
+  });
+
+  document.addEventListener('touchmove', function(event){
+    var touch = event.touches[0];
+    if(activeButton === document.querySelectorAll('.menu_button')[2] && touch_info === 'down'){
+      p_aX = touch.clientX;
+      p_aY = touch.clientY;
+
+      choice_classrooms.forEach(function(element){
+        var Left = String(parseFloat(classroomDB(element.id).left_value) + (p_aX - p_bX)) + 'px';
+        var Top = String(parseFloat(classroomDB(element.id).top_value) + (p_aY - p_bY)) + 'px';
+        move_classroomDB(element.id, Left, Top);
+        refresh_remember_class.push(element.id);
+      });
+
+      p_bX = p_aX;
+      p_bY = p_aY;
     }
   });
 }
