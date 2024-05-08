@@ -693,27 +693,26 @@ function mouse_move_class(){
   });
 
   document.addEventListener('touchmove', function(event){
-    var touch = event.touches[0];
-    if(activeButton === document.querySelectorAll('.menu_button')[2] && touch_info === 'down'){
-      p_aX = touch.clientX;
-      p_aY = touch.clientY;
+    if(event.touches.length === 1){
+      event.preventDefault();
 
-      choice_classrooms.forEach(function(element){
-        var Left = String(parseFloat(classroomDB(element.id).left_value) + (p_aX - p_bX)) + 'px';
-        var Top = String(parseFloat(classroomDB(element.id).top_value) + (p_aY - p_bY)) + 'px';
-        move_classroomDB(element.id, Left, Top);
-        refresh_remember_class.push(element.id);
-      });
+      var touch = event.touches[0];
+      if(activeButton === document.querySelectorAll('.menu_button')[2] && touch_info === 'down'){
+        p_aX = touch.clientX;
+        p_aY = touch.clientY;
 
-      p_bX = p_aX;
-      p_bY = p_aY;
+        choice_classrooms.forEach(function(element){
+          var Left = String(parseFloat(classroomDB(element.id).left_value) + (p_aX - p_bX)) + 'px';
+          var Top = String(parseFloat(classroomDB(element.id).top_value) + (p_aY - p_bY)) + 'px';
+          move_classroomDB(element.id, Left, Top);
+          refresh_remember_class.push(element.id);
+        });
+
+        p_bX = p_aX;
+        p_bY = p_aY;
+      }
     }
   });
-
-  document.addEventListener('touchmove', function(event) {
-    // 터치 이벤트가 발생했을 때 스크롤을 막습니다.
-    event.preventDefault();
-  }, { passive: false });
 }
 
 
