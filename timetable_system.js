@@ -72,7 +72,6 @@ function sendDataToPHP(data) {
       request.send(jsonData);
 
       if (request.status === 200) { // 요청이 성공한 경우
-          console.log(request.responseText); // 서버로부터 받은 응답 출력
       } else { // 요청이 실패한 경우
           console.error('Request failed with status:', request.status);
       }
@@ -94,7 +93,6 @@ function deleteDataInPHP(data) {
       request.send(jsonData);
 
       if (request.status === 200) { // 요청이 성공한 경우
-          console.log(request.responseText); // 서버로부터 받은 응답 출력
       } else { // 요청이 실패한 경우
           console.error('Request failed with status:', request.status);
       }
@@ -116,8 +114,6 @@ function EditDataToPHP(data) {
       request.send(jsonData);
 
       if (request.status === 200) { // 요청이 성공한 경우
-          console.log(jsonData);
-          console.log(request.responseText); // 서버로부터 받은 응답 출력
       } else { // 요청이 실패한 경우
           console.error('Request failed with status:', request.status);
       }
@@ -139,8 +135,6 @@ function MoveDataToPHP(data) {
       request.send(jsonData);
 
       if (request.status === 200) { // 요청이 성공한 경우
-          console.log(jsonData);
-          console.log(request.responseText); // 서버로부터 받은 응답 출력
       } else { // 요청이 실패한 경우
           console.error('Request failed with status:', request.status);
       }
@@ -190,7 +184,6 @@ function classroomDB(objectcode) {
 
       if (request.status === 200) { // 요청이 성공한 경우
           var result = request.responseText;
-          console.log(result); // 서버로부터 받은 응답 출력
           return JSON.parse(result);
       } else { // 요청이 실패한 경우
           console.error('Request failed with status:', request.status);
@@ -272,7 +265,6 @@ var remember_change_classroom_DB = [];
 function remember_change_classroom(){
   remember_change_classroom_DB = [];
   document.querySelectorAll('.class_info_panel').forEach(function(element){
-    console.log("함수 : " + classroomDB(element.id));
     remember_change_classroom_DB.push(classroomDB(element.id));
   });
 }
@@ -313,16 +305,6 @@ function click_classroom(element) {
 
 //입력된 객체 A,B가 일치하는지 확인해주는 함수
 function object_compare(A, B){
-  console.log(A.class_number,B.class_number);
-  console.log(A.class_name,B.class_name);
-  console.log(A.device_code,B.device_code);
-  console.log(A.width,B.width);
-  console.log(A.height,B.height);
-  console.log(A.other,B.other);
-  console.log(A.wifi,B.wifi);
-  console.log(A.top_value,B.top_value);
-  console.log(A.left_value,B.left_value);
-
   if(A.class_number !== B.class_number)return false;
   else if(A.class_name !== B.class_name)return false;
   else if(A.device_code !== B.device_code)return false;
