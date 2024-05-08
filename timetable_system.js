@@ -709,6 +709,11 @@ function mouse_move_class(){
       p_bY = p_aY;
     }
   });
+
+  document.addEventListener('touchmove', function(event) {
+    // 터치 이벤트가 발생했을 때 스크롤을 막습니다.
+    event.preventDefault();
+  }, { passive: false });
 }
 
 
