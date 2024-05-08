@@ -311,6 +311,16 @@ function click_classroom(element) {
 
 //입력된 객체 A,B가 일치하는지 확인해주는 함수
 function object_compare(A, B){
+  console.log(A.class_number,B.class_number);
+  console.log(A.class_name,B.class_name);
+  console.log(A.device_code,B.device_code);
+  console.log(A.width,B.width);
+  console.log(A.height,B.height);
+  console.log(A.other,B.other);
+  console.log(A.wifi,B.wifi);
+  console.log(A.top_value,B.top_value);
+  console.log(A.left_value,B.left_value);
+
   if(A.class_number !== B.class_number)return false;
   else if(A.class_name !== B.class_name)return false;
   else if(A.device_code !== B.device_code)return false;
