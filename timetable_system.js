@@ -322,7 +322,16 @@ function arr_compare(now, past){
 var change_remember = [];
 //데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
 function show_floor(){
-  var show_array = load_database_code();
+  var preprocessing = load_database_code();
+
+  var show_array = [];
+  var index = 0;
+  preprocessing.forEach(function(arr){
+    if(arr.floor===floor&&arr.which==which){
+      show_array[index] = arr;
+      index++;
+    }
+  });
 
   var new_change = [];
   show_array.forEach(function(now){
