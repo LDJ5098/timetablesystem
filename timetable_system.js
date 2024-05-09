@@ -327,7 +327,7 @@ function show_floor(){
   var new_change = [];
   show_array.forEach(function(now){
     for(var i=0; i<change_remember.length; i++){
-      if(arr_compare(now,change_remember[i])===true&&now.object_code===change_remember[i].object_code){
+      if(arr_compare(now,change_remember[i])===true){
         new_change.push(now);//같은 경우의 객체
         break;
       }
@@ -345,13 +345,13 @@ function show_floor(){
   });
 
   var new_array = [];
-  show_array.forEach(function(element){
+  show_array.forEach(function(now){
     var TF_now = true; 
     for(var i=0;i<new_change.length;i++){
-      if(new_change[i].object_code===element.id) TF_now = false;
+      if(new_change[i].object_code===now.object_code) TF_now = false;
     }
     if(TF_now){
-      new_array.push(element.id);
+      new_array.push(now.object_code);
     }
   });
 
