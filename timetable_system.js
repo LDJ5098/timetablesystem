@@ -367,6 +367,11 @@ function changeBackground() {
 
 //처음에 데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
 function first_show_floor(){
+
+  document.querySelectorAll('.class_info_panel').forEach(function(element){
+    element.remove();
+  });
+
   var show_arry = load_database_code();
   show_arry.forEach(function(db){
     if(db.which===which.value&&db.floor===floor.value){
@@ -504,6 +509,7 @@ function fix_classroom_checkbox(){
 //새 교실 데이터 전송
 function creating_classroom(){
   push_classroomDB(which, floor, create_number, create_name, create_classroom_device_code, create_width, create_height, create_class_detail, create_classroom_WIFI_check, String(563/2) + "px", "500px");
+  first_show_floor();
 }
 
 
@@ -540,7 +546,7 @@ function create_new_classroom(){
 //수정하는 데이터 전송
 function fixing_classroom(){
   fix_classroomDB(recent_choice_code ,which, floor, fix_number, fix_name, fix_classroom_device_code, fix_width, fix_height, fix_class_detail, fix_classroom_WIFI_check);
-  show_floor();
+  first_show_floor();
 }
 
 //수정하기 전 검사
@@ -726,6 +732,7 @@ function delete_class(){
     choice_classrooms.forEach(function(element){
       remove_classroomDB(element.id);
     });
+    first_show_floor();
   }
 }
 
