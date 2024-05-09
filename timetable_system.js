@@ -307,44 +307,87 @@ function changeBackground() {
     show_floor();
 }
 
-//데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
-function show_floor(){
 
-  document.querySelectorAll('.class_info_panel').forEach(function(element){
-    element.remove();
-  });
+//object_code, which, floor, class_number, class_name, device_code, width, height, other, wifi, top_value, left_value
+function arr_compare(now, past){
+  const keys = Object.keys(now);
 
-  var show_arry = load_database_code();
-  show_arry.forEach(function(db){
-    if(db.which===which.value&&db.floor===floor.value){
-      var show_classroom = document.createElement("div");
-    
-      show_classroom.classList.add("class_info_panel");
-      show_classroom.id = db.object_code;
-      show_classroom.style.width = db.width;
-      show_classroom.style.height = db.height;
-      show_classroom.style.top = db.top_value;
-      show_classroom.style.left = db.left_value;
-
-      var in_text = document.createElement('label');
-
-      in_text.textContent =  db.class_number;
-
-      floor_background.appendChild(show_classroom);
-      show_classroom.appendChild(in_text);
-
-      click_classroom(show_classroom);
-    }
-  });
+  for (var key of keys) {
+    if (now[key] !== past[key]) return false;//같지 않음
+  }
+  return true;//같음
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var change_remember = [];
+//데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
+function show_floor(){
+  var show_array = load_database_code();
+
+  var new_change = [];
+  show_array.forEach(function(now){
+    for(var i=0; i<change_remember.length; i++){
+      if(arr_compare(now,change_remember[i])===true&&now.object_code===change_remember[i].object_code){
+        new_change.push(now);//같은 경우의 객체
+        break;
+      }
+    }
+  });
+
+  document.querySelectorAll('.class_info_panel').forEach(function(element){
+    var TF_past = true; 
+    for(var i=0;i<new_change.length;i++){
+      if(new_change[i].object_code===element.id) TF_past = false;
+    }
+    if(TF_past){
+      element.remove();
+    }
+  });
+
+  var new_array = [];
+  show_array.forEach(function(element){
+    var TF_now = true; 
+    for(var i=0;i<new_change.length;i++){
+      if(new_change[i].object_code===element.id) TF_now = false;
+    }
+    if(TF_now){
+      new_array.push(element.id);
+    }
+  });
+
+  show_array.forEach(function(db){
+    for(var new_array_ID of new_array){
+      if(db.object_code===new_array_ID){
+        var show_classroom = document.createElement("div");
+        
+        show_classroom.classList.add("class_info_panel");
+        show_classroom.id = db.object_code;
+        show_classroom.style.width = db.width;
+        show_classroom.style.height = db.height;
+        show_classroom.style.top = db.top_value;
+        show_classroom.style.left = db.left_value;
+    
+        var in_text = document.createElement('label');
+    
+        in_text.textContent =  db.class_number;
+    
+        floor_background.appendChild(show_classroom);
+        show_classroom.appendChild(in_text);
+    
+        click_classroom(show_classroom);
+        break;
+      }
+    }
+  });
+
+  change_remember = show_array;
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 // which 또는 floor 값이 변경될 때마다 배경 이미지 변경
 which.addEventListener("change", changeBackground);
 floor.addEventListener("change", changeBackground);
-
-
 
 //class_info_panel중에서 choice_panel 제거 함수
 function cancel_choice(){
