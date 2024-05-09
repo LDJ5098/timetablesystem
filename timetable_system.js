@@ -327,7 +327,7 @@ function show_floor(){
   var show_array = [];
   var index = 0;
   preprocessing.forEach(function(arr){
-    if(arr.floor===floor&&arr.which==which){
+    if(arr.floor===floor.value&&arr.which==which.value){
       show_array[index] = arr;
       index++;
     }
