@@ -320,15 +320,15 @@ function object_compare(A, B){
 
 //mainDB에 들어있는 값을 화면에 나타내주는 함수(갱신)
 function show_floor(){
-    document.querySelectorAll('.class_info_panel').forEach(function(element){
+  for(var i=0;i<remember_change_classroom_DB.length;i++){
       var TF=false;
-      var show_array = classroomDB(element.id);
-      for(var i=0;i<remember_change_classroom_DB.length;i++){
+      document.querySelectorAll('.class_info_panel').forEach(function(element){
+        var show_array = classroomDB(element.id);
         if(object_compare(remember_change_classroom_DB[i], show_array)===true&&remember_change_classroom_DB[i].object_code===show_array.object_code){
           TF=true;
-          break;
+          //break;
         }
-      }
+      });
       if(TF===false){//값 변동이 일어난 경우
         console.log("값 변동이 발생했습니다.");
         element.remove();
@@ -351,7 +351,7 @@ function show_floor(){
         click_classroom(show_classroom);
         remember_change_classroom();
       }
-    });
+    }
 }
 
 
