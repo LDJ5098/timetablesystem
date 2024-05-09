@@ -260,14 +260,6 @@ function remove_classroomDB(code){
   console.log('삭제되었습니다');
 }
 
-//교실 데이터가 변경이 생길 경우 기록용 함수
-var remember_change_classroom_DB = [];
-function remember_change_classroom(){
-  remember_change_classroom_DB = [];
-  document.querySelectorAll('.class_info_panel').forEach(function(element){
-    remember_change_classroom_DB.push(classroomDB(element.id));
-  });
-}
 
 //교실이 클릭되었을 때 이벤트 처리 함수 true == 같음
 function click_classroom(element) {
@@ -303,58 +295,6 @@ function click_classroom(element) {
 }
 
 
-//입력된 객체 A,B가 일치하는지 확인해주는 함수
-function object_compare(A, B){
-  if(A.class_number !== B.class_number)return false;
-  else if(A.class_name !== B.class_name)return false;
-  else if(A.device_code !== B.device_code)return false;
-  else if(A.width !== B.width)return false;
-  else if(A.height !== B.height)return false;
-  else if(A.other !== B.other)return false;
-  else if(A.wifi !== B.wifi)return false;
-  else if(A.top_value !== B.top_value)return false;
-  else if(A.left_value !== B.left_value)return false;
-  else return true;
-}
-
-
-//mainDB에 들어있는 값을 화면에 나타내주는 함수(갱신)
-function show_floor(){
-    document.querySelectorAll('.class_info_panel').forEach(function(element){
-      var TF=false;
-      var show_array = classroomDB(element.id);
-      for(var i=0;i<remember_change_classroom_DB.length;i++){
-        if(object_compare(remember_change_classroom_DB[i], show_array)===true&&remember_change_classroom_DB[i].object_code===show_array.object_code){
-          TF=true;
-          break;
-        }
-      }
-      if(TF===false){//값 변동이 일어난 경우
-        console.log("값 변동이 발생했습니다.");
-        element.remove();
-        var show_classroom = document.createElement("div");
-            
-        show_classroom.classList.add("class_info_panel");
-        show_classroom.id = show_array.object_code;
-        show_classroom.style.width = show_array.width;
-        show_classroom.style.height = show_array.height;
-        show_classroom.style.top = show_array.top_value;
-        show_classroom.style.left = show_array.left_value;
-      
-        var in_text = document.createElement('label');
-      
-        in_text.textContent =  show_array.class_number;
-      
-        floor_background.appendChild(show_classroom);
-        show_classroom.appendChild(in_text);
-
-        click_classroom(show_classroom);
-        remember_change_classroom();
-      }
-    });
-}
-
-
 //floor 배경 이미지 변경 함수
 function changeBackground() {
 
@@ -364,11 +304,11 @@ function changeBackground() {
 
     document.getElementById('floor_info').textContent = which.value + "-" + floor.value;
 
-    first_show_floor();
+    show_floor();
 }
 
-//처음에 데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
-function first_show_floor(){
+//데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
+function show_floor(){
 
   document.querySelectorAll('.class_info_panel').forEach(function(element){
     element.remove();
@@ -396,7 +336,6 @@ function first_show_floor(){
       click_classroom(show_classroom);
     }
   });
-  remember_change_classroom();
 }
 
 
@@ -736,7 +675,7 @@ function delete_class(){
 }
 
 // 페이지가 로드될 때 실행할 함수들
-first_show_floor();
+show_floor();
 move_class();
 Menu_Operation();//메뉴 버튼들 실행 판단
 changeBackground();//배경 변경 함수
@@ -750,9 +689,7 @@ setInterval(function() {
     refresh_remember_class.push(element.id);
   });
 
-  if(activeButton===document.querySelectorAll('.menu_button')[2])show_floor();
-  else first_show_floor();
-
+  show_floor();
   refresh_class_rember();
   refresh_remember_class = [];
 }, 62.5); // 16fps 16/1000
