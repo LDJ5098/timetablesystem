@@ -567,7 +567,7 @@ var refresh_remember_class = [];
 function refresh_class_rember(){
   for(var i=0; i<refresh_remember_class.length; i++) {
     var element = document.getElementById(refresh_remember_class[i]);
-    console.log("기억해둔 코드 : " + document.getElementById);
+    console.log("기억해둔 코드 : " + element);
       element.classList.add('choice_panel');
   }
 }
