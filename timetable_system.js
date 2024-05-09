@@ -64,7 +64,7 @@ function randomCODE(){
 function sendDataToPHP(data) {
   var url = "timetable_system_add.php";
   var request = new XMLHttpRequest();
-  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.open("POST", url, true); // 동기적 요청으로 변경 (마지막 파라미터가 false)
   request.setRequestHeader("Content-Type", "application/json");
 
   try {
@@ -85,7 +85,7 @@ function sendDataToPHP(data) {
 function deleteDataInPHP(data) {
   var url = "timetable_system_delete.php";
   var request = new XMLHttpRequest();
-  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.open("POST", url, true); // 동기적 요청으로 변경 (마지막 파라미터가 false)
   request.setRequestHeader("Content-Type", "application/json");
 
   try {
@@ -106,7 +106,7 @@ function deleteDataInPHP(data) {
 function EditDataToPHP(data) {
   var url = "timetable_system_edit.php";
   var request = new XMLHttpRequest();
-  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.open("POST", url, true); // 동기적 요청으로 변경 (마지막 파라미터가 false)
   request.setRequestHeader("Content-Type", "application/json");
 
   try {
@@ -127,7 +127,7 @@ function EditDataToPHP(data) {
 function MoveDataToPHP(data) {
   var url = "timetable_system_move.php";
   var request = new XMLHttpRequest();
-  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.open("POST", url, true); // 동기적 요청으로 변경 (마지막 파라미터가 false)
   request.setRequestHeader("Content-Type", "application/json");
 
   try {
@@ -265,13 +265,14 @@ function remove_classroomDB(code){
 function click_classroom(element) {
     element.addEventListener('click', function() {
       if(activeButton===document.querySelectorAll('.menu_button')[1]){
-        fix_number.value=classroomDB(element.id).class_number;
-        fix_name.value=classroomDB(element.id).class_name;
-        fix_classroom_device_code.value=classroomDB(element.id).device_code;
-        fix_width.value=classroomDB(element.id).width;
-        fix_height.value=classroomDB(element.id).height;
-        fix_class_detail.value=classroomDB(element.id).other;
-        fix_classroom_WIFI_check.checked=classroomDB(element.id).wifi;
+        searchdata = classroomDB(element.id);
+        fix_number.value=searchdata.class_number;
+        fix_name.value=searchdata.class_name;
+        fix_classroom_device_code.value=searchdata.device_code;
+        fix_width.value=searchdata.width;
+        fix_height.value=searchdata.height;
+        fix_class_detail.value=searchdata.other;
+        fix_classroom_WIFI_check.checked=searchdata.wifi;
         document.getElementById('fix_classroom_background').style.display='flex';
         recent_choice_code = element.id;
       }
@@ -509,8 +510,9 @@ function creating_classroom(){
 function create_new_classroom(){
   var error_log = "";
 
-  for (let i = 0; i < load_database_code().length; i++) {
-    if(load_database_code()[i].floor===floor.value&&load_database_code()[i].which===which.value&&load_database_code()[i].class_number===create_number.value&&recent_choice_code!==load_database_code()[i].object_code){
+  var database = load_database_code();
+  for (let i = 0; i < database.length; i++) {
+    if(database[i].floor===floor.value&&database[i].which===which.value&&database[i].class_number===create_number.value&&recent_choice_code!==database[i].object_code){
       error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)";
       break;
     }
@@ -544,8 +546,9 @@ function fixing_classroom(){
 function fix_classroom(){
   var error_log = "";
 
-  for (let i = 0; i < load_database_code().length; i++) {
-    if(load_database_code()[i].floor===floor.value&&load_database_code()[i].which===which.value&&load_database_code()[i].class_number===fix_number.value&&recent_choice_code!==load_database_code()[i].object_code){
+  var database = load_database_code();
+  for (let i = 0; i < database.length; i++) {
+    if(database[i].floor===floor.value&&database[i].which===which.value&&database[i].class_number===fix_number.value&&recent_choice_code!==database[i].object_code){
       error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)";
       break;
     }
@@ -610,8 +613,9 @@ function move_class(){
     if (event.key === "ArrowUp"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 위쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var Left = classroomDB(element.id).left_value;
-            var Top = String(parseFloat(classroomDB(element.id).top_value) - keyboard_speed)+'px';
+            var searchdata = classroomDB(element.id);
+            var Left = searchdata.left_value;
+            var Top = String(parseFloat(searchdata.top_value) - keyboard_speed)+'px';
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top);
         });
@@ -619,8 +623,9 @@ function move_class(){
     else if (event.key === "ArrowDown"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 아래쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var Left = classroomDB(element.id).left_value;
-            var Top = String(parseFloat(classroomDB(element.id).top_value) + keyboard_speed)+'px';
+            var searchdata = classroomDB(element.id);
+            var Left = searchdata.left_value;
+            var Top = String(parseFloat(searchdata.top_value) + keyboard_speed)+'px';
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top);  
         });
@@ -628,8 +633,9 @@ function move_class(){
     else if (event.key === "ArrowLeft"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 왼쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var Left = String(parseFloat(classroomDB(element.id).left_value) - keyboard_speed)+'px';
-            var Top = classroomDB(element.id).top_value;
+            var searchdata = classroomDB(element.id);
+            var Left = String(parseFloat(searchdata.left_value) - keyboard_speed)+'px';
+            var Top = searchdata.top_value;
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top); 
         });
@@ -637,8 +643,9 @@ function move_class(){
     else if (event.key === "ArrowRight"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 오른쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var Left = String(parseFloat(classroomDB(element.id).left_value) + keyboard_speed)+'px';
-            var Top = classroomDB(element.id).top_value;
+            var searchdata = classroomDB(element.id);
+            var Left = String(parseFloat(searchdata.left_value) + keyboard_speed)+'px';
+            var Top = searchdata.top_value;
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top);
         });
@@ -673,8 +680,9 @@ function mouse_move_class(){
       aY=event.clientY;
 
       choice_classrooms.forEach(function(element){
-        var Left = String(parseFloat(classroomDB(element.id).left_value) + (aX-bX))+'px';
-        var Top = String(parseFloat(classroomDB(element.id).top_value) + (aY-bY))+'px';
+        var searchdata = classroomDB(element.id);
+        var Left = String(parseFloat(searchdata.left_value) + (aX-bX))+'px';
+        var Top = String(parseFloat(searchdata.top_value) + (aY-bY))+'px';
         move_classroomDB(element.id, Left, Top);
         refresh_remember_class.push(element.id);
       });
@@ -703,8 +711,9 @@ function mouse_move_class(){
       p_aY = touch.clientY;
 
       choice_classrooms.forEach(function(element){
-        var Left = String(parseFloat(classroomDB(element.id).left_value) + (p_aX - p_bX)) + 'px';
-        var Top = String(parseFloat(classroomDB(element.id).top_value) + (p_aY - p_bY)) + 'px';
+        var searchdata = classroomDB(element.id);
+        var Left = String(parseFloat(searchdata.left_value) + (p_aX - p_bX)) + 'px';
+        var Top = String(parseFloat(searchdata.top_value) + (p_aY - p_bY)) + 'px';
         move_classroomDB(element.id, Left, Top);
         refresh_remember_class.push(element.id);
       });
