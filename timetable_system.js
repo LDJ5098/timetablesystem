@@ -366,7 +366,7 @@ function changeBackground() {
 }
 
 //처음에 데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
-function first_show_floor(){
+function REALL_show_floor(){
   var show_arry = load_database_code();
   show_arry.forEach(function(db){
     if(db.which===which.value&&db.floor===floor.value){
@@ -504,6 +504,7 @@ function fix_classroom_checkbox(){
 //새 교실 데이터 전송
 function creating_classroom(){
   push_classroomDB(which, floor, create_number, create_name, create_classroom_device_code, create_width, create_height, create_class_detail, create_classroom_WIFI_check, String(563/2) + "px", "500px");
+  REALL_show_floor();
 }
 
 
@@ -540,7 +541,7 @@ function create_new_classroom(){
 //수정하는 데이터 전송
 function fixing_classroom(){
   fix_classroomDB(recent_choice_code ,which, floor, fix_number, fix_name, fix_classroom_device_code, fix_width, fix_height, fix_class_detail, fix_classroom_WIFI_check);
-  show_floor();
+  REALL_show_floor();
 }
 
 //수정하기 전 검사
@@ -581,6 +582,7 @@ function refresh_class_rember(){
     var element = document.getElementById(refresh_remember_class[i]);
     element.classList.add('choice_panel');
   }
+  refresh_remember_class = [];
 }
 
 
@@ -727,10 +729,11 @@ function delete_class(){
       remove_classroomDB(element.id);
     });
   }
+  REALL_show_floor();
 }
 
 // 페이지가 로드될 때 실행할 함수들
-first_show_floor();
+REALL_show_floor();
 move_class();
 Menu_Operation();//메뉴 버튼들 실행 판단
 changeBackground();//배경 변경 함수
@@ -746,5 +749,4 @@ setInterval(function() {
 
   show_floor();
   refresh_class_rember();
-  refresh_remember_class = [];
 }, 62.5); // 16fps 16/1000
