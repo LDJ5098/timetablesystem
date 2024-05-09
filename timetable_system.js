@@ -269,35 +269,6 @@ function remember_change_classroom(){
   });
 }
 
-//처음에 데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
-function REALL_show_floor(){
-  var show_arry = load_database_code();
-  show_arry.forEach(function(db){
-    if(db.which===which.value&&db.floor===floor.value){
-      var show_classroom = document.createElement("div");
-    
-      show_classroom.classList.add("class_info_panel");
-      show_classroom.id = db.object_code;
-      show_classroom.style.width = db.width;
-      show_classroom.style.height = db.height;
-      show_classroom.style.top = db.top_value;
-      show_classroom.style.left = db.left_value;
-
-      var in_text = document.createElement('label');
-
-      in_text.textContent =  db.class_number;
-
-      floor_background.appendChild(show_classroom);
-      show_classroom.appendChild(in_text);
-
-      click_classroom(show_classroom);
-    }
-  });
-  remember_change_classroom();
-}
-
-
-
 //교실이 클릭되었을 때 이벤트 처리 함수 true == 같음
 function click_classroom(element) {
     element.addEventListener('click', function() {
@@ -349,41 +320,38 @@ function object_compare(A, B){
 
 //mainDB에 들어있는 값을 화면에 나타내주는 함수(갱신)
 function show_floor(){
+    document.querySelectorAll('.class_info_panel').forEach(function(element){
+      var TF=false;
+      var show_array = classroomDB(element.id);
       for(var i=0;i<remember_change_classroom_DB.length;i++){
-        var TF=false;
-        
-        document.querySelectorAll('.class_info_panel').forEach(function(element){
-        var show_array = classroomDB(element.id);
         if(object_compare(remember_change_classroom_DB[i], show_array)===true&&remember_change_classroom_DB[i].object_code===show_array.object_code){
           TF=true;
-          //break;
+          break;
         }
-        });
+      }
+      if(TF===false){//값 변동이 일어난 경우
+        console.log("값 변동이 발생했습니다.");
+        element.remove();
+        var show_classroom = document.createElement("div");
+            
+        show_classroom.classList.add("class_info_panel");
+        show_classroom.id = show_array.object_code;
+        show_classroom.style.width = show_array.width;
+        show_classroom.style.height = show_array.height;
+        show_classroom.style.top = show_array.top_value;
+        show_classroom.style.left = show_array.left_value;
+      
+        var in_text = document.createElement('label');
+      
+        in_text.textContent =  show_array.class_number;
+      
+        floor_background.appendChild(show_classroom);
+        show_classroom.appendChild(in_text);
 
-
-        if(TF===false){//값 변동이 일어난 경우
-          console.log("값 변동이 발생했습니다.");
-          element.remove();
-          var show_classroom = document.createElement("div");
-              
-          show_classroom.classList.add("class_info_panel");
-          show_classroom.id = show_array.object_code;
-          show_classroom.style.width = show_array.width;
-          show_classroom.style.height = show_array.height;
-          show_classroom.style.top = show_array.top_value;
-          show_classroom.style.left = show_array.left_value;
-        
-          var in_text = document.createElement('label');
-        
-          in_text.textContent =  show_array.class_number;
-        
-          floor_background.appendChild(show_classroom);
-          show_classroom.appendChild(in_text);
-
-          click_classroom(show_classroom);
-          remember_change_classroom();
-        }
-    }
+        click_classroom(show_classroom);
+        remember_change_classroom();
+      }
+    });
 }
 
 
@@ -395,8 +363,33 @@ function changeBackground() {
     document.getElementById("background").style.backgroundImage = "url('" + imagePath + "')";
 
     document.getElementById('floor_info').textContent = which.value + "-" + floor.value;
+}
 
-    remember_change_classroom();
+//처음에 데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
+function first_show_floor(){
+  var show_arry = load_database_code();
+  show_arry.forEach(function(db){
+    if(db.which===which.value&&db.floor===floor.value){
+      var show_classroom = document.createElement("div");
+    
+      show_classroom.classList.add("class_info_panel");
+      show_classroom.id = db.object_code;
+      show_classroom.style.width = db.width;
+      show_classroom.style.height = db.height;
+      show_classroom.style.top = db.top_value;
+      show_classroom.style.left = db.left_value;
+
+      var in_text = document.createElement('label');
+
+      in_text.textContent =  db.class_number;
+
+      floor_background.appendChild(show_classroom);
+      show_classroom.appendChild(in_text);
+
+      click_classroom(show_classroom);
+    }
+  });
+  remember_change_classroom();
 }
 
 
@@ -511,7 +504,6 @@ function fix_classroom_checkbox(){
 //새 교실 데이터 전송
 function creating_classroom(){
   push_classroomDB(which, floor, create_number, create_name, create_classroom_device_code, create_width, create_height, create_class_detail, create_classroom_WIFI_check, String(563/2) + "px", "500px");
-  remember_change_classroom();
 }
 
 
@@ -548,7 +540,7 @@ function create_new_classroom(){
 //수정하는 데이터 전송
 function fixing_classroom(){
   fix_classroomDB(recent_choice_code ,which, floor, fix_number, fix_name, fix_classroom_device_code, fix_width, fix_height, fix_class_detail, fix_classroom_WIFI_check);
-  remember_change_classroom();
+  show_floor();
 }
 
 //수정하기 전 검사
@@ -587,9 +579,7 @@ var refresh_remember_class = [];
 function refresh_class_rember(){
   for(var i=0; i<refresh_remember_class.length; i++) {
     var element = document.getElementById(refresh_remember_class[i]);
-    if(element!==null){
-      element.classList.add('choice_panel');
-    }
+    element.classList.add('choice_panel');
   }
 }
 
@@ -736,12 +726,11 @@ function delete_class(){
     choice_classrooms.forEach(function(element){
       remove_classroomDB(element.id);
     });
-    remember_change_classroom();
   }
 }
 
 // 페이지가 로드될 때 실행할 함수들
-REALL_show_floor();
+first_show_floor();
 move_class();
 Menu_Operation();//메뉴 버튼들 실행 판단
 changeBackground();//배경 변경 함수
