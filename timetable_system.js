@@ -64,7 +64,7 @@ function randomCODE(){
 function sendDataToPHP(data) {
   var url = "timetable_system_add.php";
   var request = new XMLHttpRequest();
-  request.open("POST", url, true); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
   request.setRequestHeader("Content-Type", "application/json");
 
   try {
@@ -85,7 +85,7 @@ function sendDataToPHP(data) {
 function deleteDataInPHP(data) {
   var url = "timetable_system_delete.php";
   var request = new XMLHttpRequest();
-  request.open("POST", url, true); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
   request.setRequestHeader("Content-Type", "application/json");
 
   try {
@@ -106,7 +106,7 @@ function deleteDataInPHP(data) {
 function EditDataToPHP(data) {
   var url = "timetable_system_edit.php";
   var request = new XMLHttpRequest();
-  request.open("POST", url, true); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
   request.setRequestHeader("Content-Type", "application/json");
 
   try {
@@ -127,7 +127,7 @@ function EditDataToPHP(data) {
 function MoveDataToPHP(data) {
   var url = "timetable_system_move.php";
   var request = new XMLHttpRequest();
-  request.open("POST", url, true); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
   request.setRequestHeader("Content-Type", "application/json");
 
   try {
