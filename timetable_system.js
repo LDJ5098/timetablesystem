@@ -357,7 +357,7 @@ function show_floor(){
 
   show_array.forEach(function(db){
     for(var new_array_ID of new_array){
-      if(db.object_code===new_array_ID){
+      if(db.object_code===new_array_ID&&db.floor===floor&&db.which===which){
         var show_classroom = document.createElement("div");
         
         show_classroom.classList.add("class_info_panel");
@@ -567,7 +567,8 @@ var refresh_remember_class = [];
 function refresh_class_rember(){
   for(var i=0; i<refresh_remember_class.length; i++) {
     var element = document.getElementById(refresh_remember_class[i]);
-    element.classList.add('choice_panel');
+    console.log("기억해둔 코드 : " + document.getElementById);
+      element.classList.add('choice_panel');
   }
 }
 
