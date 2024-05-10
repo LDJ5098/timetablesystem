@@ -25,23 +25,21 @@ document.addEventListener("DOMContentLoaded", function() {
 if(sessionStorage.getItem('loginTF')==true){
   document.querySelectorAll('.menu_button').forEach(function(element){
     element.disabled = false;
-    
-    login_button.textContent = "로그아웃";
-    login_button.addEventListener('click', function(){
-      sessionStorage.removeItem('loginTF');
-      location.reload();
-    });
   });
+  login_button.textContent = "로그아웃";
 }
 else {
   document.querySelectorAll('.menu_button').forEach(function(element){
     element.disabled = true;
-
-    login_button.addEventListener('click', function(){
-      window.location.href = 'admin_login.html';
-    });
   });
 }
+login_button.addEventListener('click', function(){
+  if(login_button.textContent === "로그아웃"){
+    sessionStorage.removeItem('loginTF');
+    location.reload();
+  }
+  else window.location.href = 'admin_login.html';
+});
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //새 생성 입력값들
