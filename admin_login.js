@@ -8,7 +8,7 @@ function checkLogin() {
         if (this.readyState == 4 && this.status == 200) {
             // PHP 파일에서 반환한 결과를 확인합니다.
             if (this.responseText === "true") {
-                localStorage.setItem('loginTF', "true");
+                sessionStorage.setItem('loginTF', "true");
                 window.location.href = "timetable_system.html";
             } else {
                 alert("아이디 또는 비밀번호가 올바르지 않습니다.");
