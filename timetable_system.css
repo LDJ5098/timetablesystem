@@ -136,3 +136,6 @@ body{
     height: 18px;
 }
 
+#login_button {
+    cursor: pointer;
+}
