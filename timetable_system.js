@@ -1,3 +1,49 @@
+//////////////////////////////////////로그인 영역/////////////////////////////////////
+var login_button = document.getElementById('loginbutton');
+
+document.addEventListener("DOMContentLoaded", function() {
+  // AJAX 요청을 수신할 준비가 되었을 때의 처리입니다.
+  function handleRequest() {
+      if (this.readyState == 4 && this.status == 200) {
+          // 요청이 성공적으로 완료되었을 때의 처리입니다.
+          var response = this.responseText;
+          // response에서 loginSuccess=true를 확인하고 처리합니다.
+          if (response === "loginSuccess=true") {
+              sessionStorage.setItem('loginTF', 'true');
+          }
+      }
+  }
+
+  // AJAX 요청을 생성합니다.
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = handleRequest;
+  xhttp.open("POST", "timetable_system.html", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send();
+});
+
+if(sessionStorage.getItem('loginTF')==true){
+  document.querySelectorAll('.menu_button').forEach(function(element){
+    element.disabled = false;
+    
+    login_button.textContent = "로그아웃";
+    login_button.addEventListener('click', function(){
+      sessionStorage.removeItem('loginTF');
+      location.reload();
+    });
+  });
+}
+else {
+  document.querySelectorAll('.menu_button').forEach(function(element){
+    element.disabled = true;
+
+    login_button.addEventListener('click', function(){
+      window.location.href = 'admin_login.html';
+    });
+  });
+}
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //새 생성 입력값들
 var create_number = document.getElementById('create_number');
 var create_name = document.getElementById('create_name');
