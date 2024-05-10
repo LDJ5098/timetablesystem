@@ -1,27 +1,4 @@
 //////////////////////////////////////로그인 영역/////////////////////////////////////
-document.addEventListener("DOMContentLoaded", function() {
-  // AJAX 요청을 수신할 준비가 되었을 때의 처리입니다.
-  function handleRequest() {
-      if (this.readyState == 4 && this.status == 200) {
-          // 요청이 성공적으로 완료되었을 때의 처리입니다.
-          var response = this.responseText;
-          // response에서 loginSuccess=true를 확인하고 처리합니다.
-          if (response === "loginSuccess=true") {
-              sessionStorage.setItem('loginTF', 'true');
-              console.log('로그인이 되었습니다');
-              logincheck();
-          }
-      }
-  }
-
-  // AJAX 요청을 생성합니다.
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = handleRequest;
-  xhttp.open("POST", "timetable_system.html", true);
-  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhttp.send();
-});
-
 function logincheck(){
   var login_button = document.getElementById('loginbutton');
   if(sessionStorage.getItem('loginTF')==true){
