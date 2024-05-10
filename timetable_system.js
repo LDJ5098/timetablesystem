@@ -1,6 +1,4 @@
 //////////////////////////////////////로그인 영역/////////////////////////////////////
-var login_button = document.getElementById('loginbutton');
-
 document.addEventListener("DOMContentLoaded", function() {
   // AJAX 요청을 수신할 준비가 되었을 때의 처리입니다.
   function handleRequest() {
@@ -10,6 +8,8 @@ document.addEventListener("DOMContentLoaded", function() {
           // response에서 loginSuccess=true를 확인하고 처리합니다.
           if (response === "loginSuccess=true") {
               sessionStorage.setItem('loginTF', 'true');
+              console.log('로그인이 되었습니다');
+              logincheck();
           }
       }
   }
@@ -22,24 +22,29 @@ document.addEventListener("DOMContentLoaded", function() {
   xhttp.send();
 });
 
-if(sessionStorage.getItem('loginTF')==true){
-  document.querySelectorAll('.menu_button').forEach(function(element){
-    element.disabled = false;
-  });
-  login_button.textContent = "로그아웃";
-}
-else {
-  document.querySelectorAll('.menu_button').forEach(function(element){
-    element.disabled = true;
-  });
-}
-login_button.addEventListener('click', function(){
-  if(login_button.textContent === "로그아웃"){
-    sessionStorage.removeItem('loginTF');
-    location.reload();
+function logincheck(){
+  var login_button = document.getElementById('loginbutton');
+  if(sessionStorage.getItem('loginTF')==true){
+    document.querySelectorAll('.menu_button').forEach(function(element){
+      element.disabled = false;
+    });
+    login_button.textContent = "로그아웃";
   }
-  else window.location.href = 'admin_login.html';
-});
+  else {
+    document.querySelectorAll('.menu_button').forEach(function(element){
+      element.disabled = true;
+    });
+  }
+
+  login_button.addEventListener('click', function(){
+    if(login_button.textContent === "로그아웃"){
+      sessionStorage.removeItem('loginTF');
+      location.reload();
+    }
+    else window.location.href = 'admin_login.html';
+  });
+}
+logincheck();
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //새 생성 입력값들
