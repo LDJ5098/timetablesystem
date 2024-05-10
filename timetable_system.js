@@ -1,7 +1,7 @@
 //////////////////////////////////////로그인 영역/////////////////////////////////////
 function logincheck(){
   var login_button = document.getElementById('loginbutton');
-  if(sessionStorage.getItem('loginTF')==true){
+  if(sessionStorage.getItem('loginTF')==="true"){
     document.querySelectorAll('.menu_button').forEach(function(element){
       element.disabled = false;
     });
