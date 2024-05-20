@@ -62,7 +62,10 @@ body{
     z-index:0;
 }
 .class_info_panel > label {
-    user-select: none;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
 }
 
 
