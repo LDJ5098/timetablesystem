@@ -152,29 +152,22 @@ function logincheck(){
   function MoveDataToPHP(data) {
     var url = "timetable_system_move.php";
     var request = new XMLHttpRequest();
-    request.open("POST", url, true); 
+    request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
     request.setRequestHeader("Content-Type", "application/json");
-  
-    request.onload = function() {
-        if (request.status === 200) {
-            console.log('Request succeeded');
-        } else {
-            console.error('Request failed with status:', request.status);
-        }
-    };
-  
-    request.onerror = function() {
-        console.error('There was a problem with the request');
-    };
   
     try {
         var jsonData = JSON.stringify(data);
         request.send(jsonData);
-        count++;
+  
+        if (request.status === 200) { // 요청이 성공한 경우
+        } else { // 요청이 실패한 경우
+            console.error('Request failed with status:', request.status);
+        }
     } catch (error) {
         console.error('There was a problem with the request:', error);
     }
   }
+  
   
   
   //서버에서 모든 데이터 다 가져오기
@@ -815,12 +808,11 @@ function logincheck(){
   
   
   function preprocessing(){
-    refresh_remember_class.push(element.id);
-    move_classroomDB(element.id, Left, Top);
 
     choice_classrooms=document.querySelectorAll('.choice_panel');
     choice_classrooms.forEach(function(element){
       refresh_remember_class.push(element.id);
+      move_classroomDB(element.id, Left, Top);
     });
   
     show_floor();
