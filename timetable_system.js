@@ -708,7 +708,7 @@ function logincheck(){
   
 
   //마우스로 이동시키기
-  var bX, bY, mouse_info='up';
+  var bX, bY, mouse_info='up', dataLeft=[], dataTop=[];
   //휴대폰 터치로 이동시키기
   var p_bX, p_bY, p_aX, p_aY, touch_info='up';
   
@@ -719,6 +719,14 @@ function logincheck(){
         bX=event.clientX;
         bY=event.clientY;
         mouse_info='down';
+
+        dataLeft=[];
+        dataTop=[];
+        choice_classrooms.forEach(function(element, index){
+            dataLeft[index]=element.style.left;
+            dataTop[index]=element.style.top;
+        });
+
     });
   
               // 드래그 종료 지점을 기록하고 이벤트 리스너를 제거합니다.
@@ -732,16 +740,14 @@ function logincheck(){
         var aX=event.clientX;
         var aY=event.clientY;
         
-        choice_classrooms.forEach(function(element){
+        choice_classrooms.forEach(function(element, index){
           //var searchdata = classroomDB(element.id);
-          var Left = String(parseFloat(element.style.left) + (aX-bX))+'px';
-          var Top = String(parseFloat(element.style.top) + (aY-bY))+'px';
+          var Left = String(parseFloat(dataLeft[index]) + (aX-bX))+'px';
+          var Top = String(parseFloat(dataTop[index]) + (aY-bY))+'px';
           
           element.style.left = Left;
           element.style.top = Top;
         });
-        bX=aX;
-        bY=aY;
       }
     });
   
