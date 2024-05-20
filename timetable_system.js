@@ -708,9 +708,9 @@ function logincheck(){
   
 
   //마우스로 이동시키기
-  var bX, bY, mouse_info='up', dataLeft=[], dataTop=[];
+  var bX, bY, mouse_info='up', mLeft=[], mTop=[];
   //휴대폰 터치로 이동시키기
-  var p_bX, p_bY, p_aX, p_aY, touch_info='up';
+  var p_bX, p_bY, touch_info='up', pLeft=[], pTop=[];
   
   function mouse_move_class(){
     //마우스 이동
@@ -720,11 +720,11 @@ function logincheck(){
         bY=event.clientY;
         mouse_info='down';
 
-        dataLeft=[];
-        dataTop=[];
+        mLeft=[];
+        mTop=[];
         choice_classrooms.forEach(function(element, index){
-            dataLeft[index]=element.style.left;
-            dataTop[index]=element.style.top;
+            mLeft[index]=element.style.left;
+            mTop[index]=element.style.top;
         });
 
     });
@@ -742,8 +742,8 @@ function logincheck(){
         
         choice_classrooms.forEach(function(element, index){
           //var searchdata = classroomDB(element.id);
-          var Left = String(parseFloat(dataLeft[index]) + (aX-bX))+'px';
-          var Top = String(parseFloat(dataTop[index]) + (aY-bY))+'px';
+          var Left = String(parseFloat(mLeft[index]) + (aX-bX))+'px';
+          var Top = String(parseFloat(mTop[index]) + (aY-bY))+'px';
           
           element.style.left = Left;
           element.style.top = Top;
@@ -758,6 +758,13 @@ function logincheck(){
       p_bX = touch.clientX;
       p_bY = touch.clientY;
       touch_info='down';
+
+      pLeft=[];
+      pTop=[];
+      choice_classrooms.forEach(function(element, index){
+          pLeft[index]=element.style.left;
+          pTop[index]=element.style.top;
+      });
     });
   
     document.addEventListener('touchend', function(){
@@ -767,22 +774,17 @@ function logincheck(){
     document.addEventListener('touchmove', function(event){
       var touch = event.touches[0];
       if(activeButton === document.querySelectorAll('.menu_button')[2] && touch_info === 'down'){
-        p_aX = touch.clientX;
-        p_aY = touch.clientY;
+        var p_aX = touch.clientX;
+        var p_aY = touch.clientY;
   
-        choice_classrooms.forEach(function(element){
+        choice_classrooms.forEach(function(element, index){
           //var searchdata = classroomDB(element.id);
-          var Left = String(parseFloat(element.style.left) + (aX-bX))+'px';
-          var Top = String(parseFloat(element.style.top) + (aY-bY))+'px';
+          var Left = String(parseFloat(pLeft[index]) + (p_aX-p_bX))+'px';
+          var Top = String(parseFloat(pTop[index]) + (p_aY-p_bY))+'px';
   
           element.style.left = Left;
           element.style.top = Top;
-          //refresh_remember_class.push(element.id);
-          //move_classroomDB(element.id, Left, Top);
         });
-  
-        p_bX = p_aX;
-        p_bY = p_aY;
       }
     });
   }
