@@ -153,13 +153,12 @@ function EditDataToPHP(data) {
 function MoveDataToPHP(data) {
   var url = "timetable_system_move.php";
   var request = new XMLHttpRequest();
-  request.open("POST", url, true); 
+  request.open("POST", url, false); 
   request.setRequestHeader("Content-Type", "application/json");
 
   request.onload = function() {
       if (request.status === 200) {
           console.log('Request succeeded');
-          preprocessing();
       } else {
           console.error('Request failed with status:', request.status);
       }
