@@ -738,11 +738,11 @@ function logincheck(){
           
           element.style.left = Left;
           element.style.top = Top;
-  
-          setTimeout(function(){},62.5);
         });
-        bX=aX;
-        bY=aY;
+        setTimeout(function(){
+            bX=aX;
+            bY=aY;
+        },62.5);
       }
     });
   
