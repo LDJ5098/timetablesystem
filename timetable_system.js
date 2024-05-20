@@ -347,18 +347,11 @@ function changeBackground() {
 
 //object_code, which, floor, class_number, class_name, device_code, width, height, other, wifi, top_value, left_value
 function arr_compare(now, past){
-  if(now.object_code!==past.object_code||
-    now.which!==past.which||
-    now.floor!==past.floor||
-    now.class_number!==past.class_number||
-    now.class_name!==past.class_name||
-    now.device_code!==past.device_code||
-    now.width!==past.width||
-    now.height!==past.height||
-    now.other!==past.other||
-    now.wifi!==past.wifi
-    )return false;
+  const keys = Object.keys(now);
 
+  for (var key of keys) {
+    if (now[key] !== past[key]) return false;//같지 않음
+  }
   return true;//같음
 }
 
