@@ -708,9 +708,9 @@ function logincheck(){
   
 
   //마우스로 이동시키기
-  var bX, bY, mouse_info='up', mObject=[];
+  var bX, bY, mouse_info='up', mLeft=[], mTop=[], mID=[];
   //휴대폰 터치로 이동시키기
-  var p_bX, p_bY, touch_info='up', pObject=[];
+  var p_bX, p_bY, touch_info='up', pLeft=[], pTop=[], pID=[];
   
   function mouse_move_class(){
     //마우스 이동
@@ -720,14 +720,13 @@ function logincheck(){
         bY=event.clientY;
         mouse_info='down';
 
-        mObject=[];
-        choice_classrooms.forEach(function(element){
-            var objcet={
-              Id : element.id,
-              Left: element.style.left,
-              Top: element.style.top
-            };
-            mObject.push(objcet);
+        mLeft=[];
+        mTop=[];
+        mID=[];
+        choice_classrooms.forEach(function(element, index){
+            mLeft[index]=element.style.left;
+            mTop[index]=element.style.top;
+            mID[index]=element.id;
         });
 
     });
@@ -745,18 +744,16 @@ function logincheck(){
         
         choice_classrooms.forEach(function(element){
           //var searchdata = classroomDB(element.id);
-          var index=false;
-          for(var i=0; i<mObject.length(); i++) if(mObject[i].Id === element.id){
-            index = i;
-            break;
-          }
-          if(index===false){
-            console.log("선택 요소에서 오류가 발생했습니다.");
-            return;
+          var index;
+          for(var i=0; i<mID.length(); i++){
+            if(element.id === mID[i]){
+              index = i;
+              break;
+            }
           }
 
-          var Left = String(parseFloat(mObject[index].Left) + (aX-bX))+'px';
-          var Top = String(parseFloat(mObject[index].Top) + (aY-bY))+'px';
+          var Left = String(parseFloat(mLeft[index]) + (aX-bX))+'px';
+          var Top = String(parseFloat(mTop[index]) + (aY-bY))+'px';
           
           element.style.left = Left;
           element.style.top = Top;
@@ -772,14 +769,13 @@ function logincheck(){
       p_bY = touch.clientY;
       touch_info='down';
 
-      pObject = [];
-      choice_classrooms.forEach(function(element){
-        var objcet={
-          Id : element.id,
-          Left: element.style.left,
-          Top: element.style.top
-        };
-        mObject.push(objcet);
+      pLeft=[];
+      pTop=[];
+      pID=[];
+      choice_classrooms.forEach(function(element, index){
+          pLeft[index]=element.style.left;
+          pTop[index]=element.style.top;
+          pID[index]=element.id;
       });
     });
   
@@ -794,20 +790,19 @@ function logincheck(){
         var p_aY = touch.clientY;
   
         choice_classrooms.forEach(function(element){
-          //var searchdata = classroomDB(element.id);
-          var index=false;
-          for(var i=0; i<pObject.length(); i++) if(pObject[i].Id === element.id){
-            index = i;
-            break;
-          }
-          if(index===false){
-            console.log("선택 요소에서 오류가 발생했습니다.");
-            return;
+
+          var index;
+          for(var i=0; i<pID.length(); i++){
+            if(element.id === pID[i]){
+              index = i;
+              break;
+            }
           }
 
-          var Left = String(parseFloat(pObject[index].Left) + (p_aX-p_bX))+'px';
-          var Top = String(parseFloat(pObject[index].Top) + (p_aY-p_bY))+'px';
-          
+          //var searchdata = classroomDB(element.id);
+          var Left = String(parseFloat(pLeft[index]) + (p_aX-p_bX))+'px';
+          var Top = String(parseFloat(pTop[index]) + (p_aY-p_bY))+'px';
+  
           element.style.left = Left;
           element.style.top = Top;
         });
@@ -855,4 +850,4 @@ function logincheck(){
   
   setInterval(function() {
     preprocessing();
-  }, 16.6); // 60fps
+  }, 62.5); // 16fps 16/1000
