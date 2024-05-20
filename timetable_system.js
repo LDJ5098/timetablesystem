@@ -745,8 +745,8 @@ function logincheck(){
         });
         bX=aX;
         bY=aY;
+        mouse_TF = false;
       }
-      mouse_TF = false;
     });
   
     //터치 이동
