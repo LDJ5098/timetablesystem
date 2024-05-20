@@ -727,7 +727,7 @@ function logincheck(){
     });
   
     document.addEventListener('mousemove', function(event){
-      if(activeButton===document.querySelectorAll('.menu_button')[2]&&mouse_info==='down'&&mouse_TF===false){
+      if(activeButton===document.querySelectorAll('.menu_button')[2]&&mouse_info==='down'){
         aX=event.clientX;
         aY=event.clientY;
   
@@ -738,11 +738,11 @@ function logincheck(){
           
           element.style.left = Left;
           element.style.top = Top;
-          //refresh_remember_class.push(element.id);
-          //move_classroomDB(element.id, Left, Top);
         });
-        bX=aX;
-        bY=aY;
+        setTimeout(function(){
+            bX=aX;
+            bY=aY;
+        },62.5);
       }
     });
   
