@@ -708,7 +708,7 @@ function logincheck(){
   
 
   //마우스로 이동시키기
-  var bX, bY, aX, aY, mouse_info='up';
+  var bX, bY, mouse_info='up';
   //휴대폰 터치로 이동시키기
   var p_bX, p_bY, p_aX, p_aY, touch_info='up';
   
@@ -729,11 +729,11 @@ function logincheck(){
     document.addEventListener('mousemove', function(event){
 
       if(activeButton===document.querySelectorAll('.menu_button')[2]&&mouse_info==='down'){
-        aX=event.clientX;
-        aY=event.clientY;
-
+        var aX=event.clientX;
+        var aY=event.clientY;
+        
         choice_classrooms.forEach(function(element){
-          var searchdata = classroomDB(element.id);
+          //var searchdata = classroomDB(element.id);
           var Left = String(parseFloat(element.style.left) + (aX-bX))+'px';
           var Top = String(parseFloat(element.style.top) + (aY-bY))+'px';
           
