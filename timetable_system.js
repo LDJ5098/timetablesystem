@@ -159,6 +159,7 @@ function MoveDataToPHP(data) {
   request.onload = function() {
       if (request.status === 200) {
           console.log('Request succeeded');
+          preprocessing();
       } else {
           console.error('Request failed with status:', request.status);
       }
@@ -806,7 +807,8 @@ create_classroom_checkbox();//새 교실 추가 WIFI체크함수
 fix_classroom_checkbox();//수정하기 WIFI체크함수
 mouse_move_class();
 
-setInterval(function() {
+
+function preprocessing(){
   choice_classrooms=document.querySelectorAll('.choice_panel');
   choice_classrooms.forEach(function(element){
     refresh_remember_class.push(element.id);
@@ -815,4 +817,10 @@ setInterval(function() {
   show_floor();
   refresh_class_rember();
   refresh_remember_class = [];
+}
+
+
+
+setInterval(function() {
+  preprocessing();
 }, 62.5); // 16fps 16/1000
