@@ -128,7 +128,6 @@ function deleteDataInPHP(data) {
 }
 
 
-
 function EditDataToPHP(data) {
   var url = "timetable_system_edit.php";
   var request = new XMLHttpRequest();
@@ -151,6 +150,7 @@ function EditDataToPHP(data) {
 
 /////////////////////////////////
 
+var count = 0;
 function MoveDataToPHP(data) {
   var url = "timetable_system_move.php";
   var request = new XMLHttpRequest();
@@ -160,6 +160,8 @@ function MoveDataToPHP(data) {
   request.onload = function() {
       if (request.status === 200) {
           console.log('Request succeeded');
+          count--;
+          if(count===0)console.log("모든 move데이터를 실행했습니다");
       } else {
           console.error('Request failed with status:', request.status);
       }
@@ -172,6 +174,7 @@ function MoveDataToPHP(data) {
   try {
       var jsonData = JSON.stringify(data);
       request.send(jsonData);
+      count++;
   } catch (error) {
       console.error('There was a problem with the request:', error);
   }
@@ -356,7 +359,9 @@ function arr_compare(now, past){
     now.width!==past.width||
     now.height!==past.height||
     now.other!==past.other||
-    now.wifi!==past.wifi
+    now.wifi!==past.wifi||
+    now.top_value!==past.top_value||
+    now.left_value!==past.left_value
     )return false;
   return true;//같음
 }
