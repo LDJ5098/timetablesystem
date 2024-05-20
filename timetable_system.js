@@ -745,7 +745,7 @@ function logincheck(){
         choice_classrooms.forEach(function(element){
           //var searchdata = classroomDB(element.id);
           var index;
-          for(var i=0; i<mID.length(); i++){
+          for(var i=0; i<mID.length; i++){
             if(element.id === mID[i]){
               index = i;
               break;
@@ -792,7 +792,7 @@ function logincheck(){
         choice_classrooms.forEach(function(element){
 
           var index;
-          for(var i=0; i<pID.length(); i++){
+          for(var i=0; i<pID.length; i++){
             if(element.id === pID[i]){
               index = i;
               break;
