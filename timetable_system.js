@@ -150,7 +150,6 @@ function EditDataToPHP(data) {
 
 
 /////////////////////////////////
-var move_call_number = 0;
 
 function MoveDataToPHP(data) {
   var url = "timetable_system_move.php";
@@ -160,8 +159,6 @@ function MoveDataToPHP(data) {
 
   request.onload = function() {
       if (request.status === 200) {
-          move_call_number--;
-          if(move_call_number===0)preprocessing();
           console.log('Request succeeded');
       } else {
           console.error('Request failed with status:', request.status);
@@ -285,7 +282,6 @@ function move_classroomDB(objectcode, Left, Top){
     top:Top,
     left:Left
   }
-  move_call_number++;
   MoveDataToPHP(object);
 }
 
