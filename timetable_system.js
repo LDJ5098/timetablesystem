@@ -853,4 +853,4 @@ function logincheck(){
   
   setInterval(function() {
     preprocessing();
-  }, 0.06); // 60fps
+  }, 16.6); // 60fps
