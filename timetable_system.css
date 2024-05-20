@@ -61,12 +61,6 @@ body{
     text-align: center;
     z-index:0;
 }
-.class_info_panel > label {
-    -webkit-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
-}
 
 
 .choice_panel {
