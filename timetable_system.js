@@ -170,7 +170,6 @@ function logincheck(){
     try {
         var jsonData = JSON.stringify(data);
         request.send(jsonData);
-        count++;
     } catch (error) {
         console.error('There was a problem with the request:', error);
     }
