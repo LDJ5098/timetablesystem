@@ -723,10 +723,10 @@ function logincheck(){
         mLeft=[];
         mTop=[];
         mID=[];
-        choice_classrooms.forEach(function(element, index){
-            mLeft[index]=element.style.left;
-            mTop[index]=element.style.top;
-            mID[index]=element.id;
+        choice_classrooms.forEach(function(element){
+            mLeft.push(element.style.left);
+            mTop.push(element.style.top);
+            mID.push(element.id);
         });
 
     });
@@ -772,10 +772,10 @@ function logincheck(){
       pLeft=[];
       pTop=[];
       pID=[];
-      choice_classrooms.forEach(function(element, index){
-          pLeft[index]=element.style.left;
-          pTop[index]=element.style.top;
-          pID[index]=element.id;
+      choice_classrooms.forEach(function(element){
+        pLeft.push(element.style.left);
+        pTop.push(element.style.top);
+        pID.push(element.id);
       });
     });
   
