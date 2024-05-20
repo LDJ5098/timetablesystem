@@ -318,6 +318,8 @@ function click_classroom(element) {
           element.classList.add("choice_panel");
         }
       }
+      
+      else {}
     });
 }
 
@@ -337,11 +339,18 @@ function changeBackground() {
 
 //object_code, which, floor, class_number, class_name, device_code, width, height, other, wifi, top_value, left_value
 function arr_compare(now, past){
-  const keys = Object.keys(now);
+  if(now.object_code!==past.object_code||
+    now.which!==past.which||
+    now.floor!==past.floor||
+    now.class_number!==past.class_number||
+    now.class_name!==past.class_name||
+    now.device_code!==past.device_code||
+    now.width!==past.width||
+    now.height!==past.height||
+    now.other!==past.other||
+    now.wifi!==past.wifi
+    )return false;
 
-  for (var key of keys) {
-    if (now[key] !== past[key]) return false;//같지 않음
-  }
   return true;//같음
 }
 
@@ -642,6 +651,10 @@ function move_class(){
             var searchdata = classroomDB(element.id);
             var Left = searchdata.left_value;
             var Top = String(parseFloat(searchdata.top_value) - keyboard_speed)+'px';
+
+            element.style.left = Left;
+            element.style.top = Top;
+
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top);
         });
@@ -652,6 +665,10 @@ function move_class(){
             var searchdata = classroomDB(element.id);
             var Left = searchdata.left_value;
             var Top = String(parseFloat(searchdata.top_value) + keyboard_speed)+'px';
+
+            element.style.left = Left;
+            element.style.top = Top;
+            
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top);  
         });
@@ -662,6 +679,10 @@ function move_class(){
             var searchdata = classroomDB(element.id);
             var Left = String(parseFloat(searchdata.left_value) - keyboard_speed)+'px';
             var Top = searchdata.top_value;
+
+            element.style.left = Left;
+            element.style.top = Top;
+
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top); 
         });
@@ -672,6 +693,10 @@ function move_class(){
             var searchdata = classroomDB(element.id);
             var Left = String(parseFloat(searchdata.left_value) + keyboard_speed)+'px';
             var Top = searchdata.top_value;
+
+            element.style.left = Left;
+            element.style.top = Top;
+
             refresh_remember_class.push(element.id);  
             move_classroomDB(element.id, Left, Top);
         });
@@ -709,6 +734,10 @@ function mouse_move_class(){
         var searchdata = classroomDB(element.id);
         var Left = String(parseFloat(searchdata.left_value) + (aX-bX))+'px';
         var Top = String(parseFloat(searchdata.top_value) + (aY-bY))+'px';
+        
+        element.style.left = Left;
+        element.style.top = Top;
+        
         move_classroomDB(element.id, Left, Top);
         refresh_remember_class.push(element.id);
       });
@@ -740,6 +769,10 @@ function mouse_move_class(){
         var searchdata = classroomDB(element.id);
         var Left = String(parseFloat(searchdata.left_value) + (p_aX - p_bX)) + 'px';
         var Top = String(parseFloat(searchdata.top_value) + (p_aY - p_bY)) + 'px';
+
+        element.style.left = Left;
+        element.style.top = Top;
+
         move_classroomDB(element.id, Left, Top);
         refresh_remember_class.push(element.id);
       });
