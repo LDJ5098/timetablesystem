@@ -812,7 +812,7 @@ function logincheck(){
     choice_classrooms=document.querySelectorAll('.choice_panel');
     choice_classrooms.forEach(function(element){
       refresh_remember_class.push(element.id);
-      move_classroomDB(element.id, Left, Top);
+      move_classroomDB(element.id, element.style.left, element.style.top);
     });
   
     show_floor();
