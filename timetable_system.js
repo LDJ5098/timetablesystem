@@ -656,9 +656,9 @@ function move_class(){
     if (event.key === "ArrowUp"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 위쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var searchdata = classroomDB(element.id);
-            var Left = searchdata.left_value;
-            var Top = String(parseFloat(searchdata.top_value) - keyboard_speed)+'px';
+            //var searchdata = classroomDB(element.id);
+            var Left = element.style.left;
+            var Top = String(parseFloat(element.style.top) - keyboard_speed)+'px';
 
             element.style.left = Left;
             element.style.top = Top;
@@ -670,9 +670,9 @@ function move_class(){
     else if (event.key === "ArrowDown"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 아래쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var searchdata = classroomDB(element.id);
-            var Left = searchdata.left_value;
-            var Top = String(parseFloat(searchdata.top_value) + keyboard_speed)+'px';
+            //var searchdata = classroomDB(element.id);
+            var Left = element.style.left;
+            var Top = String(parseFloat(element.style.top) + keyboard_speed)+'px';
 
             element.style.left = Left;
             element.style.top = Top;
@@ -684,9 +684,9 @@ function move_class(){
     else if (event.key === "ArrowLeft"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 왼쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var searchdata = classroomDB(element.id);
-            var Left = String(parseFloat(searchdata.left_value) - keyboard_speed)+'px';
-            var Top = searchdata.top_value;
+            //var searchdata = classroomDB(element.id);
+            var Left = String(parseFloat(element.style.left) - keyboard_speed)+'px';
+            var Top = element.style.top;
 
             element.style.left = Left;
             element.style.top = Top;
@@ -698,9 +698,9 @@ function move_class(){
     else if (event.key === "ArrowRight"&&activeButton===document.querySelectorAll('.menu_button')[2]) {
         // 오른쪽 방향키를 눌렀을 때의 동작
         choice_classrooms.forEach(function(element){
-            var searchdata = classroomDB(element.id);
-            var Left = String(parseFloat(searchdata.left_value) + keyboard_speed)+'px';
-            var Top = searchdata.top_value;
+            //var searchdata = classroomDB(element.id);
+            var Left = String(parseFloat(element.style.left) + keyboard_speed)+'px';
+            var Top = element.style.top;
 
             element.style.left = Left;
             element.style.top = Top;
@@ -739,15 +739,15 @@ function mouse_move_class(){
       aY=event.clientY;
 
       choice_classrooms.forEach(function(element){
-        var searchdata = classroomDB(element.id);
-        var Left = String(parseFloat(searchdata.left_value) + (aX-bX))+'px';
-        var Top = String(parseFloat(searchdata.top_value) + (aY-bY))+'px';
+        //var searchdata = classroomDB(element.id);
+        var Left = String(parseFloat(element.style.left) + (aX-bX))+'px';
+        var Top = String(parseFloat(element.style.top) + (aY-bY))+'px';
         
         element.style.left = Left;
         element.style.top = Top;
-        
-        move_classroomDB(element.id, Left, Top);
+
         refresh_remember_class.push(element.id);
+        move_classroomDB(element.id, Left, Top);
       });
       bX=aX;
       bY=aY;
@@ -774,15 +774,15 @@ function mouse_move_class(){
       p_aY = touch.clientY;
 
       choice_classrooms.forEach(function(element){
-        var searchdata = classroomDB(element.id);
-        var Left = String(parseFloat(searchdata.left_value) + (p_aX - p_bX)) + 'px';
-        var Top = String(parseFloat(searchdata.top_value) + (p_aY - p_bY)) + 'px';
+        //var searchdata = classroomDB(element.id);
+        var Left = String(parseFloat(element.style.left) + (aX-bX))+'px';
+        var Top = String(parseFloat(element.style.top) + (aY-bY))+'px';
 
         element.style.left = Left;
         element.style.top = Top;
 
-        move_classroomDB(element.id, Left, Top);
         refresh_remember_class.push(element.id);
+        move_classroomDB(element.id, Left, Top);
       });
 
       p_bX = p_aX;
