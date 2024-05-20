@@ -721,12 +721,13 @@ function logincheck(){
         mouse_info='down';
 
         mObject=[];
-        choice_classrooms.forEach(function(element, index){
-            mObject[index]={
+        choice_classrooms.forEach(function(element){
+            var objcet={
               Id : element.id,
               Left: element.style.left,
               Top: element.style.top
             };
+            mObject.push(objcet);
         });
 
     });
@@ -772,12 +773,13 @@ function logincheck(){
       touch_info='down';
 
       pObject = [];
-      choice_classrooms.forEach(function(element, index){
-        pObject[index]={
-          ID : element.id,
+      choice_classrooms.forEach(function(element){
+        var objcet={
+          Id : element.id,
           Left: element.style.left,
           Top: element.style.top
         };
+        mObject.push(objcet);
       });
     });
   
