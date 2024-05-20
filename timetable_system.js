@@ -726,7 +726,11 @@ function logincheck(){
         mouse_info='up';
     });
   
+    let m_Running = false;
     document.addEventListener('mousemove', function(event){
+      if(m_Running) return;
+      m_Running = true;
+
       if(activeButton===document.querySelectorAll('.menu_button')[2]&&mouse_info==='down'){
         aX=event.clientX;
         aY=event.clientY;
@@ -739,10 +743,9 @@ function logincheck(){
           element.style.left = Left;
           element.style.top = Top;
         });
-        setTimeout(function(){
-            bX=aX;
-            bY=aY;
-        },62.5);
+        bX=aX;
+        bY=aY;
+        m_Running=false;
       }
     });
   
