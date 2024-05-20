@@ -731,17 +731,15 @@ function logincheck(){
       if(activeButton===document.querySelectorAll('.menu_button')[2]&&mouse_info==='down'){
         aX=event.clientX;
         aY=event.clientY;
-  
-        for (var i = 0; i < choice_classrooms.length; i++) {
-            var element = choice_classrooms[i];
-            // var searchdata = classroomDB(element.id);
-            var Left = String(parseFloat(element.style.left) + (aX - bX)) + 'px';
-            var Top = String(parseFloat(element.style.top) + (aY - bY)) + 'px';
-            
-            element.style.left = Left;
-            element.style.top = Top;
-        }
-        
+
+        choice_classrooms.forEach(function(element){
+          var searchdata = classroomDB(element.id);
+          var Left = String(parseFloat(element.style.left) + (aX-bX))+'px';
+          var Top = String(parseFloat(element.style.top) + (aY-bY))+'px';
+          
+          element.style.left = Left;
+          element.style.top = Top;
+        });
         bX=aX;
         bY=aY;
       }
