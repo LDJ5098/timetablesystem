@@ -149,15 +149,19 @@ function EditDataToPHP(data) {
 }
 
 
+/////////////////////////////////
+var move_call_number = 0;
 
 function MoveDataToPHP(data) {
   var url = "timetable_system_move.php";
   var request = new XMLHttpRequest();
-  request.open("POST", url, false); 
+  request.open("POST", url, true); 
   request.setRequestHeader("Content-Type", "application/json");
 
   request.onload = function() {
       if (request.status === 200) {
+          move_call_number--;
+          if(move_call_number===0)preprocessing();
           console.log('Request succeeded');
       } else {
           console.error('Request failed with status:', request.status);
@@ -198,7 +202,6 @@ function load_database_code() {
       return null;
   }
 }
-
 //서버에서 특정 데이터만 가져오기
 function classroomDB(objectcode) {
   var data = {
@@ -275,13 +278,14 @@ function fix_classroomDB(objectcode ,Which_, floor_, number, name, code, width, 
   EditDataToPHP(object);
 }
 
+
 function move_classroomDB(objectcode, Left, Top){
   var object = {
     object_code:objectcode,
     top:Top,
     left:Left
   }
-
+  move_call_number++;
   MoveDataToPHP(object);
 }
 
