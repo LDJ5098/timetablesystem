@@ -706,8 +706,9 @@ function logincheck(){
   
   }
   
+
   //마우스로 이동시키기
-  var bX, bY, aX, aY, mouse_info='up';
+  var bX, bY, aX, aY, mouse_info='up', mouse_TF=false;
   //휴대폰 터치로 이동시키기
   var p_bX, p_bY, p_aX, p_aY, touch_info='up';
   
@@ -723,11 +724,11 @@ function logincheck(){
               // 드래그 종료 지점을 기록하고 이벤트 리스너를 제거합니다.
     document.addEventListener('mouseup', function(){
         mouse_info='up';
-  
     });
   
     document.addEventListener('mousemove', function(event){
-      if(activeButton===document.querySelectorAll('.menu_button')[2]&&mouse_info==='down'){
+      if(activeButton===document.querySelectorAll('.menu_button')[2]&&mouse_info==='down'&&mouse_TF===false){
+        mouse_TF = true;
         aX=event.clientX;
         aY=event.clientY;
   
@@ -745,6 +746,7 @@ function logincheck(){
         bX=aX;
         bY=aY;
       }
+      mouse_TF = false;
     });
   
     //터치 이동
@@ -773,7 +775,6 @@ function logincheck(){
   
           element.style.left = Left;
           element.style.top = Top;
-
           //refresh_remember_class.push(element.id);
           //move_classroomDB(element.id, Left, Top);
         });
