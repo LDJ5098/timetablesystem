@@ -738,11 +738,11 @@ function logincheck(){
           
           element.style.left = Left;
           element.style.top = Top;
+          //refresh_remember_class.push(element.id);
+          //move_classroomDB(element.id, Left, Top);
         });
-        setTimeout(function(){
-            bX=aX;
-            bY=aY;
-        },62.5);
+        bX=aX;
+        bY=aY;
       }
     });
   
