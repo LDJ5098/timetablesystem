@@ -851,8 +851,9 @@ function logincheck(){
   function setUserScalable(value) {
     var viewport = document.querySelector("meta[name=viewport]");
     var initialScale = viewport.getAttribute("content").match(/initial-scale=([0-9.]+)/)[1];
+    var deviceWidth = window.screen.width;
 
-    viewportMetaTag.setAttribute('content', 'width=device-width, initial-scale=' + initialScale + ', user-scalable=' + value);
+    viewportMetaTag.setAttribute('content', 'width=' + deviceWidth +', initial-scale=' + initialScale + ', user-scalable=' + value);
   }
 
   ///
