@@ -841,7 +841,32 @@ function logincheck(){
     refresh_remember_class = [];
   }
   
-  
+
+
+  //반응형 웹 기능 - 화면 확대, 스크롤 기능 통제
+  //html meta데이터 통제
+  var viewportMetaTag = document.querySelector('meta[name="viewport"]');
+
+  // user-scalable 변경하기
+  function setUserScalable(value) {
+    viewportMetaTag.setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=' + value);
+  }
+
+  ///
+  document.addEventListener('touchstart', function(){
+    var choice_check = document.querySelectorAll('.choice_panel');
+    if(choice_check.length>0&&activeButton === document.querySelectorAll('.menu_button')[2]){
+      document.body.style.overflow = 'hidden';
+      setUserScalable('no');
+    }
+  });
+  document.addEventListener('touchend', function(){
+    touch_info='up';
+    document.body.style.overflow = 'auto';
+    setUserScalable('yes');
+  });
+
+
   
   setInterval(function() {
     preprocessing();
