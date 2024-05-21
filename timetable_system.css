@@ -5,11 +5,12 @@ a {
 
 body{
     display: flex;
-    width: 1200px;
+    width: auto;
+    height: 100vh;
     background-color: rgb(243, 243, 243);
     justify-content: center;
     align-items: center;
-
+    
     -ms-overflow-style: none;
 }::-webkit-scrollbar {
     display: none;
@@ -17,8 +18,8 @@ body{
 
 #main {
     display: flex;
-    width: 1000px;
-    height: 100%;
+    width: auto;
+    height: auto;
     flex-direction: column;
     text-align: center;
     align-items: center;
