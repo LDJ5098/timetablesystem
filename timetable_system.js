@@ -847,27 +847,16 @@ function logincheck(){
   //html meta데이터 통제
   var viewportMetaTag = document.querySelector('meta[name="viewport"]');
 
-  // user-scalable 변경하기
-  function setUserScalable(value) {
-    var viewport = document.querySelector("meta[name=viewport]");
-    var initialScale = viewport.getAttribute("content").match(/initial-scale=([0-9.]+)/)[1];
-    var deviceWidth = window.screen.width;
-
-    viewportMetaTag.setAttribute('content', 'width=' + deviceWidth +', initial-scale=' + initialScale + ', user-scalable=' + value);
-  }
-
   ///
   document.addEventListener('touchstart', function(){
     var choice_check = document.querySelectorAll('.choice_panel');
     if(choice_check.length>0&&activeButton === document.querySelectorAll('.menu_button')[2]){
       document.body.style.overflow = 'hidden';
-      setUserScalable('no');
     }
   });
   document.addEventListener('touchend', function(){
     touch_info='up';
     document.body.style.overflow = 'auto';
-    setUserScalable('yes');
   });
 
 
