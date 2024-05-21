@@ -849,7 +849,10 @@ function logincheck(){
 
   // user-scalable 변경하기
   function setUserScalable(value) {
-    viewportMetaTag.setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=' + value);
+    var viewport = document.querySelector("meta[name=viewport]");
+    var initialScale = viewport.getAttribute("content").match(/initial-scale=([0-9.]+)/)[1];
+
+    viewportMetaTag.setAttribute('content', 'width=device-width, initial-scale=' + initialScale + ', user-scalable=' + value);
   }
 
   ///
