@@ -451,7 +451,6 @@ function logincheck(){
       document.getElementById('fix_classroom_background').style.display='none';
       document.getElementById('delete_button').style.display='none';
       cancel_choice();
-      document.body.style.overflow = 'auto';
     }
   
     else if(activeButton===document.querySelectorAll('.menu_button')[1]){
@@ -459,7 +458,6 @@ function logincheck(){
       document.getElementById('create_classroom_background').style.display='none';
       document.getElementById('delete_button').style.display='none';
       cancel_choice();
-      document.body.style.overflow = 'auto';
     }
   
     else if(activeButton===document.querySelectorAll('.menu_button')[2]){
@@ -470,7 +468,6 @@ function logincheck(){
       cancel_choice();
       move_class();
       mouse_move_class();
-      document.body.style.overflow = 'hidden';
     }
   
     else if(activeButton===document.querySelectorAll('.menu_button')[3]){
@@ -479,7 +476,6 @@ function logincheck(){
       document.getElementById('fix_classroom_background').style.display='none';
       document.getElementById('delete_button').style.display='block';
       cancel_choice();
-      document.body.style.overflow = 'auto';
     }
   
     else {
@@ -488,7 +484,6 @@ function logincheck(){
       document.getElementById('fix_classroom_background').style.display='none';
       document.getElementById('delete_button').style.display='none';
       cancel_choice();
-      document.body.style.overflow = 'auto';
     }
   }
   
@@ -850,4 +845,4 @@ function logincheck(){
   
   setInterval(function() {
     preprocessing();
-  }, 62.5); // 16fps 16/1000
+  }, 16.6); // 16fps 16/1000
