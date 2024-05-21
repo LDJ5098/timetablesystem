@@ -852,40 +852,12 @@ function logincheck(){
     var choice_check = document.querySelectorAll('.choice_panel');
     if(choice_check.length>0&&activeButton === document.querySelectorAll('.menu_button')[2]){
       document.body.style.overflow = 'hidden';
-      toggleFullScreen();
     }
   });
   document.addEventListener('touchend', function(){
     touch_info='up';
     document.body.style.overflow = 'auto';
-    exitFullScreen();
   });
-
-  //위치이동 활성화시 전체화면
-  function toggleFullScreen() {
-    var elem = document.getElementById("fullscreen-element");
-    if (!document.fullscreenElement) {
-      elem.requestFullscreen().catch(err => {
-        alert(`전체 화면으로 전환할 수 없습니다: ${err.message}`);
-      });
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      }
-    }
-  }
-  function exitFullScreen() {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    } else if (document.mozCancelFullScreen) { /* Firefox */
-      document.mozCancelFullScreen();
-    } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-      document.webkitExitFullscreen();
-    } else if (document.msExitFullscreen) { /* IE/Edge */
-      document.msExitFullscreen();
-    }
-  }
-
   //////////////////////////////////////////////////////
 
   
