@@ -4,9 +4,11 @@ a {
 }
 
 body{
-    min-width: 1000px;
+    min-width: auto;
     background-color: rgb(243, 243, 243);
-    overflow: auto;
+    -ms-overflow-style: none;
+}::-webkit-scrollbar {
+    display: none;
 }
 
 #main {
