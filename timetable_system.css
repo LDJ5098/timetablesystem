@@ -4,7 +4,7 @@ a {
 }
 
 body{
-    min-width: auto;
+    width: 1000px;
     background-color: rgb(243, 243, 243);
     -ms-overflow-style: none;
 }::-webkit-scrollbar {
@@ -13,7 +13,7 @@ body{
 
 #main {
     display: flex;
-    width: 100%;
+    width: 1000px;
     height: 100%;
     flex-direction: column;
     text-align: center;
