@@ -160,6 +160,10 @@ function logincheck(){
         request.send(jsonData);
   
         if (request.status === 200) { // 요청이 성공한 경우
+          show_floor();
+          refresh_class_rember();
+          refresh_remember_class = [];
+
         } else { // 요청이 실패한 경우
             console.error('Request failed with status:', request.status);
         }
@@ -835,10 +839,6 @@ function logincheck(){
       move_classroomDB(element.id, element.style.left, element.style.top);
       refresh_remember_class.push(element.id);
     });
-  
-    show_floor();
-    refresh_class_rember();
-    refresh_remember_class = [];
   }
   
 
