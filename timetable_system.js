@@ -119,6 +119,7 @@ function deleteDataInPHP(data) {
       request.send(jsonData);
 
       if (request.status === 200) { // 요청이 성공한 경우
+        show_floor();
       } else { // 요청이 실패한 경우
           console.error('Request failed with status:', request.status);
       }
@@ -139,6 +140,7 @@ function EditDataToPHP(data) {
       request.send(jsonData);
 
       if (request.status === 200) { // 요청이 성공한 경우
+        show_floor();
       } else { // 요청이 실패한 경우
           console.error('Request failed with status:', request.status);
       }
@@ -158,7 +160,6 @@ function MoveDataToPHP(data) {
   request.onreadystatechange = function() {
     if (request.readyState === 4) { // 요청이 완료된 경우
       if (request.status === 200) { // 요청이 성공한 경우
-        show_floor();
       } else { // 요청이 실패한 경우
         console.error('Request failed with status:', request.status);
       }
@@ -821,6 +822,7 @@ function delete_class(){
       remove_classroomDB(element.id);
     });
   }
+  show_floor();
 }
 
 // 페이지가 로드될 때 실행할 함수들
@@ -840,8 +842,6 @@ function preprocessing(){
     move_classroomDB(element.id, element.style.left, element.style.top);
     refresh_remember_class.push(element.id);
   });
-
-  //show_floor();
   refresh_class_rember();
   refresh_remember_class = [];
 }
