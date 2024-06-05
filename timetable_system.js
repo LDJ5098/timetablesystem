@@ -174,20 +174,18 @@ function logincheck(){
   function load_database_code() {
     var url = 'timetable_system_load.php';
     var request = new XMLHttpRequest();
-    request.open('GET', url, true); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+    request.open('GET', url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
     request.send();
   
     if (request.status === 200) { // 요청이 성공한 경우
         try {
             var data = JSON.parse(request.responseText);
             // 데이터 처리 로직 추가
-            show_floor_true(data);
             return data;
         } catch (error) {
             console.error('Error parsing JSON data:', error);
             return null;
         }
-
     } else { // 요청이 실패한 경우
         console.error('Request failed with status:', request.status);
         return null;
@@ -361,10 +359,8 @@ function logincheck(){
   var change_remember = [];
   //데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
   function show_floor(){
-    load_database_code();
-  }
-
-  function show_floor_true(preprocessing){
+    var preprocessing = load_database_code();
+  
     var show_array = [];
     var index = 0;
     preprocessing.forEach(function(arr){
