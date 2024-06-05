@@ -152,22 +152,26 @@ function EditDataToPHP(data) {
 function MoveDataToPHP(data) {
   var url = "timetable_system_move.php";
   var request = new XMLHttpRequest();
-  request.open("POST", url, true); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.open("POST", url, true); // 비동기적 요청으로 변경 (마지막 파라미터가 true)
   request.setRequestHeader("Content-Type", "application/json");
 
-  try {
-      var jsonData = JSON.stringify(data);
-      request.send(jsonData);
-
+  request.onreadystatechange = function() {
+    if (request.readyState === 4) { // 요청이 완료된 경우
       if (request.status === 200) { // 요청이 성공한 경우
         show_floor();
         refresh_class_rember();
         refresh_remember_class = [];
       } else { // 요청이 실패한 경우
-          console.error('Request failed with status:', request.status);
+        console.error('Request failed with status:', request.status);
       }
+    }
+  };
+
+  try {
+    var jsonData = JSON.stringify(data);
+    request.send(jsonData);
   } catch (error) {
-      console.error('There was a problem with the request:', error);
+    console.error('There was a problem with the request:', error);
   }
 }
 
