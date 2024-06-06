@@ -418,6 +418,12 @@ function show_floor(preprocessing){
     }
   });
 
+///////////////////////////////////
+  choice_classrooms=document.querySelectorAll('.choice_panel');
+  choice_classrooms.forEach(function(element){
+    refresh_remember_class.push(element.id);
+  });
+////////////////////////////////////
 
 
   document.querySelectorAll('.class_info_panel').forEach(function(element){ //필드 데이터 중에 변경이 없는 경우는 제외하고 삭제시킴
@@ -468,6 +474,9 @@ function show_floor(preprocessing){
   });
 
   change_remember = show_array;
+///////////////////////////////////////
+  refresh_class_rember();
+  refresh_remember_class = [];
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -874,11 +883,8 @@ function preprocessing(){
   choice_classrooms=document.querySelectorAll('.choice_panel');
   choice_classrooms.forEach(function(element){
     move_classroomDB(element.id, element.style.left, element.style.top);
-    refresh_remember_class.push(element.id);
   });
   show_refresh();
-  refresh_class_rember();
-  refresh_remember_class = [];
 }
 
 
