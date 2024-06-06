@@ -149,7 +149,11 @@ function EditDataToPHP(data) {
 
 
 /////////////////////////////////
+var isprocesing = false;
 function MoveDataToPHP(data) {
+  if(isprocesing) return;
+  isprocesing=true;
+
   var url = "timetable_system_move.php";
   var request = new XMLHttpRequest();
   request.open("POST", url, true); // 비동기적 요청으로 변경 (마지막 파라미터가 true)
@@ -158,6 +162,7 @@ function MoveDataToPHP(data) {
   request.onreadystatechange = function() {
     if (request.readyState === 4) { // 요청이 완료된 경우
       if (request.status === 200) { // 요청이 성공한 경우
+        isprocesing=false;
       } else { // 요청이 실패한 경우
         console.error('Request failed with status:', request.status);
       }
@@ -384,19 +389,9 @@ function arr_compare(now, past){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var change_remember = [];//기존의 데이터를 저장해두는 배열
-var isprocesing = false;//플래그 함수(중복실행방지)
 //데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
 
 function show_floor(preprocessing){
-  if(isprocesing) return;
-  isprocesing=true;
-
-  choice_classrooms=document.querySelectorAll('.choice_panel');
-  choice_classrooms.forEach(function(element){
-    move_classroomDB(element.id, element.style.left, element.style.top);
-  });
-
-
   var show_array = [];
   var index = 0;
   preprocessing.forEach(function(arr){//층과 건물이 같은지 확인
@@ -487,7 +482,6 @@ function show_floor(preprocessing){
 ///////////////////////////////////////
   refresh_class_rember();
   refresh_remember_class = [];
-  isprocesing=false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -890,6 +884,10 @@ fix_classroom_checkbox();//수정하기 WIFI체크함수
 mouse_move_class();
 
 function preprocessing(){
+  choice_classrooms=document.querySelectorAll('.choice_panel');
+  choice_classrooms.forEach(function(element){
+    move_classroomDB(element.id, element.style.left, element.style.top);
+  });
   show_refresh();
 }
 
