@@ -902,5 +902,5 @@ document.addEventListener('touchend', function(){
 
 
 setInterval(function() {
-  show_refresh();
+  preprocessing();
 }, 16.6); // 16fps 16/1000
