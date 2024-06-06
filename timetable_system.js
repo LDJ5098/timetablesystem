@@ -387,13 +387,6 @@ var change_remember = [];//기존의 데이터를 저장해두는 배열
 //데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
 
 function show_floor(preprocessing){
-  
-  choice_classrooms=document.querySelectorAll('.choice_panel');
-  choice_classrooms.forEach(function(element){
-    move_classroomDB(element.id, element.style.left, element.style.top);
-  });
-
-
   var show_array = [];
   var index = 0;
   preprocessing.forEach(function(arr){//층과 건물이 같은지 확인
@@ -885,9 +878,19 @@ create_classroom_checkbox();//새 교실 추가 WIFI체크함수
 fix_classroom_checkbox();//수정하기 WIFI체크함수
 mouse_move_class();
 
-
+var isprocesing = false;
 function preprocessing(){
+  if(isprocesing) return;
+
+  isprocesing=true;
+
+  choice_classrooms=document.querySelectorAll('.choice_panel');
+  choice_classrooms.forEach(function(element){
+    move_classroomDB(element.id, element.style.left, element.style.top);
+  });
   show_refresh();
+
+  isprocesing=false;
 }
 
 
