@@ -98,7 +98,6 @@ function sendDataToPHP(data) {
       request.send(jsonData);
 
       if (request.status === 200) { // 요청이 성공한 경우
-        show_floor();
       } else { // 요청이 실패한 경우
           console.error('Request failed with status:', request.status);
       }
@@ -120,7 +119,6 @@ function deleteDataInPHP(data) {
       request.send(jsonData);
 
       if (request.status === 200) { // 요청이 성공한 경우
-        show_floor();
       } else { // 요청이 실패한 경우
           console.error('Request failed with status:', request.status);
       }
@@ -338,8 +336,6 @@ function changeBackground() {
     document.getElementById("background").style.backgroundImage = "url('" + imagePath + "')";
 
     document.getElementById('floor_info').textContent = which.value + "-" + floor.value;
-
-    show_floor();
 }
 
 
@@ -383,12 +379,12 @@ function show_floor(){
         new_change.push(now);//데이터가 기존의 데이터와 같은 경우, new_change에 저장(즉 변경이 없는 경우를 저장)
         break;
       } else {
-        var TF=true;
+        var TF=false;
         if((mouse_info==='down' || touch_info==='down')&&activeButton===document.querySelectorAll('.menu_button')[2]){//이동모드에서 교실이 이동되고 있다면
           for (var j = 0; j < choice_classrooms.length; j++) {
             if (choice_classrooms[j].id === now.object_code) {
-              new_change.push(now);//데이터가 다르긴 하지만 현재 해당 교실이 이동 중이라면 new_change에 저장
-              TF=false;
+              new_change.push(now);//데이터가 다르긴 하지만 현재 해당 교실이 이동 중이라면 new_change에 저장 
+              TF=true;
               break; // 조건이 만족되면 더 이상 루프를 돌 필요가 없으므로 break를 사용
             }
           }
@@ -839,7 +835,6 @@ function delete_class(){
       remove_classroomDB(element.id);
     });
   }
-  show_floor();
 }
 
 // 페이지가 로드될 때 실행할 함수들
