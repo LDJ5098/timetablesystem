@@ -178,25 +178,6 @@ function MoveDataToPHP(data) {
   }
 }
 //////////////////////////////////////
-function lastMove(data) {
-  var url = "timetable_system_move.php";
-  var request = new XMLHttpRequest();
-  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
-  request.setRequestHeader("Content-Type", "application/json");
-
-  try {
-      var jsonData = JSON.stringify(data);
-      request.send(jsonData);
-
-      if (request.status === 200) { // 요청이 성공한 경우
-      } else { // 요청이 실패한 경우
-          console.error('Request failed with status:', request.status);
-      }
-  } catch (error) {
-      console.error('There was a problem with the request:', error);
-  }
-}
-
 
 //서버에서 모든 데이터 다 가져오기(동기적)
 function load_database_code() {
@@ -331,16 +312,6 @@ function move_classroomDB(objectcode, Left, Top){
   }
   MoveDataToPHP(object);
 }
-
-function last_move_classroomDB(objectcode, Left, Top){
-  var object = {
-    object_code:objectcode,
-    top:Top,
-    left:Left
-  }
-  lastMove(object);
-}
-
 
 //객체 정보 삭제 함수
 function remove_classroomDB(code){
@@ -819,11 +790,6 @@ function mouse_move_class(){
       mouse_info='up';
 
       show_control = true;
-      choice_classrooms=document.querySelectorAll('.choice_panel');
-      choice_classrooms.forEach(function(element){
-        last_move_classroomDB(element.id, element.style.left, element.style.top);
-      });
-      show_floor(load_database_code());
   });
 
   document.addEventListener('mousemove', function(event){
@@ -874,11 +840,6 @@ function mouse_move_class(){
     touch_info='up';
 
     show_control = true;
-    choice_classrooms=document.querySelectorAll('.choice_panel');
-    choice_classrooms.forEach(function(element){
-      last_move_classroomDB(element.id, element.style.left, element.style.top);
-    });
-    show_floor(load_database_code());
   });
 
   document.addEventListener('touchmove', function(event){
