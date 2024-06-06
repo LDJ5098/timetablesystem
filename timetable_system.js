@@ -383,7 +383,7 @@ function show_floor(){
         var TF=true;
         if((mouse_info === 'down' || touch_info === 'down')&&activeButton===document.querySelectorAll('.menu_button')[2]){
           for (var j = 0; j < choice_classrooms.length; j++) {
-            if (choice_classrooms[j].id === now.id) {
+            if (choice_classrooms[j].id === now.object_code) {
               TF = false;
               break; // 조건이 만족되면 더 이상 루프를 돌 필요가 없으므로 break를 사용
             }
