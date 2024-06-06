@@ -387,6 +387,13 @@ var change_remember = [];//기존의 데이터를 저장해두는 배열
 //데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
 
 function show_floor(preprocessing){
+  choice_classrooms=document.querySelectorAll('.choice_panel');
+  choice_classrooms.forEach(function(element){
+    move_classroomDB(element.id, element.style.left, element.style.top);
+    refresh_remember_class.push(element.id);
+  });
+
+
   var show_array = [];
   var index = 0;
   preprocessing.forEach(function(arr){//층과 건물이 같은지 확인
@@ -416,6 +423,9 @@ function show_floor(preprocessing){
         if(TF)break;
       }
     }
+
+    refresh_class_rember();
+    refresh_remember_class = [];
   });
 
 
@@ -861,7 +871,7 @@ function delete_class(){
 }
 
 // 페이지가 로드될 때 실행할 함수들
-show_refresh();
+show_refresh(refresh_remember_class);
 move_class();
 Menu_Operation();//메뉴 버튼들 실행 판단
 changeBackground();//배경 변경 함수
@@ -871,14 +881,7 @@ mouse_move_class();
 
 
 function preprocessing(){
-  choice_classrooms=document.querySelectorAll('.choice_panel');
-  choice_classrooms.forEach(function(element){
-    move_classroomDB(element.id, element.style.left, element.style.top);
-    refresh_remember_class.push(element.id);
-  });
-  show_refresh();
-  refresh_class_rember();
-  refresh_remember_class = [];
+  show_refresh(refresh_remember_class);
 }
 
 
@@ -902,5 +905,5 @@ document.addEventListener('touchend', function(){
 
 
 setInterval(function() {
-  preprocessing();
+  show_refresh();
 }, 16.6); // 16fps 16/1000
