@@ -362,7 +362,8 @@ function arr_compare(now, past){
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-var change_remember = [];
+var change_remember = [];//기존의 데이터를 저장해두는 배열
+var moving_TF = false;
 //데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
 function show_floor(){
   var preprocessing = load_database_code();
@@ -381,7 +382,8 @@ function show_floor(){
     for(var i=0; i<change_remember.length; i++){
       if(arr_compare(now,change_remember[i])===true){
         var TF=true;
-        if((mouse_info === 'down' || touch_info === 'down')&&activeButton===document.querySelectorAll('.menu_button')[3]){
+        console.log(moving_TF);
+        if(moving_TF=true&&activeButton===document.querySelectorAll('.menu_button')[3]){
           for (var j = 0; j < choice_classrooms.length; j++) {
             if (choice_classrooms[j].id === now.id) {
               TF = false;
@@ -734,6 +736,7 @@ function mouse_move_class(){
       bX=event.clientX;
       bY=event.clientY;
       mouse_info='down';
+      moving_TF=true;
 
       mLeft=[];
       mTop=[];
@@ -749,6 +752,7 @@ function mouse_move_class(){
             // 드래그 종료 지점을 기록하고 이벤트 리스너를 제거합니다.
   document.addEventListener('mouseup', function(){
       mouse_info='up';
+      moving_TF=false;
   });
 
   document.addEventListener('mousemove', function(event){
@@ -783,6 +787,7 @@ function mouse_move_class(){
     p_bX = touch.clientX;
     p_bY = touch.clientY;
     touch_info='down';
+    moving_TF=true;
 
     pLeft=[];
     pTop=[];
@@ -796,6 +801,7 @@ function mouse_move_class(){
 
   document.addEventListener('touchend', function(){
     touch_info='up';
+    moving_TF=false;
   });
 
   document.addEventListener('touchmove', function(event){
