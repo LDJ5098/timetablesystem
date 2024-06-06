@@ -174,7 +174,7 @@ function MoveDataToPHP(data) {
 
 
 
-//서버에서 모든 데이터 다 가져오기
+//서버에서 모든 데이터 다 가져오기(동기적)
 function load_database_code() {
   var url = 'timetable_system_load.php';
   var request = new XMLHttpRequest();
@@ -195,6 +195,31 @@ function load_database_code() {
       return null;
   }
 }
+//서버에서 모든 데이터 다 가져오기(비동기)/////////////////////////  show_floor()랑 연계됨, 화면 새로고침용
+function show_refresh() {
+  var url = 'timetable_system_load.php';
+  var request = new XMLHttpRequest();
+  request.open('GET', url, true); // 비동기적 요청으로 변경 (마지막 파라미터가 true)
+
+  request.onreadystatechange = function() {
+    if (request.readyState === 4) { // 요청이 완료된 경우
+      if (request.status === 200) { // 요청이 성공한 경우
+        try {
+          var data = JSON.parse(request.responseText);
+          show_floor(data);
+        } catch (error) {
+          console.error('Error parsing JSON data:', error);
+        }
+      } else { // 요청이 실패한 경우
+        console.error('Request failed with status:', request.status);
+      }
+    }
+  };
+
+  request.send();
+}
+
+
 //서버에서 특정 데이터만 가져오기
 function classroomDB(objectcode) {
   var data = {
@@ -360,9 +385,8 @@ function arr_compare(now, past){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 var change_remember = [];//기존의 데이터를 저장해두는 배열
 //데이터베이스에서 값을 가져와서 화면에 띄워주는 함수
-function show_floor(){
-  var preprocessing = load_database_code();
 
+function show_floor(preprocessing){
   var show_array = [];
   var index = 0;
   preprocessing.forEach(function(arr){//층과 건물이 같은지 확인
@@ -445,7 +469,6 @@ function show_floor(){
 
   change_remember = show_array;
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -838,7 +861,7 @@ function delete_class(){
 }
 
 // 페이지가 로드될 때 실행할 함수들
-show_floor();
+show_refresh();
 move_class();
 Menu_Operation();//메뉴 버튼들 실행 판단
 changeBackground();//배경 변경 함수
@@ -853,7 +876,7 @@ function preprocessing(){
     move_classroomDB(element.id, element.style.left, element.style.top);
     refresh_remember_class.push(element.id);
   });
-  show_floor();
+  show_refresh();
   refresh_class_rember();
   refresh_remember_class = [];
 }
