@@ -888,12 +888,17 @@ create_classroom_checkbox();//새 교실 추가 WIFI체크함수
 fix_classroom_checkbox();//수정하기 WIFI체크함수
 mouse_move_class();
 
+var isprocesing3 = false;
 function preprocessing(){
+  if(isprocesing3)return;
+  isprocesing3 = true;
+
   choice_classrooms=document.querySelectorAll('.choice_panel');
   choice_classrooms.forEach(function(element){
     move_classroomDB(element.id, element.style.left, element.style.top);
   });
   show_refresh();
+  isprocesing3 = false;  
 }
 
 
