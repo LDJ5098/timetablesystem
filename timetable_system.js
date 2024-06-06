@@ -201,7 +201,11 @@ function load_database_code() {
   }
 }
 //서버에서 모든 데이터 다 가져오기(비동기)/////////////////////////  show_floor()랑 연계됨, 화면 새로고침용
+var isprocesing2 = false;
 function show_refresh() {
+  if(isprocesing2) return;
+  isprocesing2=true;
+
   var url = 'timetable_system_load.php';
   var request = new XMLHttpRequest();
   request.open('GET', url, true); // 비동기적 요청으로 변경 (마지막 파라미터가 true)
@@ -212,6 +216,7 @@ function show_refresh() {
         try {
           var data = JSON.parse(request.responseText);
           show_floor(data);
+          isprocesing2=false;
         } catch (error) {
           console.error('Error parsing JSON data:', error);
         }
