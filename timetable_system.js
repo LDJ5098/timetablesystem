@@ -736,7 +736,6 @@ function mouse_move_class(){
       bX=event.clientX;
       bY=event.clientY;
       mouse_info='down';
-      moving_TF=true;
 
       mLeft=[];
       mTop=[];
@@ -756,7 +755,7 @@ function mouse_move_class(){
   });
 
   document.addEventListener('mousemove', function(event){
-
+    moving_TF=true;
     if(activeButton===document.querySelectorAll('.menu_button')[2]&&mouse_info==='down'){
       var aX=event.clientX;
       var aY=event.clientY;
@@ -787,7 +786,6 @@ function mouse_move_class(){
     p_bX = touch.clientX;
     p_bY = touch.clientY;
     touch_info='down';
-    moving_TF=true;
 
     pLeft=[];
     pTop=[];
@@ -805,6 +803,7 @@ function mouse_move_class(){
   });
 
   document.addEventListener('touchmove', function(event){
+    moving_TF=true;
     var touch = event.touches[0];
     if(activeButton === document.querySelectorAll('.menu_button')[2] && touch_info === 'down'){
       var p_aX = touch.clientX;
