@@ -380,17 +380,20 @@ function show_floor(){
   show_array.forEach(function(now){
     for(var i=0; i<change_remember.length; i++){
       if(arr_compare(now,change_remember[i])===true){
+        new_change.push(now);//데이터가 기존의 데이터와 같은 경우, new_change에 저장(즉 변경이 없는 경우를 저장)
+        break;
+      } else {
         var TF=true;
-        if((mouse_info === 'down' || touch_info === 'down')&&activeButton===document.querySelectorAll('.menu_button')[2]){
+        if((mouse_info==='down' || touch_info==='down')&&activeButton===document.querySelectorAll('.menu_button')[2]){//이동모드에서 교실이 이동되고 있다면
           for (var j = 0; j < choice_classrooms.length; j++) {
             if (choice_classrooms[j].id === now.object_code) {
-              TF = false;
+              new_change.push(now);//데이터가 다르긴 하지만 현재 해당 교실이 이동 중이라면 new_change에 저장
+              TF=false;
               break; // 조건이 만족되면 더 이상 루프를 돌 필요가 없으므로 break를 사용
             }
-          }          
+          }
         }
-        if(TF) new_change.push(now);//데이터가 기존의 데이터와 같은 경우, 이동 모드에서 이동 중인, new_change에 저장(즉 변경이 없는 경우를 저장) 해당되는 것들만 제외하고 갱신하기 위함
-        break;
+        if(TF)break;
       }
     }
   });
