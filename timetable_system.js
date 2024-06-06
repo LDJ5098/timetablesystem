@@ -98,6 +98,7 @@ function sendDataToPHP(data) {
       request.send(jsonData);
 
       if (request.status === 200) { // 요청이 성공한 경우
+        show_floor();
       } else { // 요청이 실패한 경우
           console.error('Request failed with status:', request.status);
       }
@@ -368,7 +369,7 @@ function show_floor(){
 
   var show_array = [];
   var index = 0;
-  preprocessing.forEach(function(arr){
+  preprocessing.forEach(function(arr){//층과 건물이 같은지 확인
     if(arr.floor===floor.value&&arr.which==which.value){
       show_array[index] = arr;
       index++;
@@ -379,17 +380,29 @@ function show_floor(){
   show_array.forEach(function(now){
     for(var i=0; i<change_remember.length; i++){
       if(arr_compare(now,change_remember[i])===true){
-        new_change.push(now);//같은 경우의 객체
+        var TF=true;
+        if((mouse_info === 'down' || touch_info === 'down')&&activeButton===document.querySelectorAll('.menu_button')[3]){
+          for (var j = 0; j < choice_classrooms.length; j++) {
+            if (choice_classrooms[j].id === now.id) {
+              TF = false;
+              break; // 조건이 만족되면 더 이상 루프를 돌 필요가 없으므로 break를 사용
+            }
+          }          
+        }
+        if(TF) new_change.push(now);//데이터가 기존의 데이터와 같은 경우, 이동 모드에서 이동 중인, new_change에 저장(즉 변경이 없는 경우를 저장) 해당되는 것들만 제외하고 갱신하기 위함
         break;
       }
     }
   });
 
-  document.querySelectorAll('.class_info_panel').forEach(function(element){
+
+
+  document.querySelectorAll('.class_info_panel').forEach(function(element){ //필드 데이터 중에 변경이 없는 경우는 제외하고 삭제시킴
     var TF_past = true; 
     for(var i=0;i<new_change.length;i++){
       if(new_change[i].object_code===element.id) TF_past = false;
     }
+    
     if(TF_past){
       element.remove();
     }
@@ -433,6 +446,8 @@ function show_floor(){
 
   change_remember = show_array;
 }
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -840,6 +855,7 @@ function preprocessing(){
     move_classroomDB(element.id, element.style.left, element.style.top);
     refresh_remember_class.push(element.id);
   });
+  show_floor();
   refresh_class_rember();
   refresh_remember_class = [];
 }
