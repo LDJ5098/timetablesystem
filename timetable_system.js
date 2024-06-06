@@ -202,7 +202,6 @@ function load_database_code() {
 }
 //서버에서 모든 데이터 다 가져오기(비동기)/////////////////////////  show_floor()랑 연계됨, 화면 새로고침용
 function show_refresh() {
-  if(show_control)return;
 
   var url = 'timetable_system_load.php';
   var request = new XMLHttpRequest();
@@ -213,7 +212,7 @@ function show_refresh() {
       if (request.status === 200) { // 요청이 성공한 경우
         try {
           var data = JSON.parse(request.responseText);
-          if(!show_control)show_floor(data);
+          show_floor(data);
         } catch (error) {
           console.error('Error parsing JSON data:', error);
         }
