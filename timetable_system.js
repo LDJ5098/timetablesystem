@@ -149,11 +149,13 @@ function EditDataToPHP(data) {
 
 
 /////////////////////////////////
-var isprocesing = false;
-function MoveDataToPHP(data) {
-  if(isprocesing) return;
-  isprocesing=true;
 
+var show_control = false;
+
+/////////////////////////////////
+
+function MoveDataToPHP(data) {
+  if(show_control)return;
   var url = "timetable_system_move.php";
   var request = new XMLHttpRequest();
   request.open("POST", url, true); // 비동기적 요청으로 변경 (마지막 파라미터가 true)
@@ -162,7 +164,6 @@ function MoveDataToPHP(data) {
   request.onreadystatechange = function() {
     if (request.readyState === 4) { // 요청이 완료된 경우
       if (request.status === 200) { // 요청이 성공한 경우
-        isprocesing=false;
       } else { // 요청이 실패한 경우
         console.error('Request failed with status:', request.status);
       }
@@ -176,7 +177,25 @@ function MoveDataToPHP(data) {
     console.error('There was a problem with the request:', error);
   }
 }
+//////////////////////////////////////
+function lastMove(data) {
+  var url = "timetable_system_move.php";
+  var request = new XMLHttpRequest();
+  request.open("POST", url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
+  request.setRequestHeader("Content-Type", "application/json");
 
+  try {
+      var jsonData = JSON.stringify(data);
+      request.send(jsonData);
+
+      if (request.status === 200) { // 요청이 성공한 경우
+      } else { // 요청이 실패한 경우
+          console.error('Request failed with status:', request.status);
+      }
+  } catch (error) {
+      console.error('There was a problem with the request:', error);
+  }
+}
 
 
 //서버에서 모든 데이터 다 가져오기(동기적)
@@ -201,10 +220,8 @@ function load_database_code() {
   }
 }
 //서버에서 모든 데이터 다 가져오기(비동기)/////////////////////////  show_floor()랑 연계됨, 화면 새로고침용
-var isprocesing2 = false;
 function show_refresh() {
-  if(isprocesing2) return;
-  isprocesing2=true;
+  if(show_control)return;
 
   var url = 'timetable_system_load.php';
   var request = new XMLHttpRequest();
@@ -215,8 +232,7 @@ function show_refresh() {
       if (request.status === 200) { // 요청이 성공한 경우
         try {
           var data = JSON.parse(request.responseText);
-          show_floor(data);
-          isprocesing2=false;
+          if(!show_control)show_floor(data);
         } catch (error) {
           console.error('Error parsing JSON data:', error);
         }
@@ -315,6 +331,16 @@ function move_classroomDB(objectcode, Left, Top){
   }
   MoveDataToPHP(object);
 }
+
+function last_move_classroomDB(objectcode, Left, Top){
+  var object = {
+    object_code:objectcode,
+    top:Top,
+    left:Left
+  }
+  lastMove(object);
+}
+
 
 //객체 정보 삭제 함수
 function remove_classroomDB(code){
@@ -768,13 +794,14 @@ var bX, bY, mouse_info='up', mLeft=[], mTop=[], mID=[];
 //휴대폰 터치로 이동시키기
 var p_bX, p_bY, touch_info='up', pLeft=[], pTop=[], pID=[];
 
-function mouse_move_class(){
+function mouse_move_class(){  
   //마우스 이동
   document.addEventListener('mousedown', function(event){
       choice_classrooms=document.querySelectorAll('.choice_panel');
       bX=event.clientX;
       bY=event.clientY;
       mouse_info='down';
+      show_control = false;
 
       mLeft=[];
       mTop=[];
@@ -790,6 +817,13 @@ function mouse_move_class(){
             // 드래그 종료 지점을 기록하고 이벤트 리스너를 제거합니다.
   document.addEventListener('mouseup', function(){
       mouse_info='up';
+
+      show_control = true;
+      choice_classrooms=document.querySelectorAll('.choice_panel');
+      choice_classrooms.forEach(function(element){
+        last_move_classroomDB(element.id, element.style.left, element.style.top);
+      });
+      show_floor(load_database_code());
   });
 
   document.addEventListener('mousemove', function(event){
@@ -824,6 +858,7 @@ function mouse_move_class(){
     p_bX = touch.clientX;
     p_bY = touch.clientY;
     touch_info='down';
+    show_control = false;
 
     pLeft=[];
     pTop=[];
@@ -837,6 +872,13 @@ function mouse_move_class(){
 
   document.addEventListener('touchend', function(){
     touch_info='up';
+
+    show_control = true;
+    choice_classrooms=document.querySelectorAll('.choice_panel');
+    choice_classrooms.forEach(function(element){
+      last_move_classroomDB(element.id, element.style.left, element.style.top);
+    });
+    show_floor(load_database_code());
   });
 
   document.addEventListener('touchmove', function(event){
@@ -888,17 +930,13 @@ create_classroom_checkbox();//새 교실 추가 WIFI체크함수
 fix_classroom_checkbox();//수정하기 WIFI체크함수
 mouse_move_class();
 
-var isprocesing3 = false;
 function preprocessing(){
-  if(isprocesing3)return;
-  isprocesing3 = true;
 
   choice_classrooms=document.querySelectorAll('.choice_panel');
   choice_classrooms.forEach(function(element){
     move_classroomDB(element.id, element.style.left, element.style.top);
   });
-  show_refresh();
-  isprocesing3 = false;  
+  show_refresh(); 
 }
 
 
