@@ -1,3 +1,14 @@
+
+//////////////////////////URL쿼리 매개변수 값 읽어오기////////////////////////
+var queryString = window.location.search;
+var searchParams = new URLSearchParams(queryString);
+// 매개변수 값 추출
+var classroom_ID = searchParams.get('classID'); // MIO1O0V2O9
+var classroom_name = searchParams.get('classname'); // 104호 (디코딩된 값)
+console.log(classroom_ID, classroom_name);
+document.getElementById("title").textContent = classroom_name;
+/////////////////////////////////////////////////////////////////////////////////
+
 document.querySelector(".table_body").scrollTop = 369;
 
 function select_week_menu(select_week){
@@ -436,7 +447,6 @@ function new_save(){
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////
-
 function deleteclass(){
     document.querySelectorAll('.delete_class').forEach(function(element){
         element.addEventListener('click', function(){
