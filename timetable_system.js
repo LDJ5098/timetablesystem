@@ -594,7 +594,7 @@ function open_iframe(class_name, class_ID){
   document.getElementById('classroom_list_background').appendChild(iframe);
 
   document.querySelectorAll('.iframe_background').forEach(function(element){
-    element.style.display = 'block';
+    element.style.display = 'flex';
   });
 }
 
