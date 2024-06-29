@@ -483,7 +483,6 @@ function show_floor(preprocessing){
   change_remember = show_array;
 ///////////////////////////////////////
   refresh_class_rember();
-  basicmode_classroom_click();
   refresh_remember_class = [];
 }
 
@@ -548,6 +547,7 @@ function Menu_Operation(){
     document.getElementById('fix_classroom_background').style.display='none';
     document.getElementById('delete_button').style.display='none';
     cancel_choice();
+    basicmode_classroom_click();
   }
 }
 
