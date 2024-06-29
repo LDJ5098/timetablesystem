@@ -554,10 +554,10 @@ function Menu_Operation(){
 //비활성화 모드 상태에서 클릭했을 때의 이벤트를 할당해주는 역할
 function basicmode_classroom_click(){
   document.querySelectorAll('.class_info_panel').forEach(function(panel) {
-    panel.addEventListener('click', function(event) {
+    panel.addEventListener('click', function() {
         if(activeButtonTF===false){
-          var clickedID = event.target.id;
-          var classname = event.querySelector('label').textContent;//클릭한 교실의 교실명 가져오기
+          var clickedID = panel.id;
+          var classname = panel.querySelector('label').textContent;//클릭한 교실의 교실명 가져오기
           open_iframe(classname, clickedID);
           console.log(classname, clickedID);
         }
