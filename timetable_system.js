@@ -553,17 +553,24 @@ function Menu_Operation(){
 }
 
 //비활성화 모드 상태에서 클릭했을 때의 이벤트를 할당해주는 역할
-function basicmode_classroom_click(){
+function basicmode_classroom_click() {
   document.querySelectorAll('.class_info_panel').forEach(function(panel) {
-    panel.addEventListener('click', function() {
-        if(activeButtonTF===false){
-          var clickedID = panel.id;
-          var classname = panel.querySelector('label').textContent;//클릭한 교실의 교실명 가져오기
-          open_iframe(classname, clickedID);
-          console.log(classname, clickedID);
-        }
-      });
+    // 먼저 기존에 추가된 클릭 이벤트 리스너를 제거합니다.
+    panel.removeEventListener('click', panelClickHandler);
+    
+    // 클릭 이벤트 리스너를 새로 추가합니다.
+    panel.addEventListener('click', panelClickHandler);
   });
+}
+
+// 클릭 이벤트 핸들러 함수를 별도로 정의합니다.
+function panelClickHandler() {
+  if (activeButtonTF === false) {
+    var clickedID = this.id; // 'panel'이 클릭된 요소를 가리킵니다.
+    var classname = this.querySelector('label').textContent; // 클릭한 교실의 교실명 가져오기
+    open_iframe(classname, clickedID);
+    console.log(classname, clickedID);
+  }
 }
 
 //iframe 영역//////////////////////////////////////////////
