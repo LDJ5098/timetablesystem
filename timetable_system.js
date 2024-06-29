@@ -61,7 +61,7 @@ var recent_choice_code = null;
 
 
 function randomCODE(){
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   var code = '';
   while(1){
     for (var i = 0; i < 10; i++) {
