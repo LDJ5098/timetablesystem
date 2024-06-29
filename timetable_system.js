@@ -53,6 +53,7 @@ var floor = document.getElementById("floor");
 var background_DIV = document.getElementById("background");
 
 var activeButton = null;
+var activeButtonTF = false;
 var recent_choice_code = null;
 
 
@@ -503,6 +504,7 @@ function cancel_choice(){
 
 function Menu_Operation(){
   if(activeButton===document.querySelectorAll('.menu_button')[0]){
+    activeButtonTF=true;
     console.log('새 교실 생성 활성화');
     document.getElementById('create_classroom_background').style.display='flex';
     document.getElementById('fix_classroom_background').style.display='none';
@@ -511,6 +513,7 @@ function Menu_Operation(){
   }
 
   else if(activeButton===document.querySelectorAll('.menu_button')[1]){
+    activeButtonTF=true;
     console.log('내용 수정 활성화');
     document.getElementById('create_classroom_background').style.display='none';
     document.getElementById('delete_button').style.display='none';
@@ -518,6 +521,7 @@ function Menu_Operation(){
   }
 
   else if(activeButton===document.querySelectorAll('.menu_button')[2]){
+    activeButtonTF=true;
     console.log('위치 이동 활성화');
     document.getElementById('create_classroom_background').style.display='none';
     document.getElementById('fix_classroom_background').style.display='none';
@@ -528,6 +532,7 @@ function Menu_Operation(){
   }
 
   else if(activeButton===document.querySelectorAll('.menu_button')[3]){
+    activeButtonTF=true;
     console.log('교실 삭제 활성화');
     document.getElementById('create_classroom_background').style.display='none';
     document.getElementById('fix_classroom_background').style.display='none';
@@ -536,17 +541,36 @@ function Menu_Operation(){
   }
 
   else {
+    activeButtonTF=false;
     console.log('비활성화');
     document.getElementById('create_classroom_background').style.display='none';
     document.getElementById('fix_classroom_background').style.display='none';
     document.getElementById('delete_button').style.display='none';
     cancel_choice();
+
+    document.querySelectorAll('.class_info_panel').forEach(function(panel) {
+        panel.addEventListener('click', function(event) {
+            if(activeButtonTF===true){
+              var clickedID = event.target.id;
+              open_iframe();
+              console.log(clickedID);
+            }
+        });
+    });
   }
 }
 
+function click_close_iframe(){
+  document.querySelectorAll('.iframe_background').forEach(function(element){
+    element.style.display = 'none';
+  });
+}
 
-
-
+function open_iframe(){
+  document.querySelectorAll('.iframe_background').forEach(function(element){
+    element.style.display = 'block';
+  });
+}
 
 
 //버튼 토글방식
@@ -917,7 +941,6 @@ document.addEventListener('touchend', function(){
   document.body.style.overflow = 'auto';
 });
 //////////////////////////////////////////////////////
-
 
 setInterval(function() {
   preprocessing();
