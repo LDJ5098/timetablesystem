@@ -557,25 +557,40 @@ function basicmode_classroom_click(){
     panel.addEventListener('click', function(event) {
         if(activeButtonTF===false){
           var clickedID = event.target.id;
-          open_iframe();
+          var classname = event.target.querySelector('label').textContent;//클릭한 교실의 교실명 가져오기
+          open_iframe(classname, clickedID);
           console.log(clickedID);
         }
       });
   });
 }
 
+//iframe 영역//////////////////////////////////////////////
 function click_close_iframe(){
   document.querySelectorAll('.iframe_background').forEach(function(element){
     element.style.display = 'none';
   });
+
+  var iframe = document.getElementById('classroom_list');
+  if (iframe) {
+      iframe.remove();
+  }
 }
 
-function open_iframe(){
+function open_iframe(class_name, class_ID){
+  var iframe = document.createElement('iframe');
+  iframe.src = 'classroom_timetable/classroom_timetable.html?classID=' + class_ID + '&classname=' + class_name;
+  iframe.id = 'classroom_list';
+
+  // iframe을 지정된 div에 추가
+  document.getElementById('classroom_list_background').appendChild(iframe);
+
   document.querySelectorAll('.iframe_background').forEach(function(element){
     element.style.display = 'block';
   });
 }
 
+/////////////////////////////////////////////////////////////////////////
 
 //버튼 토글방식
 function toggleButton(index) {
