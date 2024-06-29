@@ -155,7 +155,7 @@ body{
 #classroom_list {
     border: none;
     width: 710px;
-    height: 470px;
+    height: 480px;
     overflow: scroll;
 }
 #classroom_list_background {
@@ -171,6 +171,8 @@ body{
     top:50%;
     left:50%;
     z-index: 2;
+    justify-content: center;
+    align-items: center;
 }
 
 #close_iframe {
