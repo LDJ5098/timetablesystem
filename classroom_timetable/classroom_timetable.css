@@ -1,0 +1,317 @@
+body{
+    position: relative;
+    height: auto;
+    width: 700px;
+}
+
+#main_table {
+    position: relative;
+    width: 100%;
+    height: 360px;
+    overflow: hidden;
+    border-collapse: collapse;
+    border-top: solid 1px black;
+    border-bottom: solid 1px black;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.table_head {
+    width: 100%;
+    height: 35px;
+}
+
+.week{
+    text-align: center;
+    background-color: rgb(233, 233, 233);
+}
+
+
+th, td {
+    margin : 0;
+    padding : 0;
+    border-collapse: collapse;
+    border:solid 1px black;
+    border-top: none;
+}
+
+
+.table_body {
+    width: 100%;
+    height: 100%;
+
+    margin-bottom: 34px;
+
+    overflow: scroll;
+    -ms-overflow-style: none;
+
+}::-webkit-scrollbar{
+    display:none;
+  }
+
+.times{
+    border-collapse: collapse;
+}
+
+.times > div {
+    display: flex;
+    border-collapse: collapse;
+    width: 100%;
+    height: 40px;
+    font-size: 11px;
+    justify-content: center;
+    align-items: center;
+
+    border-bottom: solid 1px black;
+}
+.class_cols {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+.class_col {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    font-size: 11px;
+    justify-content: center;
+    align-items: center;
+    border-bottom: solid 1px black;
+}
+
+
+.class_info {
+    position: absolute;
+    top:10px;
+    width: 100%;
+    height: 40px;
+    background-color: rgb(255, 199, 199);
+    overflow: scroll;
+}
+
+
+.class_info > div {
+    display: flex;
+    width: 95%;
+    height: auto;
+    margin-left:5%;
+    margin-bottom: 5px;
+}
+
+.classname {
+    width: 90%;
+    font-size: 11.5px;
+    font-weight: bold;
+    margin-top: 5%;
+}
+
+.delete_class {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+
+    width: 10px;
+    height: 10px;
+    font-size: 10px;
+    line-height: 1.0;
+    padding:2px;
+    cursor: pointer;
+}
+
+.class_professor {
+    width: 100%;
+    font-size: 9px;
+}
+
+/*////////////////////////////////////////////////////////////////*/
+#menu {
+    margin-top:40px;
+    margin-bottom: 40px;
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+#title {
+    position: absolute;
+    left: 5px;
+    font-size: 40px;
+}
+
+#create_new_button {
+    position: absolute;
+    right: 5px;
+    top: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: white;
+    border: solid 1px rgb(77, 77, 77);
+    border-radius: 8px;
+
+
+    width: 35px;
+    height: 35px;
+    font-size: 30px;
+
+    cursor: pointer;
+}
+
+#close_button {
+    position: absolute;
+    right: 8px;
+    top: -18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+
+    color : white;
+    background-color: rgb(160, 160, 160);
+    border: none;
+    box-shadow: 0 0 5px 0 rgb(150, 150, 150);
+    border-radius: 100px;
+
+    width: 35px;
+    height: 35px;
+    font-size: 25px;
+}
+
+#close_button:hover {
+    background-color: rgb(255, 71, 71);
+    cursor: pointer;
+}
+
+
+#create_new_menu_DIV{
+    display: block;
+    position: absolute;
+
+    left:350px;
+    top: 100px;
+
+    width: 400px;
+    height: auto;
+    padding-bottom: 20px;
+    box-shadow: 0 0 15px 0px rgb(112, 112, 112);
+    border-radius: 2px;
+    background-color: white;
+    z-index: 3;
+    transform: translateX(-50%);
+}
+#create_new_menu_DIV > h3 {
+    margin-left : 5%;
+}
+
+.info_input {
+    display: flex;
+    text-align: center;
+    width: 90%;
+    padding-left: 5%;
+    padding-right: 5%;
+    margin-bottom: 5px;
+}
+.info_input > input {
+    width: 75%;
+    border: solid 1px rgb(201, 201, 201);
+    font-size: 12px;
+}
+.info_input > label{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+
+    width: 22%;
+    height: 20px;
+    font-size: 12px;
+}
+
+#create_background{
+    display: none;
+    position: absolute;
+    width: 700px;
+    height: 400px;
+
+    top:-30px;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.637);
+}
+
+.select_week {
+    width: 70%;
+    display: flex;
+}
+.select_week > label{
+    width: 20px;
+
+    font-size: 14px;
+    background-color: rgb(233, 233, 233);
+
+    margin-right: 5px;
+
+    cursor: pointer;
+}
+
+.time_place {
+    width: 95%;
+    border-radius: 2px;
+    height: auto;
+    display: block;
+    padding:6px;
+    margin-bottom: 5px;
+    border: solid 1px rgb(201, 201, 201);
+}
+
+#time_places {
+    width: 77%;
+    height: auto;
+}
+
+#more_input {
+    color: rgb(255, 42, 42);
+    font-weight: bold;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left:100px;
+}
+
+
+.starthour {
+    font-size: 10px;
+    width: 68px;
+    height: 25px;
+}
+.startminute {
+    font-size: 10px;
+    width: 45px;
+    height: 25px;
+}
+.endhour {
+    font-size: 10px;
+    width: 68px;
+    height: 25px;
+}
+.endminute {
+    font-size: 10px;
+    width: 45px;
+    height: 25px;
+}
+
+#new_save{
+    display: flex;
+    justify-content: right;
+    margin-right: 23px;
+}
+#new_save > button {
+    background-color: rgb(255, 42, 42);
+    color: white;
+    border: none;
+    width: 45px;
+    height: 25px;
+    border-radius: 2px;
+    cursor: pointer;
+}
