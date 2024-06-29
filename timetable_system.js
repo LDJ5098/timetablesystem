@@ -483,6 +483,7 @@ function show_floor(preprocessing){
   change_remember = show_array;
 ///////////////////////////////////////
   refresh_class_rember();
+  basicmode_classroom_click();
   refresh_remember_class = [];
 }
 
@@ -547,17 +548,20 @@ function Menu_Operation(){
     document.getElementById('fix_classroom_background').style.display='none';
     document.getElementById('delete_button').style.display='none';
     cancel_choice();
-
-    document.querySelectorAll('.class_info_panel').forEach(function(panel) {
-        panel.addEventListener('click', function(event) {
-            if(activeButtonTF===false){
-              var clickedID = event.target.id;
-              open_iframe();
-              console.log(clickedID);
-            }
-        });
-    });
   }
+}
+
+//비활성화 모드 상태에서 클릭했을 때의 이벤트를 할당해주는 역할
+function basicmode_classroom_click(){
+  document.querySelectorAll('.class_info_panel').forEach(function(panel) {
+    panel.addEventListener('click', function(event) {
+        if(activeButtonTF===false){
+          var clickedID = event.target.id;
+          open_iframe();
+          console.log(clickedID);
+        }
+      });
+  });
 }
 
 function click_close_iframe(){
@@ -913,6 +917,7 @@ changeBackground();//배경 변경 함수
 create_classroom_checkbox();//새 교실 추가 WIFI체크함수
 fix_classroom_checkbox();//수정하기 WIFI체크함수
 mouse_move_class();
+basicmode_classroom_click();
 
 function preprocessing(){
 
