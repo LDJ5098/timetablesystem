@@ -550,7 +550,7 @@ function Menu_Operation(){
 
     document.querySelectorAll('.class_info_panel').forEach(function(panel) {
         panel.addEventListener('click', function(event) {
-            if(activeButtonTF===true){
+            if(activeButtonTF===false){
               var clickedID = event.target.id;
               open_iframe();
               console.log(clickedID);
