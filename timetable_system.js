@@ -557,9 +557,9 @@ function basicmode_classroom_click(){
     panel.addEventListener('click', function(event) {
         if(activeButtonTF===false){
           var clickedID = event.target.id;
-          var classname = event.target.querySelector('label').textContent;//클릭한 교실의 교실명 가져오기
+          var classname = event.querySelector('label').textContent;//클릭한 교실의 교실명 가져오기
           open_iframe(classname, clickedID);
-          console.log(clickedID);
+          console.log(classname, clickedID);
         }
       });
   });
