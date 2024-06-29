@@ -484,6 +484,8 @@ function show_floor(preprocessing){
 ///////////////////////////////////////
   refresh_class_rember();
   refresh_remember_class = [];
+
+  basicmode_classroom_click();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -510,7 +512,6 @@ function Menu_Operation(){
     document.getElementById('fix_classroom_background').style.display='none';
     document.getElementById('delete_button').style.display='none';
     cancel_choice();
-    basicmode_classroom_click();
   }
 
   else if(activeButton===document.querySelectorAll('.menu_button')[1]){
@@ -519,7 +520,6 @@ function Menu_Operation(){
     document.getElementById('create_classroom_background').style.display='none';
     document.getElementById('delete_button').style.display='none';
     cancel_choice();
-    basicmode_classroom_click();
   }
 
   else if(activeButton===document.querySelectorAll('.menu_button')[2]){
@@ -531,7 +531,6 @@ function Menu_Operation(){
     cancel_choice();
     move_class();
     mouse_move_class();
-    basicmode_classroom_click();
   }
 
   else if(activeButton===document.querySelectorAll('.menu_button')[3]){
@@ -541,7 +540,6 @@ function Menu_Operation(){
     document.getElementById('fix_classroom_background').style.display='none';
     document.getElementById('delete_button').style.display='block';
     cancel_choice();
-    basicmode_classroom_click();
   }
 
   else {
@@ -551,22 +549,28 @@ function Menu_Operation(){
     document.getElementById('fix_classroom_background').style.display='none';
     document.getElementById('delete_button').style.display='none';
     cancel_choice();
-    basicmode_classroom_click();
   }
 }
-basicmode_classroom_click();
+
 //비활성화 모드 상태에서 클릭했을 때의 이벤트를 할당해주는 역할
-function basicmode_classroom_click(){
+function basicmode_classroom_click() {
   document.querySelectorAll('.class_info_panel').forEach(function(panel) {
-    panel.addEventListener('click', function() {
-        if(activeButtonTF===false){
-          var clickedID = panel.id;
-          var classname = panel.querySelector('label').textContent;//클릭한 교실의 교실명 가져오기
-          open_iframe(classname, clickedID);
-          console.log(classname, clickedID);
-        }
-      });
+    // 먼저 기존에 추가된 클릭 이벤트 리스너를 제거합니다.
+    panel.removeEventListener('click', panelClickHandler);
+    
+    // 클릭 이벤트 리스너를 새로 추가합니다.
+    panel.addEventListener('click', panelClickHandler);
   });
+}
+
+// 클릭 이벤트 핸들러 함수를 별도로 정의합니다.
+function panelClickHandler() {
+  if (activeButtonTF === false) {
+    var clickedID = this.id; // 'panel'이 클릭된 요소를 가리킵니다.
+    var classname = this.querySelector('label').textContent; // 클릭한 교실의 교실명 가져오기
+    open_iframe(classname, clickedID);
+    console.log(classname, clickedID);
+  }
 }
 
 //iframe 영역//////////////////////////////////////////////
@@ -936,6 +940,7 @@ changeBackground();//배경 변경 함수
 create_classroom_checkbox();//새 교실 추가 WIFI체크함수
 fix_classroom_checkbox();//수정하기 WIFI체크함수
 mouse_move_class();
+basicmode_classroom_click();
 
 function preprocessing(){
 
