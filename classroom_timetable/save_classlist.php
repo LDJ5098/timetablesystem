@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 $data = json_decode(file_get_contents('php://input'), true);
 
 $object_code = $data['object_code'];
-$maindata = json_encode($data['maindata']);
+$maindata = json_encode($data['maindata'], JSON_UNESCAPED_UNICODE);
 
 // 준비된 SQL 문
 $sql = "INSERT INTO classlist (object_code, maindata) VALUES ('$object_code', '$maindata')
