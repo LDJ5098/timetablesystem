@@ -511,7 +511,7 @@ function edit_menu(){
 function sendData() {
     var object_code=classroom_ID;
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'process.php', false); // false for synchronous request
+    xhr.open('POST', 'save_classlist.php', false); // false for synchronous request
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     
     xhr.onreadystatechange = function () {
