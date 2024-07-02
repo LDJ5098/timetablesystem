@@ -472,8 +472,6 @@ function search_background_color(code){
 
 
 function show_data(){
-    loadData();
-
     document.querySelectorAll('.class_info').forEach(function(element){
         element.remove();
     });
@@ -548,6 +546,7 @@ function loadData() {
 }
 
 function cycle(){
+    loadData();
     show_data();
     console.log('출력했습니다.');
 }
