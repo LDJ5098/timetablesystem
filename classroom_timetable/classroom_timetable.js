@@ -470,7 +470,7 @@ function search_background_color(code){
     return background;
 }
 
-var backup_maindata;
+var backup_maindata = [[],[],[],[],[],[],[]];
 
 function finddatacode(key){
     for(var i = 0; i < maindata.length; i++){
@@ -585,11 +585,10 @@ function loadData() {
     xhr.send();
 }
 
-loadData();
 function cycle(){
-    backup_maindata=maindata;
     loadData();
     show_data();
+    backup_maindata=maindata;
     console.log('출력했습니다.');
 }
 setInterval(cycle, 16.6);
