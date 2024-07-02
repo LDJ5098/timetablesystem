@@ -296,6 +296,7 @@ function deleteclass_maindata(classID){
         if(forTF==false)break;
     }
     console.log(maindata);
+    sendData();
 }
 
 //중복 체크
@@ -444,6 +445,7 @@ function new_save(){
         });
         show_data();
         close_button_click();
+        sendData();
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////
@@ -545,7 +547,6 @@ function loadData() {
 
 function cycle(){
     loadData();
-    sendData();
     show_data();
     console.log('출력했습니다.');
 }
