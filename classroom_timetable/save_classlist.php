@@ -18,10 +18,11 @@ $data = json_decode(file_get_contents('php://input'), true);
 
 $object_code = $data['object_code'];
 $maindata = json_encode($data['maindata'], JSON_UNESCAPED_UNICODE);
+$serial_class_data = json_encode($data['serial_class_data'], JSON_UNESCAPED_UNICODE);
 
 // 준비된 SQL 문
-$sql = "INSERT INTO classlist (object_code, maindata) VALUES ('$object_code', '$maindata')
-        ON DUPLICATE KEY UPDATE maindata='$maindata'";
+$sql = "INSERT INTO classlist (object_code, maindata) VALUES ('$object_code', '$maindata', '$serial_class_data')
+        ON DUPLICATE KEY UPDATE maindata='$maindata', serial_class_data=$serial_class_data";
 
 // 데이터베이스에 저장
 if ($conn->query($sql) === TRUE) {
