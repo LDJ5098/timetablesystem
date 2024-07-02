@@ -544,8 +544,8 @@ function loadData() {
 }
 
 function cycle(){
-    sendData();
     loadData();
+    sendData();
     show_data();
     console.log('출력했습니다.');
 }
