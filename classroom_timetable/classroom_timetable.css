@@ -1,173 +1,189 @@
+a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: rgb(80, 134, 185); /* 클릭 시 색상 변경 방지 */
+}
+
 body{
-    position: relative;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    width: auto;
+    min-width: 1200px;
     height: auto;
-    width: 700px;
+    min-height: 100vh;
+    background-color: rgb(243, 243, 243);
+    justify-content: center;
+    align-items: center;
+    
+    overflow:auto;
 }
 
-#main_table {
-    position: relative;
-    width: 100%;
-    height: 360px;
-    overflow: hidden;
-    border-collapse: collapse;
-    border-top: solid 1px black;
-    border-bottom: solid 1px black;
-}
-
-table {
-    border-collapse: collapse;
-}
-
-.table_head {
-    width: 100%;
-    height: 35px;
-}
-
-.week{
+#main {
+    display: flex;
+    width: auto;
+    height: auto;
+    flex-direction: column;
     text-align: center;
-    background-color: rgb(233, 233, 233);
-}
-
-
-th, td {
-    margin : 0;
-    padding : 0;
-    border-collapse: collapse;
-    border:solid 1px black;
-    border-top: none;
-}
-
-
-.table_body {
-    width: 100%;
-    height: 100%;
-
-    margin-bottom: 34px;
-
-    overflow: scroll;
-    -ms-overflow-style: none;
-
-}::-webkit-scrollbar{
-    display:none;
-  }
-
-.times{
-    border-collapse: collapse;
-}
-
-.times > div {
-    display: flex;
-    border-collapse: collapse;
-    width: 100%;
-    height: 40px;
-    font-size: 11px;
-    justify-content: center;
     align-items: center;
-
-    border-bottom: solid 1px black;
+    justify-content: center;
+    padding:5px;
+    margin-top:20px;
+    margin-bottom:20px;
 }
-.class_cols {
+
+#background{
     position: relative;
-    display: block;
-    width: 100%;
-}
-.class_col {
-    display: flex;
-    width: 100%;
-    height: 40px;
-    font-size: 11px;
-    justify-content: center;
-    align-items: center;
-    border-bottom: solid 1px black;
-}
-
-
-.class_info {
-    position: absolute;
-    top:10px;
-    width: 100%;
-    height: 40px;
-    background-color: rgb(255, 199, 199);
-    overflow: scroll;
-}
-
-
-.class_info > div {
-    display: flex;
-    width: 95%;
-    height: auto;
-    margin-left:5%;
-    margin-bottom: 5px;
-}
-
-.classname {
-    width: 90%;
-    font-size: 11.5px;
-    font-weight: bold;
-    margin-top: 5%;
-}
-
-.delete_class {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-
-    width: 10px;
-    height: 10px;
-    font-size: 10px;
-    line-height: 1.0;
-    padding:2px;
-    cursor: pointer;
-}
-
-.class_professor {
-    width: 100%;
-    font-size: 9px;
-}
-
-/*////////////////////////////////////////////////////////////////*/
-#menu {
-    margin-top:40px;
-    margin-bottom: 40px;
-    position: relative;
-    display: flex;
-    width: 100%;
-    align-items: center;
-}
-
-#title {
-    position: absolute;
-    left: 5px;
-    font-size: 40px;
-}
-
-#create_new_button {
-    position: absolute;
-    right: 5px;
-    top: 1px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    background-color: white;
-    border: solid 1px rgb(77, 77, 77);
+    width: 1000px;
+    height: 563px;
+    border: 1px solid rgb(109, 109, 109);
     border-radius: 8px;
+    background-size: contain;
+    margin-top:10px;
+}
+
+#menu {
+    display: flex;
+    width: 980px;
+    justify-content: space-between;
+    padding-left:10px;
+    padding-right:10px;
+}
+
+.active {
+    background-color: green;
+    color: white;
+}
+
+/*//////////////////////////////////////////////////////*/
+.class_info_panel {
+    display: flex;
+    position: absolute;
+    width: 55px;
+    height: 45px;
+    background-color: rgb(122, 255, 133);
+    transform: translate(-50%, -50%);
+
+    justify-content: center;
+    align-items: center;    
+
+    top:281px;
+    left:500px;
+
+    font-size: 12px;
+    text-align: center;
+    z-index:0;
+}
 
 
-    width: 35px;
+.choice_panel {
+    border: 2px dashed rgb(0, 0, 0);
+}
+
+/*/////////////////////////////////////////////////////////////////////////////////*/
+.info_classroom_background {
+    display: none;
+    position: absolute;
+    width:100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.63);
+
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.info_classroom_DIV {
+    width: 400px;
+    height: 410px;
+    border: 2px solid black;
+    background-color: white;
+    border-radius: 10px;
+
+    box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.274);
+
+}
+
+.info_classroom_DIV > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.info_classroom_DIV > div > label {
+    margin-right: 8px;
+}
+
+.info_input {
+    width: 200px;
+}
+.info_classroom_DIV > div > textarea {
+    resize: none;
+    width: 200px;
+}
+
+
+
+
+#delete_button {
+    width: 100px;
     height: 35px;
-    font-size: 30px;
+    font-weight: bold;
+    background-color: rgb(196, 255, 235);
+    font-size: 16px;
+    border-radius: 10px;
+    margin-top:10px;
+}
 
+
+
+/*/////////////////////////////////////////////////////////////////////////////////*/
+
+.class_detail {
+    height: 60px;
+}
+
+.checkbox {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+}
+
+#loginbutton {
     cursor: pointer;
 }
 
-#close_button {
+#classroom_list {
+    border: none;
+    width: 710px;
+    height: 480px;
+    overflow: scroll;
+}
+#classroom_list_background {
     position: absolute;
-    right: 8px;
+    display: none;
+    background-color: white;
+    width: 80%;
+    height: 90%;
+    border-radius: 12px;
+    box-shadow: 0 0 7px black;
+    align-items: center;
+    transform: translate(-50%, -50%);
+    top:50%;
+    left:50%;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+}
+
+#close_iframe {
+    position: absolute;
+    right: -10px;
     top: -18px;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     
 
     color : white;
@@ -176,142 +192,20 @@ th, td {
     box-shadow: 0 0 5px 0 rgb(150, 150, 150);
     border-radius: 100px;
 
-    width: 35px;
-    height: 35px;
-    font-size: 25px;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
 }
-
-#close_button:hover {
+#close_iframe:hover {
     background-color: rgb(255, 71, 71);
     cursor: pointer;
 }
 
-
-#create_new_menu_DIV{
-    display: block;
-    position: absolute;
-
-    left:350px;
-    top: 100px;
-
-    width: 400px;
-    height: auto;
-    padding-bottom: 20px;
-    box-shadow: 0 0 15px 0px rgb(112, 112, 112);
-    border-radius: 2px;
-    background-color: white;
-    z-index: 3;
-    transform: translateX(-50%);
-}
-#create_new_menu_DIV > h3 {
-    margin-left : 5%;
-}
-
-.info_input {
-    display: flex;
-    text-align: center;
-    width: 90%;
-    padding-left: 5%;
-    padding-right: 5%;
-    margin-bottom: 5px;
-}
-.info_input > input {
-    width: 75%;
-    border: solid 1px rgb(201, 201, 201);
-    font-size: 12px;
-}
-.info_input > label{
-    display: flex;
-    justify-content: left;
-    align-items: center;
-
-    width: 22%;
-    height: 20px;
-    font-size: 12px;
-}
-
-#create_background{
+#classroom_list_focus_layer{
+    position: relative;
     display: none;
-    position: absolute;
-    width: 700px;
-    height: 400px;
-
-    top:-30px;
-    z-index: 2;
-    background-color: rgba(255, 255, 255, 0.637);
-}
-
-.select_week {
-    width: 70%;
-    display: flex;
-}
-.select_week > label{
-    width: 20px;
-
-    font-size: 14px;
-    background-color: rgb(233, 233, 233);
-
-    margin-right: 5px;
-
-    cursor: pointer;
-}
-
-.time_place {
-    width: 95%;
-    border-radius: 2px;
-    height: auto;
-    display: block;
-    padding:6px;
-    margin-bottom: 5px;
-    border: solid 1px rgb(201, 201, 201);
-}
-
-#time_places {
-    width: 77%;
-    height: auto;
-}
-
-#more_input {
-    color: rgb(255, 42, 42);
-    font-weight: bold;
-    font-size: 12px;
-    cursor: pointer;
-    margin-left:100px;
-}
-
-
-.starthour {
-    font-size: 10px;
-    width: 68px;
-    height: 25px;
-}
-.startminute {
-    font-size: 10px;
-    width: 45px;
-    height: 25px;
-}
-.endhour {
-    font-size: 10px;
-    width: 68px;
-    height: 25px;
-}
-.endminute {
-    font-size: 10px;
-    width: 45px;
-    height: 25px;
-}
-
-#new_save{
-    display: flex;
-    justify-content: right;
-    margin-right: 23px;
-}
-#new_save > button {
-    background-color: rgb(255, 42, 42);
-    color: white;
-    border: none;
-    width: 45px;
-    height: 25px;
-    border-radius: 2px;
-    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.507);
+    width: 100%;
+    height: 100%;
+    z-index: 1;
 }
