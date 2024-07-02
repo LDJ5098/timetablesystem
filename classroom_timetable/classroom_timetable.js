@@ -473,37 +473,30 @@ function search_background_color(code){
 var backup_maindata;
 
 function finddatacode(key){
-    var TF=true;
     for(var i = 0; i < maindata.length; i++){
         for(var j = 0; j < maindata[i].length; j++){
             if(maindata[i][j].key===key){
-                TF=false;
-                break;
+                return false;
             }
-            if(TF===false)break;
         }
-        if(TF===false)break;
     }
-    return TF;
+    return true;
 }
 
 function finddifferences(key, classname, professor, start_time, end_time, serial_code){
-    var TF=false;
     for(var i = 0; i < backup_maindata.length; i++){
         for(var j = 0; j < backup_maindata[i].length; j++){
             if(backup_maindata[i][j].key===key){
                 var object = backup_maindata[i][j];
-                if(object.classname!==classname)TF=true;
-                else if(object.professor!==professor)TF=true;
-                else if(object.start_time!==start_time)TF=true;
-                else if(object.end_time!==end_time)TF=true;
-                else if(object.serial_code!==serial_code)TF=true;
+                if(object.classname!==classname)return true;
+                else if(object.professor!==professor)return true;
+                else if(object.start_time!==start_time)return true;
+                else if(object.end_time!==end_time)return true;
+                else if(object.serial_code!==serial_code)return true;
             }
-            if(TF===true)break;
         }
-        if(TF===true)break;
     }
-    return TF;
+    return false;
 }
 
 function show_data(){
