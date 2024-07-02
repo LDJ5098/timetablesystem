@@ -273,8 +273,6 @@ function add_new_data(class_name, professor_name, choice_week ,start_time, end_t
     }
     maindata[choice_week].push(object);
     serial_class_data.push(serial_object);
-    show_data();
-    deleteclass();
 
     console.log(maindata);
 }
@@ -443,7 +441,7 @@ function new_save(){
             
             add_new_data(class_name, professor ,choice_week ,starttime, endtime, backgroundcolor, serial_class);
         });
-        show_data();
+        //show_data();
         close_button_click();
         sendData();
     }
@@ -453,7 +451,7 @@ function deleteclass(){
     document.querySelectorAll('.delete_class').forEach(function(element){
         element.addEventListener('click', function(){
             deleteclass_maindata(element.parentElement.parentElement.id);
-            show_data();
+            //show_data();
         });
     });
 }
@@ -523,6 +521,7 @@ function show_data(){
             else if(search_mode==='different'){
                 document.querySelectorAll('.class_info').forEach(function(element){
                     if(element.id===object.key)element.remove();
+                    deleteclass_maindata(object.key);
                 });
             }
             var className = object.classname;
