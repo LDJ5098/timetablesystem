@@ -22,7 +22,7 @@ $serial_class_data = json_encode($data['serial_class_data'], JSON_UNESCAPED_UNIC
 
 // 준비된 SQL 문
 $sql = "INSERT INTO classlist (object_code, maindata, serial_class_data) VALUES ('$object_code', '$maindata', '$serial_class_data')
-        ON DUPLICATE KEY UPDATE maindata='$maindata', serial_class_data=$serial_class_data";
+        ON DUPLICATE KEY UPDATE maindata='$maindata', serial_class_data='$serial_class_data'";
 
 // 데이터베이스에 저장
 if ($conn->query($sql) === TRUE) {
