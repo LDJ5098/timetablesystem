@@ -511,7 +511,7 @@ function show_data(){
                     if(element.id===object.key)element.remove();
                 });
             }
-        })
+        });
     });
 
     maindata.forEach(function(datas, index){
