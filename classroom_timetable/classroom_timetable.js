@@ -275,7 +275,6 @@ function add_new_data(class_name, professor_name, choice_week ,start_time, end_t
     serial_class_data.push(serial_object);
 
     //console.log(maindata);
-    sendData();
 }
 
 function class_edit(arr_index, object_id ,classname, professor_name, choice_week, start_time, end_time){
@@ -443,6 +442,7 @@ function new_save(){
             add_new_data(class_name, professor ,choice_week ,starttime, endtime, backgroundcolor, serial_class);
         });
         //show_data();
+        sendData();
         close_button_click();
     }
 }
