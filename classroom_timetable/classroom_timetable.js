@@ -484,19 +484,25 @@ function finddatacode(key){
 }
 
 function finddifferences(key, classname, professor, start_time, end_time, serial_code){
+    var found = false;
+
     for(var i = 0; i < backup_maindata.length; i++){
         for(var j = 0; j < backup_maindata[i].length; j++){
             if(backup_maindata[i][j].key===key){
+                found = true;
                 var object = backup_maindata[i][j];
-                if(object.classname!==classname)return true;
-                else if(object.professor!==professor)return true;
-                else if(object.start_time!==start_time)return true;
-                else if(object.end_time!==end_time)return true;
-                else if(object.serial_code!==serial_code)return true;
+                if(object.classname!==classname)return 'different';
+                else if(object.professor!==professor)return 'different';
+                else if(object.start_time!==start_time)return 'different';
+                else if(object.end_time!==end_time)return 'different';
+                else if(object.serial_code!==serial_code)return 'different';
             }
         }
     }
-    return false;
+    return found ? 'same' : 'not found';
+    //different : 데이터가 존재하지만 일부 속성 값이 다른 경우
+    //same : 데이터가 존재하고 모든 속성 값이 동일한 경우
+    //not found : 해당 키에 해당하는 데이터가 존재하지 않는 경우
 }
 
 function show_data(){
@@ -512,7 +518,9 @@ function show_data(){
 
     maindata.forEach(function(datas, index){
         datas.forEach(function(object){
-            if(finddifferences(object.key, object.classname, object.professor, object.start_time, object.end_time, object.serial_code)){
+            var search_mode = finddifferences(object.key, object.classname, object.professor, object.start_time, object.end_time, object.serial_code);
+            if(search_mode==='same')return;
+            else if(search_mode==='different'){
                 document.querySelectorAll('.class_info').forEach(function(element){
                     if(element.id===object.key)element.remove();
                 });
