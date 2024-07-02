@@ -595,7 +595,9 @@ function loadData() {
     xhr.send();
 }
 
-
+loadData();
+show_data();
+backup_maindata=maindata;
 function cycle(){
     loadData();
     show_data();
