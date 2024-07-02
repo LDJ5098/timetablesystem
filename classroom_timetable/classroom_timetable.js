@@ -508,4 +508,24 @@ function edit_menu(){
 }
 
 
-show_data();
+function sendData() {
+    var object_code=classroom_ID;
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'process.php', false); // false for synchronous request
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(xhr.responseText);
+        }
+    };
+
+    var data = JSON.stringify({ object_code: object_code, maindata: maindata });
+    xhr.send(data);
+}
+
+function cycle(){
+    show_data();
+    console.log('출력했습니다.');
+}
+setInterval(cycle, 1000);
