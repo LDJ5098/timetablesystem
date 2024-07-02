@@ -294,7 +294,6 @@ function deleteclass_maindata(classID){
         if(forTF==false)break;
     }
     //console.log(maindata);
-    sendData();
 }
 
 //중복 체크
@@ -443,7 +442,6 @@ function new_save(){
         });
         //show_data();
         close_button_click();
-        sendData();
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////
@@ -521,7 +519,6 @@ function show_data(){
             else if(search_mode==='different'){
                 document.querySelectorAll('.class_info').forEach(function(element){
                     if(element.id===object.key)element.remove();
-                    deleteclass_maindata(object.key);
                 });
             }
             var className = object.classname;
