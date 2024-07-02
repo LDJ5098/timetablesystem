@@ -255,8 +255,8 @@ function refresh_maindata(){
 }
 
 
-
-function add_new_data(class_name, professor_name, choice_week ,start_time, end_time, background_color_value, serial_class){
+////////////////////////////////////////////////////수업 추가///////////////////////////////////////////////////////////////////////////////////////////
+function add_new_data(class_name, professor_name, choice_week ,start_time, end_time, serial_class){
     var object = {
         key:generateRandomKey(),
         classname:class_name,
@@ -267,12 +267,7 @@ function add_new_data(class_name, professor_name, choice_week ,start_time, end_t
         serial_code:serial_class
     }
 
-    var serial_object = {
-        serial_code:serial_class,
-        background_color:background_color_value
-    }
     maindata[choice_week].push(object);
-    serial_class_data.push(serial_object);
 
     //console.log(maindata);
 }
@@ -281,6 +276,8 @@ function class_edit(arr_index, object_id ,classname, professor_name, choice_week
     
 }
 
+
+///////////////////////////////////////////////////수업 삭제////////////////////////////////////////////////////////////////////////////////////////////
 function deleteclass_maindata(classID){
     var forTF=true;
     for (var i = 0; i < maindata.length; i++) {
@@ -297,7 +294,7 @@ function deleteclass_maindata(classID){
     //console.log(maindata);
 }
 
-//중복 체크
+//중복 체크//데이터 생성할 때 시간 겹치는게 존재하는가 체크하는용도
 function duplication_check(list_index, choice_week, start_time, end_time){
     var TF = false;
     for (var i = 0; i < maindata[choice_week].length; i++) {
@@ -402,7 +399,6 @@ function new_save(){
         var class_name = document.querySelectorAll('.info_input > input')[0].value;
         var professor = document.querySelectorAll('.info_input > input')[1].value;
 
-        var backgroundcolor = getRandomPastelColor();
         var serial_class = serial_class_key();
 
         var TF=false;
@@ -439,14 +435,16 @@ function new_save(){
             var starttime = parseInt(starthour) * 60 + parseInt(startminute);
             var endtime = parseInt(endhour) * 60 + parseInt(endminute);
             
-            add_new_data(class_name, professor ,choice_week ,starttime, endtime, backgroundcolor, serial_class);
+            add_new_data(class_name, professor ,choice_week ,starttime, endtime, serial_class);
         });
         //show_data();
         sendData();
         close_button_click();
     }
 }
-////////////////////////////////////////////////////////////////////////////////////
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function deleteclass() {
     document.querySelectorAll('.delete_class').forEach(function(element) {
         if (!element.hasListener) {  // 커스텀 속성으로 이벤트 리스너 중복 방지
@@ -459,18 +457,6 @@ function deleteclass() {
     });
 }
 
-
-
-function search_background_color(code){
-    var background;
-    for(i=0;i<serial_class_data.length;i++){
-        if(serial_class_data[i].serial_code===code){
-            background = serial_class_data[i].background_color;
-            break;
-        }
-    }
-    return background;
-}
 
 var backup_maindata = [[],[],[],[],[],[],[]];
 
@@ -529,7 +515,7 @@ function show_data(){
             }
             var className = object.classname;
             var professorName = object.professor;
-            var background_color = search_background_color(object.serial_code);
+            var background_color = getRandomPastelColor();
 
             var height = ((100 * (parseFloat(object.endtime-object.starttime)/(60*24))) - parseFloat(0.04)).toFixed(2) + '%';
             var top = ((100 * (parseFloat(object.starttime)/(60*24))) - parseFloat(0.02)).toFixed(2) + '%';
@@ -555,6 +541,7 @@ function show_data(){
 }
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function edit_menu(){
 }
 
@@ -593,6 +580,7 @@ function loadData() {
 
     xhr.send();
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function cycle(){
     loadData();
