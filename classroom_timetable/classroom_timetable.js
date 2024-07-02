@@ -523,7 +523,7 @@ function sendData() {
     xhr.send(data);
 }
 
-function loadData(object_code) {
+function loadData() {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', 'load_classlist.php?object_code=' + object_code, true); // true for asynchronous request
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
