@@ -507,9 +507,8 @@ function show_data(){
 function edit_menu(){
 }
 
-
+var object_code=classroom_ID;
 function sendData() {
-    var object_code=classroom_ID;
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'save_classlist.php', false); // false for synchronous request
     xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -524,7 +523,29 @@ function sendData() {
     xhr.send(data);
 }
 
+function loadData(object_code) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'load_classlist.php?object_code=' + object_code, true); // true for asynchronous request
+    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.maindata) {
+                maindata = response.maindata;
+                console.log('성공적으로 데이터를 불러왔습니다. : ', response.maindata);
+            } else {
+                console.log('데이터를 불러오는데 실패했습니다.');
+            }
+        }
+    };
+
+    xhr.send();
+}
+
 function cycle(){
+    sendData();
+    loadData();
     show_data();
     console.log('출력했습니다.');
 }
