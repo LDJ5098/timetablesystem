@@ -470,14 +470,63 @@ function search_background_color(code){
     return background;
 }
 
+var backup_maindata;
+
+function finddatacode(key){
+    var TF=true;
+    for(var i = 0; i < maindata.length; i++){
+        for(var j = 0; j < maindata[i].length; j++){
+            if(maindata[i][j].key===key){
+                TF=false;
+                break;
+            }
+            if(TF===false)break;
+        }
+        if(TF===false)break;
+    }
+    return TF;
+}
+
+function finddifferences(key, classname, professor, start_time, end_time, serial_code){
+    var TF=false;
+    for(var i = 0; i < backup_maindata.length; i++){
+        for(var j = 0; j < backup_maindata[i].length; j++){
+            if(backup_maindata[i][j].key===key){
+                var object = backup_maindata[i][j];
+                if(object.classname!==classname)TF=true;
+                else if(object.professor!==professor)TF=true;
+                else if(object.start_time!==start_time)TF=true;
+                else if(object.end_time!==end_time)TF=true;
+                else if(object.serial_code!==serial_code)TF=true;
+            }
+            if(TF===true)break;
+        }
+        if(TF===true)break;
+    }
+    return TF;
+}
 
 function show_data(){
-    document.querySelectorAll('.class_info').forEach(function(element){
-        element.remove();
+    backup_maindata.forEach(function(datas){
+        datas.forEach(function(object){
+            if(finddatacode(object.key)){
+                document.querySelectorAll('.class_info').forEach(function(element){
+                    if(element.id===object.key)element.remove();
+                });
+            }
+        })
     });
 
     maindata.forEach(function(datas, index){
         datas.forEach(function(object){
+            if(finddifferences(object.key, object.classname, object.professor, object.start_time, object.end_time, object.serial_code)){
+                document.querySelectorAll('.class_info').forEach(function(element){
+                    if(element.id===object.key)element.remove();
+                });
+            }
+            else return;
+
+
             var className = object.classname;
             var professorName = object.professor;
             var background_color = search_background_color(object.serial_code);
@@ -546,6 +595,7 @@ function loadData() {
 }
 
 function cycle(){
+    backup_maindata=maindata;
     loadData();
     show_data();
     console.log('출력했습니다.');
