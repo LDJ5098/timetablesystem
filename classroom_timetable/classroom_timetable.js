@@ -5,7 +5,7 @@ var searchParams = new URLSearchParams(queryString);
 // 매개변수 값 추출
 var classroom_ID = searchParams.get('classID'); // MIO1O0V2O9
 var classroom_name = searchParams.get('classname'); // 104호 (디코딩된 값)
-console.log(classroom_ID, classroom_name);
+//console.log(classroom_ID, classroom_name);
 document.getElementById("title").textContent = classroom_name;
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -242,9 +242,9 @@ function refresh_maindata(){
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                console.log("데이터가 성공적으로 저장되었습니다.");
+                //console.log("데이터가 성공적으로 저장되었습니다.");
             } else {
-                console.log("데이터 저장 중 오류가 발생했습니다. " + xhr.statusText);
+                //console.log("데이터 저장 중 오류가 발생했습니다. " + xhr.statusText);
             }
         }
     };
@@ -274,7 +274,7 @@ function add_new_data(class_name, professor_name, choice_week ,start_time, end_t
     maindata[choice_week].push(object);
     serial_class_data.push(serial_object);
 
-    console.log(maindata);
+    //console.log(maindata);
 }
 
 function class_edit(arr_index, object_id ,classname, professor_name, choice_week, start_time, end_time){
@@ -293,7 +293,7 @@ function deleteclass_maindata(classID){
         }
         if(forTF==false)break;
     }
-    console.log(maindata);
+    //console.log(maindata);
     sendData();
 }
 
@@ -563,7 +563,7 @@ function sendData() {
     
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.responseText);
+            //console.log(xhr.responseText);
         }
     };
 
@@ -581,9 +581,9 @@ function loadData() {
             var response = JSON.parse(xhr.responseText);
             if (response.maindata) {
                 maindata = response.maindata;
-                console.log('성공적으로 데이터를 불러왔습니다. : ', response.maindata);
+                //console.log('성공적으로 데이터를 불러왔습니다. : ', response.maindata);
             } else {
-                console.log('데이터를 불러오는데 실패했습니다.');
+                //console.log('데이터를 불러오는데 실패했습니다.');
             }
         }
     };
@@ -595,6 +595,6 @@ function cycle(){
     loadData();
     show_data();
     backup_maindata=maindata;
-    console.log('출력했습니다.');
+    //console.log('출력했습니다.');
 }
 setInterval(cycle, 16.6);
