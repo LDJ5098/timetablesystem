@@ -447,14 +447,18 @@ function new_save(){
     }
 }
 ////////////////////////////////////////////////////////////////////////////////////
-function deleteclass(){
-    document.querySelectorAll('.delete_class').forEach(function(element){
-        element.addEventListener('click', function(){
-            deleteclass_maindata(element.parentElement.parentElement.id);
-            //show_data();
-        });
+function deleteclass() {
+    document.querySelectorAll('.delete_class').forEach(function(element) {
+        if (!element.hasListener) {  // 커스텀 속성으로 이벤트 리스너 중복 방지
+            element.addEventListener('click', function() {
+                deleteclass_maindata(element.parentElement.parentElement.id);
+                //show_data();
+            });
+            element.hasListener = true;  // 커스텀 속성 추가
+        }
     });
 }
+
 
 
 function search_background_color(code){
