@@ -523,32 +523,30 @@ function show_data(){
                 document.querySelectorAll('.class_info').forEach(function(element){
                     if(element.id===object.key)element.remove();
                 });
+
+                var className = object.classname;
+                var professorName = object.professor;
+                var background_color = search_background_color(object.serial_code);
+
+                var height = ((100 * (parseFloat(object.endtime-object.starttime)/(60*24))) - parseFloat(0.04)).toFixed(2) + '%';
+                var top = ((100 * (parseFloat(object.starttime)/(60*24))) - parseFloat(0.02)).toFixed(2) + '%';
+
+                var class_id = object.key;
+                var html = `
+                    <div class="class_info ${object.serial_code}" style="height:${height}; top:${top}; background-color:${background_color};" id="${class_id}">
+                        <div>
+                            <label class="classname">${className}</label>
+                            <img src="delete.png" class="delete_class">
+                        </div>
+                        <div>
+                            <label class="class_professor">${professorName}</label>
+                        </div>
+                    </div>
+                `;
+
+                var target = document.querySelectorAll('.class_cols')[index];
+                target.insertAdjacentHTML('beforeend', html);
             }
-            else return;
-
-
-            var className = object.classname;
-            var professorName = object.professor;
-            var background_color = search_background_color(object.serial_code);
-
-            var height = ((100 * (parseFloat(object.endtime-object.starttime)/(60*24))) - parseFloat(0.04)).toFixed(2) + '%';
-            var top = ((100 * (parseFloat(object.starttime)/(60*24))) - parseFloat(0.02)).toFixed(2) + '%';
-
-            var class_id = object.key;
-            var html = `
-                <div class="class_info ${object.serial_code}" style="height:${height}; top:${top}; background-color:${background_color};" id="${class_id}">
-                    <div>
-                        <label class="classname">${className}</label>
-                        <img src="delete.png" class="delete_class">
-                    </div>
-                    <div>
-                        <label class="class_professor">${professorName}</label>
-                    </div>
-                </div>
-            `;
-
-            var target = document.querySelectorAll('.class_cols')[index];
-            target.insertAdjacentHTML('beforeend', html);
         });
     });
     deleteclass();
@@ -594,6 +592,7 @@ function loadData() {
     xhr.send();
 }
 
+loadData();
 function cycle(){
     backup_maindata=maindata;
     loadData();
