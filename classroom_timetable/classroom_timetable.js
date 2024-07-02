@@ -294,6 +294,7 @@ function deleteclass_maindata(classID){
         }
         if(forTF==false)break;
     }
+    sendData();
     //console.log(maindata);
 }
 
