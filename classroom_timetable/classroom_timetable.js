@@ -5,8 +5,15 @@ var searchParams = new URLSearchParams(queryString);
 // 매개변수 값 추출
 var classroom_ID = searchParams.get('classID'); // MIO1O0V2O9
 var classroom_name = searchParams.get('classname'); // 104호 (디코딩된 값)
+var loginTF = searchParams.get('loginTF'); // 104호 (디코딩된 값)
 //console.log(classroom_ID, classroom_name);
 document.getElementById("title").textContent = classroom_name;
+/////////////////////////////////////////////////////////////////////////////////
+
+function loginfail(){
+    alert('로그인이 안되어있습니다.');
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 
 document.querySelector(".table_body").scrollTop = 369;
@@ -349,6 +356,11 @@ function duplication_check(list_index, choice_week, start_time, end_time){
 }
 //////////////////////////////////////////////////////////////////////////
 function new_save(){
+    if(loginTF!=="true"){
+        loginfail();
+        return;
+    }
+
     var input=document.querySelectorAll('.info_input > input');
 
     if(input[0].value===""){
@@ -448,6 +460,11 @@ function new_save(){
 }
 ////////////////////////////////////////////////////////////////////////////////////
 function deleteclass() {
+    if(loginTF!=="true"){
+        loginfail();
+        return;
+    }
+
     document.querySelectorAll('.delete_class').forEach(function(element) {
         if (!element.hasListener) {  // 커스텀 속성으로 이벤트 리스너 중복 방지
             element.addEventListener('click', function() {
