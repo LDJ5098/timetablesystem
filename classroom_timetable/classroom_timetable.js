@@ -555,7 +555,7 @@ function show_data(){
                 <div class="class_info ${object.serial_code}" style="height:${height}; top:${top}; background-color:${background_color};" id="${class_id}">
                     <div>
                         <label class="classname">${className}</label>
-                        <img src="delete.png" class="delete_class">
+                        ${loginTF === "true" ? '<img src="delete.png" class="delete_class">' : ''}
                     </div>
                     <div>
                         <label class="class_professor">${professorName}</label>
@@ -619,9 +619,6 @@ backup_maindata=maindata;
 ///////////////////로그인이 안되어있는 상태에서 접속했을시///////////////////////////////////////////////////
 
 if(loginTF!=="true"){
-    document.querySelectorAll('.delete_class').forEach(function(element) {
-        element.style.display = "none";
-    });
     document.getElementById('create_new_button').style.display = "none";
 }
 
