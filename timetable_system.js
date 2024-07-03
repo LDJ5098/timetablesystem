@@ -360,14 +360,32 @@ function click_classroom(element) {
 }
 
 
-//floor 배경 이미지 변경 함수
+//floor 배경 이미지 변경 함수//////////////////////////////////////////////////////////////
+var preloadedImages = {};
+function preloadImages() {
+  var whichOptions = Array.from(which.options).map(option => option.value);
+  var floorOptions = Array.from(floor.options).map(option => option.value);
+
+  whichOptions.forEach(function(w) {
+      floorOptions.forEach(function(f) {
+          var imagePath = "./floor_section/" + w + "/" + f + ".jpg";
+          var img = new Image();
+          img.src = imagePath;
+          preloadedImages[w + "-" + f] = img;
+      });
+  });
+}
+
 function changeBackground() {
+  var selectedWhich = which.value;
+  var selectedFloor = floor.value;
+  var imageKey = selectedWhich + "-" + selectedFloor;
 
-    var imagePath = "./floor_section/" + which.value + "/" + floor.value + ".jpg";
+  if (preloadedImages[imageKey]) {
+      document.getElementById("background").style.backgroundImage = "url('" + preloadedImages[imageKey].src + "')";
+  }
 
-    document.getElementById("background").style.backgroundImage = "url('" + imagePath + "')";
-
-    document.getElementById('floor_info').textContent = which.value + "-" + floor.value;
+  document.getElementById('floor_info').textContent = selectedWhich + "-" + selectedFloor;
 }
 
 
@@ -933,6 +951,7 @@ function delete_class(){
 }
 
 // 페이지가 로드될 때 실행할 함수들
+preloadImages();
 show_refresh();
 move_class();
 Menu_Operation();//메뉴 버튼들 실행 판단
