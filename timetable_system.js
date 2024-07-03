@@ -205,7 +205,6 @@ function load_database_code() {
 var loading_data = false;
 function show_refresh() {
   if(loading_data===true)return;
-  loading_data=true;
   var url = 'timetable_system_load.php';
   var request = new XMLHttpRequest();
   request.open('GET', url, true); // 비동기적 요청으로 변경 (마지막 파라미터가 true)
@@ -533,6 +532,7 @@ function Menu_Operation(){
     document.getElementById('fix_classroom_background').style.display='none';
     document.getElementById('delete_button').style.display='none';
     cancel_choice();
+    loading_data=true;
   }
 
   else if(activeButton===document.querySelectorAll('.menu_button')[1]){
@@ -541,6 +541,7 @@ function Menu_Operation(){
     document.getElementById('create_classroom_background').style.display='none';
     document.getElementById('delete_button').style.display='none';
     cancel_choice();
+    loading_data=true;
   }
 
   else if(activeButton===document.querySelectorAll('.menu_button')[2]){
