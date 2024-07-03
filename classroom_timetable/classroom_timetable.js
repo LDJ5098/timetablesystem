@@ -524,9 +524,6 @@ function finddifferences(key, classname, professor, start_time, end_time, serial
 }
 
 function show_data(){
-    if(loginTF!=="true") document.getElementById('create_new_button').style.display = "none";
-    else document.getElementById('create_new_button').style.display = "block";
-
     backup_maindata.forEach(function(datas){
         datas.forEach(function(object){
             if(finddatacode(object.key)){
@@ -620,6 +617,8 @@ show_data();
 backup_maindata=maindata;
 
 ///////////////////로그인이 안되어있는 상태에서 접속했을시///////////////////////////////////////////////////
+if(loginTF!=="true") document.getElementById('create_new_button').style.display = "none";
+else document.getElementById('create_new_button').style.display = "block";
 function loginfail(){
     alert('로그인이 안되어있습니다.');
 }
