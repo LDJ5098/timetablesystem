@@ -8,13 +8,7 @@ var classroom_name = searchParams.get('classname'); // 104호 (디코딩된 값)
 var loginTF = searchParams.get('loginTF'); // 로그인여부
 //console.log(classroom_ID, classroom_name);
 document.getElementById("title").textContent = classroom_name;
-/////////////////////////////////////////////////////////////////////////////////
 
-function loginfail(){
-    alert('로그인이 안되어있습니다.');
-}
-
-/////////////////////////////////////////////////////////////////////////////////
 
 document.querySelector(".table_body").scrollTop = 369;
 
@@ -621,6 +615,23 @@ console.log(loginTF);
 loadData();
 show_data();
 backup_maindata=maindata;
+
+///////////////////로그인이 안되어있는 상태에서 접속했을시///////////////////////////////////////////////////
+
+if(loginTF!=="true"){
+    document.querySelectorAll('.delete_class').forEach(function(element) {
+        element.style.display = "none";
+    });
+    document.getElementById('create_new_button').style.display = "none";
+}
+
+function loginfail(){
+    alert('로그인이 안되어있습니다.');
+}
+
+/////////////////////////////////////////////////////////////////////////////////
+
+
 function cycle(){
     loadData();
     show_data();
