@@ -365,7 +365,8 @@ function changeBackground() {
 
     var imagePath = "./floor_section/" + which.value + "/" + floor.value + ".jpg";
 
-    document.getElementById("background").style.backgroundImage = "url('" + imagePath + "')";
+    //document.getElementById("background").style.backgroundImage = "url('" + imagePath + "')";
+    document.getElementById("background_img").src = imagePath;
 
     document.getElementById('floor_info').textContent = which.value + "-" + floor.value;
 }
