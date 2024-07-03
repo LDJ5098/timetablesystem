@@ -587,7 +587,7 @@ function click_close_iframe(){
 
 function open_iframe(class_name, class_ID){
   var iframe = document.createElement('iframe');
-  iframe.src = 'classroom_timetable/classroom_timetable.html?classID=' + class_ID + '&classname=' + class_name;
+  iframe.src = 'classroom_timetable/classroom_timetable.html?classID=' + class_ID + '&classname=' + class_name + '&loginTF' + sessionStorage.getItem('loginTF');
   iframe.id = 'classroom_list';
 
   // iframe을 지정된 div에 추가
