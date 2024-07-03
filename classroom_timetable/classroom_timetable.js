@@ -356,11 +356,6 @@ function duplication_check(list_index, choice_week, start_time, end_time){
 }
 //////////////////////////////////////////////////////////////////////////
 function new_save(){
-    if(loginTF!=="true"){
-        loginfail();
-        return;
-    }
-
     var input=document.querySelectorAll('.info_input > input');
 
     if(input[0].value===""){
@@ -460,11 +455,6 @@ function new_save(){
 }
 ////////////////////////////////////////////////////////////////////////////////////
 function deleteclass() {
-    if(loginTF!=="true"){
-        loginfail();
-        return;
-    }
-
     document.querySelectorAll('.delete_class').forEach(function(element) {
         if (!element.hasListener) {  // 커스텀 속성으로 이벤트 리스너 중복 방지
             element.addEventListener('click', function() {
@@ -612,6 +602,7 @@ function loadData() {
     xhr.send();
 }
 
+console.log(loginTF);
 loadData();
 show_data();
 backup_maindata=maindata;
