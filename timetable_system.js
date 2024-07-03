@@ -181,7 +181,9 @@ function MoveDataToPHP(data) {
 //////////////////////////////////////
 
 //서버에서 모든 데이터 다 가져오기(동기적)
+var loading_data=false;
 function load_database_code() {
+  loading_data=true;
   var url = 'timetable_system_load.php';
   var request = new XMLHttpRequest();
   request.open('GET', url, false); // 동기적 요청으로 변경 (마지막 파라미터가 false)
@@ -191,18 +193,22 @@ function load_database_code() {
       try {
           var data = JSON.parse(request.responseText);
           // 데이터 처리 로직 추가
+          loading_data=false;
           return data;
       } catch (error) {
           console.error('Error parsing JSON data:', error);
+          loading_data=false;
           return null;
       }
   } else { // 요청이 실패한 경우
       console.error('Request failed with status:', request.status);
+      loading_data=false;
       return null;
   }
 }
 //서버에서 모든 데이터 다 가져오기(비동기)/////////////////////////  show_floor()랑 연계됨, 화면 새로고침용
 function show_refresh() {
+  if(loading_data===true)return;
 
   var url = 'timetable_system_load.php';
   var request = new XMLHttpRequest();
