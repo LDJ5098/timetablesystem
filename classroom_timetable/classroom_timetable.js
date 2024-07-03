@@ -313,11 +313,10 @@ function duplication_check(list_index, choice_week, start_time, end_time){
     var TF = false;
     for (var i = 0; i < maindata[choice_week].length; i++) {
         var element = maindata[choice_week][i];
-        if (start_time >= element.starttime && start_time <= element.endtime) {
-            TF = true;
-            break;
-        }
-        if (end_time >= element.starttime && end_time <= element.endtime) {
+        if ((start_time >= element.starttime && start_time <= element.endtime) ||
+            (end_time >= element.starttime && end_time <= element.endtime) ||
+            (start_time <= element.starttime && end_time >= element.endtime) ||
+            (start_time >= element.starttime && end_time <= element.endtime)) {
             TF = true;
             break;
         }
