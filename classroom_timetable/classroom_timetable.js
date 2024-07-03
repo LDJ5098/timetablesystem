@@ -294,6 +294,11 @@ function class_edit(arr_index, object_id ,classname, professor_name, choice_week
 }
 
 function deleteclass_maindata(classID){
+    if(loginTF!=="true"){
+        loginfail();
+        return;
+    }
+
     var forTF=true;
     for (var i = 0; i < maindata.length; i++) {
         for (var j = 0; j < maindata[i].length; j++) {
@@ -465,11 +470,6 @@ function new_save(){
 }
 ////////////////////////////////////////////////////////////////////////////////////
 function deleteclass() {
-    if(loginTF==="true"){
-        console.log('로그인이 안되어있습니다.');
-        return;
-    }
-
     document.querySelectorAll('.delete_class').forEach(function(element) {
         if (!element.hasListener) {  // 커스텀 속성으로 이벤트 리스너 중복 방지
             element.addEventListener('click', function() {
