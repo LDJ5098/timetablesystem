@@ -160,6 +160,11 @@ select_enable_functionality();
 
 
 function create_new_class(){
+    if(loginTF==="true"){
+        console.log('로그인이 안되어있습니다.');
+        return;
+    }
+
     document.getElementById('create_background').style.display='block';
 
     var time_place = document.querySelectorAll('.time_place');
@@ -356,6 +361,11 @@ function duplication_check(list_index, choice_week, start_time, end_time){
 }
 //////////////////////////////////////////////////////////////////////////
 function new_save(){
+    if(loginTF==="true"){
+        console.log('로그인이 안되어있습니다.');
+        return;
+    }
+
     var input=document.querySelectorAll('.info_input > input');
 
     if(input[0].value===""){
@@ -455,6 +465,11 @@ function new_save(){
 }
 ////////////////////////////////////////////////////////////////////////////////////
 function deleteclass() {
+    if(loginTF==="true"){
+        console.log('로그인이 안되어있습니다.');
+        return;
+    }
+
     document.querySelectorAll('.delete_class').forEach(function(element) {
         if (!element.hasListener) {  // 커스텀 속성으로 이벤트 리스너 중복 방지
             element.addEventListener('click', function() {
