@@ -5,7 +5,7 @@ var searchParams = new URLSearchParams(queryString);
 // 매개변수 값 추출
 var classroom_ID = searchParams.get('classID'); // MIO1O0V2O9
 var classroom_name = searchParams.get('classname'); // 104호 (디코딩된 값)
-var loginTF = searchParams.get('loginTF'); // 104호 (디코딩된 값)
+var loginTF = searchParams.get('loginTF'); // 로그인여부
 //console.log(classroom_ID, classroom_name);
 document.getElementById("title").textContent = classroom_name;
 /////////////////////////////////////////////////////////////////////////////////
