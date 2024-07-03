@@ -160,8 +160,8 @@ select_enable_functionality();
 
 
 function create_new_class(){
-    if(loginTF==="true"){
-        console.log('로그인이 안되어있습니다.');
+    if(loginTF!=="true"){
+        loginfail();
         return;
     }
 
@@ -361,8 +361,8 @@ function duplication_check(list_index, choice_week, start_time, end_time){
 }
 //////////////////////////////////////////////////////////////////////////
 function new_save(){
-    if(loginTF==="true"){
-        console.log('로그인이 안되어있습니다.');
+    if(loginTF!=="true"){
+        loginfail();
         return;
     }
 
