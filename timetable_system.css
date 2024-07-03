@@ -42,11 +42,6 @@ body{
     margin-top:10px;
 }
 
-#background_img {
-    position: absolute;
-    width: 100%;
-}
-
 #menu {
     display: flex;
     width: 980px;
