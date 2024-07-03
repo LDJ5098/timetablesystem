@@ -579,7 +579,7 @@ function click_close_iframe(){
     element.style.display = 'none';
   });
 
-  var iframe = document.getElementById('classroom_list');
+  var iframe = document.querySelector('#classroom_list');
   if (iframe) {
       iframe.remove();
   }
