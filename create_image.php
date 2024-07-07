@@ -1,6 +1,8 @@
 <?php
+$code = $_GET['code'];
+$version = $_GET['version'];
 
-function drawClassInfo($courseName, $professorName, $startTime, $endTime) {
+function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version) {
     $width = 800;
     $height = 480;
 
@@ -40,7 +42,10 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime) {
     }
 
     // 비트맵 데이터를 16진수 문자열로 변환
-    $hexString = "";
+    $hexString_1 = "";
+    $hexString_2 = "";
+
+    $count=0;
     for ($i = 0; $i < count($bitmap); $i += 8) {
         $byte = 0;
         for ($bit = 0; $bit < 8; $bit++) {
@@ -48,10 +53,20 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime) {
                 $byte |= 1 << (7 - $bit);
             }
         }
-        $hexString .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";
+        $count++;
+        if($count<=24000) $hexString_1 .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";
+        else $hexString_2 .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";
     }
 
-    // 결과 출력
+    // 결과 출력 (version에 따라)
+    if ($version == 1) {
+        $hexString = $hexString_1;
+    } elseif ($version == 2) {
+        $hexString = $hexString_2;
+    } else {
+        $hexString = "none_version";
+    }
+    
     echo "/X1345247::SET::/" . $hexString . "/";
     
     // 이미지 저장 (원하는 경우)
@@ -66,6 +81,6 @@ function calculateTextXPosition($text, $fontPath, $fontSize, $width) {
 }
 
 // 예제 데이터
-drawClassInfo('프로그래밍 언어', '소지영', '09:00', '12:00');
+drawClassInfo('프로그래밍 언어', '소지영', '09:00', '12:00', $version);
 
 ?>
