@@ -13,7 +13,7 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime) {
     imagefilledrectangle($image, 0, 0, $width, $height, $white);
 
     // 폰트 설정 (경로는 시스템에 맞게 변경 필요)
-    $fontPath = '/path/to/arial.ttf'; // 예: '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf'
+    $fontPath = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf';
 
     // 텍스트 높이와 y 시작 좌표 계산
     $lineHeight = 100;
