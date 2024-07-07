@@ -2,7 +2,7 @@
 $code = $_GET['code'];
 $version = $_GET['version'];
 
-function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version) {
+function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version, $code) {
     $width = 800;
     $height = 480;
 
@@ -67,7 +67,7 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
         $hexString = "none_version";
     }
     
-    echo "/X1345247::SET::/" . $hexString . "/";
+    echo "/" . $code . "::BW::/" . $hexString . "/";
     
     // 이미지 저장 (원하는 경우)
     imagepng($image, 'class_info.png');
@@ -81,6 +81,6 @@ function calculateTextXPosition($text, $fontPath, $fontSize, $width) {
 }
 
 // 예제 데이터
-drawClassInfo('프로그래밍 언어', '소지영', '09:00', '12:00', $version);
+drawClassInfo('프로그래밍 언어', '소지영', '09:00', '12:00', $version, $code);
 
 ?>
