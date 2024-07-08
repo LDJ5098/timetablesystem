@@ -12,7 +12,11 @@ function convertMinutesToTime($minutes) {//분으로만 표현된 시간을 '09:
 }
 
 
-function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version, $code, $key) {//이미지 생성 + 출력함수
+function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version, $code, $key, $TF) {//이미지 생성 + 출력함수
+    if($TF==true){
+        echo "/" . $code . "::BW::" . $key . "/none_data/";
+        return;
+    }
     $width = 800;
     $height = 480;
 
@@ -145,6 +149,7 @@ $sql_code_load = "SELECT object_code FROM classroomDB WHERE device_code = '$code
 $code_load_result = $conn->query($sql_code_load);
 
 // 결과 검증
+$TF=false;//데이터가 정상 여부 -> false:실패 -> true:정상
 if ($code_load_result->num_rows > 0) {
     // object_code 값을 추출
     $row = $code_load_result->fetch_assoc();
@@ -164,7 +169,7 @@ if ($code_load_result->num_rows > 0) {
 
         // 배열을 반복하며 key, classname, procfessor, starttime, endtime 값을 추출
         $array = $data[$dayOfWeek-1];
-                        
+        
         foreach ($array as $obj) {
             $key = $obj['key'] ?? null;
             $classname = $obj['classname'] ?? null;
@@ -178,13 +183,10 @@ if ($code_load_result->num_rows > 0) {
             if($starttime >= $currentTime && $starttime < $closestTime) {
                 $closestTime = $starttime;
                 $result_obj = $obj;
+                $TF=true;
             }
         }
-    } else {
-        echo "검색된 데이터가 없습니다. 데이터가 비어있진 않은지 확인하십시오.";
     }
-} else {
-    echo "object_code를 찾을 수 없습니다.";
 }
 
 $conn->close();
@@ -198,7 +200,7 @@ $startTime_convert = convertMinutesToTime($starttime);
 $endTime_convert = convertMinutesToTime($endtime);
 
 //echo "교실명 : " . $classname . "," . "교수명 : " . $professor . "," . "수업시작 시간 : " . $startTime_convert . "," . "수업 끝나는 시간 : " .$endTime_convert . "," . "버전 : " . $version . "," . "기기코드 : " . $code . "," . "교실key(ID) : " . $key . "\n";
-drawClassInfo($classname, $professor, $startTime_convert, $endTime_convert, $version, $code, $key);
+drawClassInfo($classname, $professor, $startTime_convert, $endTime_convert, $version, $code, $key, $TF);
 
 
 // 예제 데이터
