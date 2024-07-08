@@ -164,12 +164,16 @@ if ($code_load_result->num_rows > 0) {
             $endtime = $obj['endtime'] ?? null;
 
             // 값 출력
-            //echo "Key: $key, Classname: $classname, Professor: $professor, Starttime: $starttime, Endtime: $endtime\n";
+            echo "Key: $key, Classname: $classname, Professor: $professor, Starttime: $starttime, Endtime: $endtime\n";
 
             if($starttime >= $currentTime && $starttime < $closestTime) {
                 $closestTime = $starttime;
                 $result_obj = $obj;
             }
+        }
+
+        if (!isset($result_obj)) {
+            echo "No upcoming class found for today.";
         }
     } else {
         echo "검색된 데이터가 없습니다. 데이터가 비어있진 않은지 확인하십시오.";
