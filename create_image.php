@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
 $code = $_GET['code'];
 $version = $_GET['version'];
 
