@@ -18,6 +18,10 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
     // 폰트 설정 (경로는 시스템에 맞게 변경 필요)
     $fontPath = '/var/www/html/fonts/arial.ttf';
 
+    if (!isFontLoaded($fontPath, "Test")) {
+        die('Error: 폰트를 로드할 수 없습니다.');
+    }
+
     // 텍스트 높이와 y 시작 좌표 계산
     $lineHeight = 100;
     $totalTextHeight = 3 * $lineHeight;
