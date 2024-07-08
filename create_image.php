@@ -5,7 +5,14 @@ date_default_timezone_set('Asia/Seoul');
 $code = $_GET['code'];
 $version = $_GET['version'];
 
-function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version, $code) {
+function convertMinutesToTime($minutes) {//분으로만 표현된 시간을 '09:00'이런형태로 바꿔주는 함수
+    $hours = floor($minutes / 60);
+    $mins = $minutes % 60;
+    return sprintf('%02d:%02d', $hours, $mins);
+}
+
+
+function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version, $code, $key) {//이미지 생성 + 출력함수
     $width = 800;
     $height = 480;
 
@@ -70,7 +77,7 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
         $hexString = $hexString_2;
     }
     
-    echo "/" . $code . "::BW::/" . $hexString . "/";
+    echo "/" . $code . "::BW::" . $key . "/" . $hexString . "/";
     
     // 이미지 저장 (원하는 경우)
     imagepng($image, 'class_info.png');
@@ -97,7 +104,10 @@ if ($conn->connect_error) {
 
 $currentHour = intval(date('H'));
 $currentMinute = intval(date('i'));
+$currentTime = $currentHour * 60 + $currentMinute;//현재시간
 $dayOfWeek_TEXT = date('l');
+$closestTime = PHP_INT_MAX; // 목표값
+
 
 function convertDayOfWeekToNumber($dayOfWeek) {
     switch ($dayOfWeek) {
@@ -145,6 +155,7 @@ if ($code_load_result->num_rows > 0) {
 
             // 배열을 반복하며 key, classname, procfessor, starttime, endtime 값을 추출
             $array = $data[$dayOfWeek-1];
+                        
             foreach ($array as $obj) {
                 $key = $obj['key'] ?? null;
                 $classname = $obj['classname'] ?? null;
@@ -152,8 +163,15 @@ if ($code_load_result->num_rows > 0) {
                 $starttime = $obj['starttime'] ?? null;
                 $endtime = $obj['endtime'] ?? null;
 
-                // 값 출력 (또는 다른 작업 수행)
-                echo "Key: $key, Classname: $classname, Professor: $professor, Starttime: $starttime, Endtime: $endtime\n";
+                // 값 출력
+                //echo "Key: $key, Classname: $classname, Professor: $professor, Starttime: $starttime, Endtime: $endtime\n";
+                
+                $startTime_convert = convertMinutesToTime($starttime);
+                $endTime_convert = convertMinutesToTime($endtime);
+
+                if($starttime >= $currentTime && $starttime < $closestTime) {
+                    drawClassInfo($classname, $professor, $startTime_convert, $endTime_convert, $version, $code, $key);
+                }
             }
         }
     } else {
@@ -166,6 +184,6 @@ if ($code_load_result->num_rows > 0) {
 $conn->close();
 
 // 예제 데이터
-drawClassInfo('프로그래밍 언어', '장성훈', '09:00', '12:00', $version, $code);
+//drawClassInfo('프로그래밍 언어', '장성훈', '09:00', '12:00', $version, $code, $key);
 
 ?>
