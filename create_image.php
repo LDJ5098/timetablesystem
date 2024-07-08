@@ -108,7 +108,6 @@ $currentTime = $currentHour * 60 + $currentMinute;//현재시간
 $dayOfWeek_TEXT = date('l');
 $closestTime = PHP_INT_MAX; // 목표값
 
-
 function convertDayOfWeekToNumber($dayOfWeek) {
     switch ($dayOfWeek) {
         case 'Monday':
@@ -130,6 +129,16 @@ function convertDayOfWeekToNumber($dayOfWeek) {
     }
 }
 $dayOfWeek = convertDayOfWeekToNumber($dayOfWeek_TEXT);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//테스터용 주석을 제거하면 됨
+/*
+$currentHour = 8;//max=23
+$currentMinute = 55;//max=59
+$currentTime = $currentHour * 60 + $currentMinute;//현재시간
+$dayOfWeek = 1;//1:월, 2:화, 3:수, 4:목, 5:금
+*/
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // 첫 번째 쿼리 실행
 $sql_code_load = "SELECT object_code FROM classroomDB WHERE device_code = '$code'";
@@ -170,10 +179,6 @@ if ($code_load_result->num_rows > 0) {
                 $closestTime = $starttime;
                 $result_obj = $obj;
             }
-        }
-
-        if (!isset($result_obj)) {
-            echo "No upcoming class found for today.";
         }
     } else {
         echo "검색된 데이터가 없습니다. 데이터가 비어있진 않은지 확인하십시오.";
