@@ -16,6 +16,9 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
     if($TF==false){
         echo "/" . $code . "::BW::" . $key . "/none_data/";
         return;
+    }elseif($TF=='connect_fail'){
+        echo "/" . $code . "::BW::" . $key . "/Connection failed...Check whether WIFI is enabled on the Administrator page./";
+        return;
     }
     $width = 800;
     $height = 480;
@@ -145,7 +148,7 @@ $dayOfWeek = 1;//1:월, 2:화, 3:수, 4:목, 5:금
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // 첫 번째 쿼리 실행
-$sql_code_load = "SELECT object_code FROM classroomDB WHERE device_code = '$code'";
+$sql_code_load = "SELECT object_code, wifi FROM classroomDB WHERE device_code = '$code'";
 $code_load_result = $conn->query($sql_code_load);
 
 // 결과 검증
@@ -154,38 +157,41 @@ if ($code_load_result->num_rows > 0) {
     // object_code 값을 추출
     $row = $code_load_result->fetch_assoc();
     $object_code = $row['object_code'];
+    if($row['wifi']==true){
+        // 두 번째 쿼리 실행
+        $sql_maindata_load = "SELECT maindata FROM classlist WHERE object_code = '$object_code'";
+        $maindata_result = $conn->query($sql_maindata_load);
 
-    // 두 번째 쿼리 실행
-    $sql_maindata_load = "SELECT maindata FROM classlist WHERE object_code = '$object_code'";
-    $maindata_result = $conn->query($sql_maindata_load);
+        if ($maindata_result->num_rows > 0) {
+            // 결과 행에서 데이터 읽어오기
+            $row = $maindata_result->fetch_assoc();
+            $jsonData = $row["maindata"]; // 'maindata' 열에서 데이터 추출
 
-    if ($maindata_result->num_rows > 0) {
-        // 결과 행에서 데이터 읽어오기
-        $row = $maindata_result->fetch_assoc();
-        $jsonData = $row["maindata"]; // 'maindata' 열에서 데이터 추출
+            // JSON 데이터를 배열로 디코딩
+            $data = json_decode($jsonData, true);
 
-        // JSON 데이터를 배열로 디코딩
-        $data = json_decode($jsonData, true);
+            // 배열을 반복하며 key, classname, procfessor, starttime, endtime 값을 추출
+            $array = $data[$dayOfWeek-1];
+            
+            foreach ($array as $obj) {
+                $key = $obj['key'] ?? null;
+                $classname = $obj['classname'] ?? null;
+                $professor = $obj['professor'] ?? null;
+                $starttime = $obj['starttime'] ?? null;
+                $endtime = $obj['endtime'] ?? null;
 
-        // 배열을 반복하며 key, classname, procfessor, starttime, endtime 값을 추출
-        $array = $data[$dayOfWeek-1];
-        
-        foreach ($array as $obj) {
-            $key = $obj['key'] ?? null;
-            $classname = $obj['classname'] ?? null;
-            $professor = $obj['professor'] ?? null;
-            $starttime = $obj['starttime'] ?? null;
-            $endtime = $obj['endtime'] ?? null;
+                // 값 출력
+                //echo "Key: $key, Classname: $classname, Professor: $professor, Starttime: $starttime, Endtime: $endtime\n";
 
-            // 값 출력
-            //echo "Key: $key, Classname: $classname, Professor: $professor, Starttime: $starttime, Endtime: $endtime\n";
-
-            if($starttime >= $currentTime && $starttime < $closestTime) {
-                $closestTime = $starttime;
-                $result_obj = $obj;
-                $TF=true;
+                if($starttime >= $currentTime && $starttime < $closestTime) {
+                    $closestTime = $starttime;
+                    $result_obj = $obj;
+                    $TF=true;
+                }
             }
         }
+    }else{
+        $TF='connect_fail';
     }
 }
 
