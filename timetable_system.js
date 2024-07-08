@@ -675,11 +675,11 @@ function create_new_classroom(){
   var database = load_database_code();
   for (let i = 0; i < database.length; i++) {
     if(database[i].floor===floor.value&&database[i].which===which.value&&database[i].class_number===create_number.value&&recent_choice_code!==database[i].object_code){
-      error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)";
+      error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)\n";
       break;
     }
-    else if(create_classroom_device_code.value==database[i].device_code&&recent_choice_code!==database[i].object_code){
-      error_log += "다른 교실에서 사용중인 기기코드는 입력할 수 없습니다.";
+    else if(create_classroom_device_code.value==database[i].device_code&&recent_choice_code!==database[i].object_code&&fix_classroom_device_code.value.replace(/\s/g, '')!==""){
+      error_log += "다른 교실에서 사용중인 기기코드는 입력할 수 없습니다.\n";
       break;
     }
   }
@@ -692,6 +692,7 @@ function create_new_classroom(){
 
   if(!length_pattern.test(create_width.value)) error_log += '가로길이를 제대로 입력하세요.\n';
   if(!length_pattern.test(create_height.value)) error_log += '세로길이를 제대로 입력하세요.\n';
+  if(create_classroom_device_code.value.replace(/\s/g, '')===""&&create_classroom_WIFI_check.checked) error_log += '기기코드에는 공백을 사용할 수 없습니다.\n';
 
 
   if(error_log!==""){
@@ -715,11 +716,11 @@ function fix_classroom(){
   var database = load_database_code();
   for (let i = 0; i < database.length; i++) {
     if(database[i].floor===floor.value&&database[i].which===which.value&&database[i].class_number===fix_number.value&&recent_choice_code!==database[i].object_code){
-      error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)";
+      error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)\n";
       break;
     }
-    else if(fix_classroom_device_code.value==database[i].device_code&&recent_choice_code!==database[i].object_code){
-      error_log += "다른 교실에서 사용중인 기기코드는 입력할 수 없습니다.";
+    else if(fix_classroom_device_code.value==database[i].device_code&&recent_choice_code!==database[i].object_code&&fix_classroom_device_code.value.replace(/\s/g, '')!==""){
+      error_log += "다른 교실에서 사용중인 기기코드는 입력할 수 없습니다.\n";
       break;
     }
   }
@@ -733,6 +734,7 @@ function fix_classroom(){
   if(!length_pattern.test(fix_width.value)) error_log += '가로길이를 제대로 입력하세요.\n';
   if(!length_pattern.test(fix_height.value)) error_log += '세로길이를 제대로 입력하세요.\n';
 
+  if(fix_classroom_device_code.value.replace(/\s/g, '')===""&&fix_classroom_WIFI_check.checked) error_log += '기기코드에는 공백을 사용할 수 없습니다.\n';
 
   if(error_log!==""){
     window.alert(error_log);
