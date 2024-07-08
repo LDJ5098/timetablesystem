@@ -93,38 +93,50 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// 첫 번째 쿼리 실행
 $sql_code_load = "SELECT object_code FROM classroomDB WHERE device_code = '$code'";
-$code_load_result = $conn->query($sql);//이때의 object_code는 "X102ABS332"이런식의 문자열임
+$code_load_result = $conn->query($sql_code_load);
 
-$sql_maindata_load = "SELECT maindata FROM classlist WHERE object_code = '$code_load_result'";
-$maindata = $conn->query($sql_maindata_load);
+// 결과 검증
+if ($code_load_result->num_rows > 0) {
+    // object_code 값을 추출
+    $row = $code_load_result->fetch_assoc();
+    $object_code = $row['object_code'];
 
-if ($maindata->num_rows > 0) {
-    // 결과 행에서 데이터 읽어오기
-    while($row = $maindata->fetch_assoc()) {
-        $jsonData = $row["json_column"];
-        
-        // JSON 데이터를 배열로 디코딩
-        $data = json_decode($jsonData, true);
-        
-        // 배열을 반복하며 key, classname, procfessor, starttime, endtime 값을 추출
-        foreach ($data as $array) {
-            foreach ($array as $obj) {
-                $key = $obj['key'] ?? null;
-                $classname = $obj['classname'] ?? null;
-                $procfessor = $obj['procfessor'] ?? null;
-                $starttime = $obj['starttime'] ?? null;
-                $endtime = $obj['endtime'] ?? null;
-                
-                // 값 출력 (또는 다른 작업 수행)
-                echo "Key: $key, Classname: $classname, Processor: $procfessor, Starttime: $starttime, Endtime: $endtime\n";
+    // 두 번째 쿼리 실행
+    $sql_maindata_load = "SELECT maindata FROM classlist WHERE object_code = '$object_code'";
+    $maindata_result = $conn->query($sql_maindata_load);
+
+    if ($maindata_result->num_rows > 0) {
+        // 결과 행에서 데이터 읽어오기
+        while ($row = $maindata_result->fetch_assoc()) {
+            $jsonData = $row["maindata"]; // 'maindata' 열에서 데이터 추출
+
+            // JSON 데이터를 배열로 디코딩
+            $data = json_decode($jsonData, true);
+
+            // 배열을 반복하며 key, classname, procfessor, starttime, endtime 값을 추출
+            foreach ($data as $array) {
+                foreach ($array as $obj) {
+                    $key = $obj['key'] ?? null;
+                    $classname = $obj['classname'] ?? null;
+                    $procfessor = $obj['procfessor'] ?? null;
+                    $starttime = $obj['starttime'] ?? null;
+                    $endtime = $obj['endtime'] ?? null;
+
+                    // 값 출력 (또는 다른 작업 수행)
+                    echo "Key: $key, Classname: $classname, Processor: $procfessor, Starttime: $starttime, Endtime: $endtime\n";
+                }
             }
         }
+    } else {
+        echo "검색된 데이터가 없습니다. 데이터가 비어있진 않은지 확인하십시오.";
     }
 } else {
-    echo "검색된 데이터가 없습니다. 데이터가 비어있진 않은지 확인하십시오.";
+    echo "object_code를 찾을 수 없습니다.";
 }
 
+$conn->close();
 
 // 예제 데이터
 drawClassInfo('프로그래밍 언어', '장성훈', '09:00', '12:00', $version, $code);
