@@ -147,31 +147,28 @@ if ($code_load_result->num_rows > 0) {
 
     if ($maindata_result->num_rows > 0) {
         // 결과 행에서 데이터 읽어오기
-        while ($row = $maindata_result->fetch_assoc()) {
-            $jsonData = $row["maindata"]; // 'maindata' 열에서 데이터 추출
+        $row = $maindata_result->fetch_assoc();
+        $jsonData = $row["maindata"]; // 'maindata' 열에서 데이터 추출
 
-            // JSON 데이터를 배열로 디코딩
-            $data = json_decode($jsonData, true);
+        // JSON 데이터를 배열로 디코딩
+        $data = json_decode($jsonData, true);
 
-            // 배열을 반복하며 key, classname, procfessor, starttime, endtime 값을 추출
-            $array = $data[$dayOfWeek-1];
+        // 배열을 반복하며 key, classname, procfessor, starttime, endtime 값을 추출
+        $array = $data[$dayOfWeek-1];
                         
-            foreach ($array as $obj) {
-                $key = $obj['key'] ?? null;
-                $classname = $obj['classname'] ?? null;
-                $professor = $obj['professor'] ?? null;
-                $starttime = $obj['starttime'] ?? null;
-                $endtime = $obj['endtime'] ?? null;
+        foreach ($array as $obj) {
+            $key = $obj['key'] ?? null;
+            $classname = $obj['classname'] ?? null;
+            $professor = $obj['professor'] ?? null;
+            $starttime = $obj['starttime'] ?? null;
+            $endtime = $obj['endtime'] ?? null;
 
-                // 값 출력
-                //echo "Key: $key, Classname: $classname, Professor: $professor, Starttime: $starttime, Endtime: $endtime\n";
-                
-                $startTime_convert = convertMinutesToTime($starttime);
-                $endTime_convert = convertMinutesToTime($endtime);
+            // 값 출력
+            //echo "Key: $key, Classname: $classname, Professor: $professor, Starttime: $starttime, Endtime: $endtime\n";
 
-                if($starttime >= $currentTime && $starttime < $closestTime) {
-                    drawClassInfo($classname, $professor, $startTime_convert, $endTime_convert, $version, $code, $key);
-                }
+            if($starttime >= $currentTime && $starttime < $closestTime) {
+                $closestTime = $starttime;
+                $result_obj = $obj;
             }
         }
     } else {
@@ -182,6 +179,17 @@ if ($code_load_result->num_rows > 0) {
 }
 
 $conn->close();
+
+$key = $result_obj['key'] ?? null;
+$classname = $result_obj['classname'] ?? null;
+$professor = $result_obj['professor'] ?? null;
+$starttime = $result_obj['starttime'] ?? null;
+$endtime = $result_obj['endtime'] ?? null;
+$startTime_convert = convertMinutesToTime($starttime);
+$endTime_convert = convertMinutesToTime($endtime);
+
+drawClassInfo($classname, $professor, $startTime_convert, $endTime_convert, $version, $code, $key);
+
 
 // 예제 데이터
 //drawClassInfo('프로그래밍 언어', '장성훈', '09:00', '12:00', $version, $code, $key);
