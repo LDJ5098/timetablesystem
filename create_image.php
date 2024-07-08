@@ -173,7 +173,7 @@ if ($code_load_result->num_rows > 0) {
             $endtime = $obj['endtime'] ?? null;
 
             // 값 출력
-            echo "Key: $key, Classname: $classname, Professor: $professor, Starttime: $starttime, Endtime: $endtime\n";
+            //echo "Key: $key, Classname: $classname, Professor: $professor, Starttime: $starttime, Endtime: $endtime\n";
 
             if($starttime >= $currentTime && $starttime < $closestTime) {
                 $closestTime = $starttime;
@@ -197,7 +197,7 @@ $endtime = $result_obj['endtime'] ?? null;
 $startTime_convert = convertMinutesToTime($starttime);
 $endTime_convert = convertMinutesToTime($endtime);
 
-echo $classname . " " . $professor . " " . $startTime_convert . " " . $endTime_convert . " " . $version . " " . $code . " " . $key;
+echo $classname . " " . $professor . " " . $startTime_convert . " " . $endTime_convert . " " . $version . " " . $code . " " . $key . "\n\n";
 drawClassInfo($classname, $professor, $startTime_convert, $endTime_convert, $version, $code, $key);
 
 
