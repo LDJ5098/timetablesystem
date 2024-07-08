@@ -652,11 +652,10 @@ function create_classroom_checkbox(){
 //fix 새 생성 checkbox 체크 여부
 
 if (fix_classroom_WIFI_check.checked) {
-  fix_classroom_device_code.disabled = true;
-} else {
   fix_classroom_device_code.disabled = false;
+} else {
+  fix_classroom_device_code.disabled = true;
 }
-
 function fix_classroom_checkbox(){
   if (fix_classroom_WIFI_check.checked) {
     fix_classroom_device_code.disabled = false;
