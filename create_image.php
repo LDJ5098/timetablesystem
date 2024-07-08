@@ -1,5 +1,7 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
+date_default_timezone_set('Asia/Seoul');
+
 $code = $_GET['code'];
 $version = $_GET['version'];
 
@@ -93,6 +95,32 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+$currentHour = intval(date('H'));
+$currentMinute = intval(date('i'));
+$dayOfWeek_TEXT = date('l');
+
+function convertDayOfWeekToNumber($dayOfWeek) {
+    switch ($dayOfWeek) {
+        case 'Monday':
+            return 1;
+        case 'Tuesday':
+            return 2;
+        case 'Wednesday':
+            return 3;
+        case 'Thursday':
+            return 4;
+        case 'Friday':
+            return 5;
+        case 'Saturday':
+            return 6;
+        case 'Sunday':
+            return 7;
+        default:
+            return -1; // Error case or fallback
+    }
+}
+$dayOfWeek = convertDayOfWeekToNumber($dayOfWeek_TEXT);
+
 // 첫 번째 쿼리 실행
 $sql_code_load = "SELECT object_code FROM classroomDB WHERE device_code = '$code'";
 $code_load_result = $conn->query($sql_code_load);
@@ -117,16 +145,16 @@ if ($code_load_result->num_rows > 0) {
 
             // 배열을 반복하며 key, classname, procfessor, starttime, endtime 값을 추출
             foreach ($data as $array) {
-                foreach ($array as $obj) {
-                    $key = $obj['key'] ?? null;
-                    $classname = $obj['classname'] ?? null;
-                    $professor = $obj['professor'] ?? null;
-                    $starttime = $obj['starttime'] ?? null;
-                    $endtime = $obj['endtime'] ?? null;
+                $obj=$array[$dayOfWeek];
+                
+                $key = $obj['key'] ?? null;
+                $classname = $obj['classname'] ?? null;
+                $professor = $obj['professor'] ?? null;
+                $starttime = $obj['starttime'] ?? null;
+                $endtime = $obj['endtime'] ?? null;
 
-                    // 값 출력 (또는 다른 작업 수행)
-                    echo "Key: $key, Classname: $classname, Professor: $professor, Starttime: $starttime, Endtime: $endtime\n";
-                }
+                // 값 출력 (또는 다른 작업 수행)
+                echo "Key: $key, Classname: $classname, Professor: $professor, Starttime: $starttime, Endtime: $endtime\n";
             }
         }
     } else {
