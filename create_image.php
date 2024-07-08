@@ -19,7 +19,11 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
     }elseif($TF=='connect_fail'){
         echo "/" . $code . "::BW::" . $key . "/Connection failed...Check whether WIFI is enabled on the Administrator page./";
         return;
+    }elseif($TF=='not_found_data'){
+        echo "/" . $code . "::BW::" . $key . "/It is necessary to ensure that the device code is correct./";
+        return;
     }
+
     $width = 800;
     $height = 480;
 
@@ -193,6 +197,8 @@ if ($code_load_result->num_rows > 0) {
     }else{
         $TF='connect_fail';
     }
+}else{
+    $TF='not_found_data';
 }
 
 $conn->close();
