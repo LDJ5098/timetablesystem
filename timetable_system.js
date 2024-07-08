@@ -340,6 +340,7 @@ function click_classroom(element) {
         fix_classroom_WIFI_check.checked=searchdata.wifi;
         document.getElementById('fix_classroom_background').style.display='flex';
         recent_choice_code = element.id;
+        fix_classroom_checkbox();
       }
 
       else if(activeButton===document.querySelectorAll('.menu_button')[2]){
