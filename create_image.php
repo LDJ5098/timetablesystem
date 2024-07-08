@@ -15,7 +15,7 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
     imagefilledrectangle($image, 0, 0, $width, $height, $white);
 
     // 폰트 설정 (경로는 시스템에 맞게 변경 필요)
-    $fontPath = '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf';
+    $fontPath = '/var/www/html/fonts/arial.ttf';
 
     // 텍스트 높이와 y 시작 좌표 계산
     $lineHeight = 100;
@@ -44,6 +44,7 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
     // 비트맵 데이터를 16진수 문자열로 변환
     $hexString_1 = "";
     $hexString_2 = "";
+    $hexString = "";
 
     $count=0;
     for ($i = 0; $i < count($bitmap); $i += 8) {
@@ -56,6 +57,7 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
         $count++;
         if($count<=24000) $hexString_1 .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";
         else $hexString_2 .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";
+        $hexString .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";;
     }
 
     // 결과 출력 (version에 따라)
@@ -63,8 +65,6 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
         $hexString = $hexString_1;
     } elseif ($version == 2) {
         $hexString = $hexString_2;
-    } else {
-        $hexString = "none_version";
     }
     
     echo "/" . $code . "::BW::/" . $hexString . "/";
