@@ -188,6 +188,7 @@ $endtime = $result_obj['endtime'] ?? null;
 $startTime_convert = convertMinutesToTime($starttime);
 $endTime_convert = convertMinutesToTime($endtime);
 
+echo $classname . " " . $professor . " " . $startTime_convert . " " . $endTime_convert . " " . $version . " " . $code . " " . $key;
 drawClassInfo($classname, $professor, $startTime_convert, $endTime_convert, $version, $code, $key);
 
 
