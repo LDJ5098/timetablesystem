@@ -20,7 +20,8 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
 
     // 텍스트 높이와 y 시작 좌표 계산
     $lineHeight = 100;
-    $totalTextHeight = 3 * $lineHeight;
+    $lineMargin = 20; // 줄 사이 마진
+    $totalTextHeight = 3 * ($lineHeight + $lineMargin) - $lineMargin;
     $startY = ($height - $totalTextHeight) / 2 + $lineHeight - 20;
 
     // 텍스트 렌더링
