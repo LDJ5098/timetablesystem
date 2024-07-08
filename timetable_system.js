@@ -678,7 +678,7 @@ function create_new_classroom(){
       error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)";
       break;
     }
-    else if(create_classroom_device_code==database[i].device_code){
+    else if(create_classroom_device_code.value==database[i].device_code){
       error_log += "다른 교실에서 사용중인 기기코드는 입력할 수 없습니다.";
       break;
     }
@@ -718,7 +718,7 @@ function fix_classroom(){
       error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)";
       break;
     }
-    else if(fix_classroom_device_code==database[i].device_code){
+    else if(fix_classroom_device_code.value==database[i].device_code){
       error_log += "다른 교실에서 사용중인 기기코드는 입력할 수 없습니다.";
       break;
     }
