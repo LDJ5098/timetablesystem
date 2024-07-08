@@ -82,6 +82,6 @@ function calculateTextXPosition($text, $fontPath, $fontSize, $width) {
 }
 
 // 예제 데이터
-drawClassInfo('프로그래밍 언어', '소지영', '09:00', '12:00', $version, $code);
+drawClassInfo('프로그래밍 언어', '장성훈', '09:00', '12:00', $version, $code);
 
 ?>
