@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
-$code = $_GET['code'];
-$version = $_GET['version'];
+$code = isset($_GET['code']) ? $_GET['code'] : '';
+$version = isset($_GET['version']) ? $_GET['version'] : '';
 
 function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version, $code) {
     $width = 800;
@@ -15,11 +15,17 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
     // 배경 채우기
     imagefilledrectangle($image, 0, 0, $width, $height, $white);
 
-    // 폰트 설정 (경로는 시스템에 맞게 변경 필요)
+    // 폰트 설정 (절대 경로 사용)
     $fontPath = '/var/www/html/fonts/arial.ttf';
 
+    // 폰트 파일 존재 확인
+    if (!file_exists($fontPath)) {
+        die('Error: 폰트 파일을 찾을 수 없습니다. 경로를 확인하세요: ' . $fontPath);
+    }
+
+    // 폰트 로드 확인
     if (!isFontLoaded($fontPath, "Test")) {
-        die('Error: 폰트를 로드할 수 없습니다.');
+        die('Error: 폰트를 로드할 수 없습니다. 폰트 파일이 손상되었을 수 있습니다: ' . $fontPath);
     }
 
     // 텍스트 높이와 y 시작 좌표 계산
@@ -51,7 +57,7 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
     $hexString_2 = "";
     $hexString = "";
 
-    $count=0;
+    $count = 0;
     for ($i = 0; $i < count($bitmap); $i += 8) {
         $byte = 0;
         for ($bit = 0; $bit < 8; $bit++) {
@@ -60,9 +66,9 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
             }
         }
         $count++;
-        if($count<=24000) $hexString_1 .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";
+        if ($count <= 24000) $hexString_1 .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";
         else $hexString_2 .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";
-        $hexString .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";;
+        $hexString .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";
     }
 
     // 결과 출력 (version에 따라)
@@ -71,17 +77,22 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
     } elseif ($version == 2) {
         $hexString = $hexString_2;
     }
-    
+
     echo "/" . $code . "::BW::/" . $hexString . "/";
-    
+
     // 이미지 저장 (원하는 경우)
     imagepng($image, 'class_info.png');
     imagedestroy($image);
 }
 
+function isFontLoaded($fontPath, $text) {
+    $bbox = imagettfbbox(10, 0, $fontPath, $text);
+    return $bbox !== false;
+}
+
 function calculateTextXPosition($text, $fontPath, $fontSize, $width) {
     $bbox = imagettfbbox($fontSize, 0, $fontPath, $text);
-    $textWidth = $bbox[2] - $bbox[0];
+    $textWidth = $bbox[2] - $text[0];
     return ($width - $textWidth) / 2;
 }
 
