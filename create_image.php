@@ -18,16 +18,6 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
     // 폰트 설정 (절대 경로 사용)
     $fontPath = '/var/www/html/fonts/arial.ttf';
 
-    // 폰트 파일 존재 확인
-    if (!file_exists($fontPath)) {
-        die('Error: 폰트 파일을 찾을 수 없습니다. 경로를 확인하세요: ' . $fontPath);
-    }
-
-    // 폰트 로드 확인
-    if (!isFontLoaded($fontPath, "Test")) {
-        die('Error: 폰트를 로드할 수 없습니다. 폰트 파일이 손상되었을 수 있습니다: ' . $fontPath);
-    }
-
     // 텍스트 높이와 y 시작 좌표 계산
     $lineHeight = 100;
     $totalTextHeight = 3 * $lineHeight;
@@ -83,11 +73,6 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
     // 이미지 저장 (원하는 경우)
     imagepng($image, 'class_info.png');
     imagedestroy($image);
-}
-
-function isFontLoaded($fontPath, $text) {
-    $bbox = imagettfbbox(10, 0, $fontPath, $text);
-    return $bbox !== false;
 }
 
 function calculateTextXPosition($text, $fontPath, $fontSize, $width) {
