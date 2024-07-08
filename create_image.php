@@ -13,7 +13,7 @@ function convertMinutesToTime($minutes) {//분으로만 표현된 시간을 '09:
 
 
 function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version, $code, $key, $TF) {//이미지 생성 + 출력함수
-    if($TF==true){
+    if($TF==false){
         echo "/" . $code . "::BW::" . $key . "/none_data/";
         return;
     }
