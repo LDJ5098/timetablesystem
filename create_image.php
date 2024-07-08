@@ -144,9 +144,8 @@ if ($code_load_result->num_rows > 0) {
             $data = json_decode($jsonData, true);
 
             // 배열을 반복하며 key, classname, procfessor, starttime, endtime 값을 추출
-            foreach ($data as $array) {
-                $obj=$array[$dayOfWeek];
-                
+            $array = $data[$dayOfWeek];
+            foreach ($array as $obj) {
                 $key = $obj['key'] ?? null;
                 $classname = $obj['classname'] ?? null;
                 $professor = $obj['professor'] ?? null;
