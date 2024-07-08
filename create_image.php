@@ -120,12 +120,12 @@ if ($code_load_result->num_rows > 0) {
                 foreach ($array as $obj) {
                     $key = $obj['key'] ?? null;
                     $classname = $obj['classname'] ?? null;
-                    $procfessor = $obj['procfessor'] ?? null;
+                    $professor = $obj['professor'] ?? null;
                     $starttime = $obj['starttime'] ?? null;
                     $endtime = $obj['endtime'] ?? null;
 
                     // 값 출력 (또는 다른 작업 수행)
-                    echo "Key: $key, Classname: $classname, Processor: $procfessor, Starttime: $starttime, Endtime: $endtime\n";
+                    echo "Key: $key, Classname: $classname, Professor: $professor, Starttime: $starttime, Endtime: $endtime\n";
                 }
             }
         }
