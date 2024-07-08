@@ -197,7 +197,7 @@ $endtime = $result_obj['endtime'] ?? null;
 $startTime_convert = convertMinutesToTime($starttime);
 $endTime_convert = convertMinutesToTime($endtime);
 
-echo $classname . " " . $professor . " " . $startTime_convert . " " . $endTime_convert . " " . $version . " " . $code . " " . $key . "\n\n";
+echo "교실명 : " . $classname . "\n" . "교수명 : " . $professor . "\n" . "수업시작 시간 : " . $startTime_convert . "\n" . "수업 끝나는 시간 : " .$endTime_convert . "\n" . "버전 : " . $version . "\n" . "기기코드 : " . $code . "\n" . "교실key(ID) : " . $key . "\n\n";
 drawClassInfo($classname, $professor, $startTime_convert, $endTime_convert, $version, $code, $key);
 
 
