@@ -212,7 +212,7 @@ $starttime = $result_obj['starttime'] ?? null;
 $endtime = $result_obj['endtime'] ?? null;
 $startTime_convert = convertMinutesToTime($starttime, ':');
 $endTime_convert = convertMinutesToTime($endtime, ':');
-$timedata_all = $updatePeroid . '/' . convertMinutesToTime($starttime, '/') . '/' . convertMinutesToTime($endtime, '/') . '/';
+$timedata_all = '/' . $updatePeroid . '/' . convertMinutesToTime($starttime, '/') . '/' . convertMinutesToTime($endtime, '/') . '/';
 
 //echo "교실명 : " . $classname . "," . "교수명 : " . $professor . "," . "수업시작 시간 : " . $startTime_convert . "," . "수업 끝나는 시간 : " .$endTime_convert . "," . "버전 : " . $version . "," . "기기코드 : " . $code . "," . "교실key(ID) : " . $key . "\n";
 drawClassInfo($classname, $professor, $startTime_convert, $endTime_convert, $version, $code, $key, $TF, $timedata_all);
