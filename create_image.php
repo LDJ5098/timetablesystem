@@ -13,13 +13,13 @@ function convertMinutesToTime($minutes) {//분으로만 표현된 시간을 '09:
 
 
 function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version, $code, $key, $TF) {//이미지 생성 + 출력함수
-    if($TF==false){
+    if($TF===false){
         echo "/" . $code . "::BW::" . $key . "/none_data/";
         return;
-    }elseif($TF=='connect_fail'){
+    }elseif($TF==='connect_fail'){
         echo "/" . $code . "::BW::" . $key . "/Connection failed...Check whether WIFI is enabled on the Administrator page./";
         return;
-    }elseif($TF=='not_found_data'){
+    }elseif($TF==='not_found_data'){
         echo "/" . $code . "::BW::" . $key . "/It is necessary to ensure that the device code is correct./";
         return;
     }
@@ -160,8 +160,9 @@ $TF=false;//데이터가 정상 여부 -> false:실패 -> true:정상
 if ($code_load_result->num_rows > 0) {
     // object_code 값을 추출
     $row = $code_load_result->fetch_assoc();
+    var_dump($row);
     $object_code = $row['object_code'];
-    if($row['wifi']==true){
+    if($row['wifi']){
         // 두 번째 쿼리 실행
         $sql_maindata_load = "SELECT maindata FROM classlist WHERE object_code = '$object_code'";
         $maindata_result = $conn->query($sql_maindata_load);
