@@ -65,7 +65,6 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
     // 비트맵 데이터를 16진수 문자열로 변환
     $hexString_1 = "";
     $hexString_2 = "";
-    $hexString = "";
 
     $count=0;
     for ($i = 0; $i < count($bitmap); $i += 8) {
@@ -78,17 +77,18 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
         $count++;
         if($count<=24000) $hexString_1 .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";
         else $hexString_2 .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";
-        $hexString .= "0x" . str_pad(dechex($byte), 2, '0', STR_PAD_LEFT) . "/";;
     }
 
     // 결과 출력 (version에 따라)
     if ($version == 1) {
-        $hexString = $hexString_1;
+        echo "/" . $code . "::BW::" . "/" . $hexString_1 . "0x11" . "/";
     } elseif ($version == 2) {
-        $hexString = $hexString_2;
+        echo "/" . $code . "::BW::" . "/" . $hexString_2 . "0x11" . "/";
+    } elseif ($version == 3) {
+        echo "/" . $code . "::BW::" . "/" . $startTime . "/" . $endTime . "/";
+    } else {
+        echo "/" . $code . "::BW::" . "/version_error/";
     }
-    
-    echo "/" . $code . "::BW::" . "/" . $hexString . "0x11" . "/";
     
     // 이미지 저장 (원하는 경우)
     imagepng($image, 'class_info.png');
