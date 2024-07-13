@@ -88,7 +88,7 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
         $hexString = $hexString_2;
     }
     
-    echo "/" . $code . "::BW::" . $key . "/" . $hexString . "/";
+    echo "/" . $code . "::BW::" . "/" . $hexString . "0x11" . "/";
     
     // 이미지 저장 (원하는 경우)
     imagepng($image, 'class_info.png');
