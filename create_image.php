@@ -5,14 +5,14 @@ date_default_timezone_set('Asia/Seoul');
 $code = $_GET['code'];
 $version = $_GET['version'];
 
-function convertMinutesToTime($minutes) {//분으로만 표현된 시간을 '09:00'이런형태로 바꿔주는 함수
+function convertMinutesToTime($minutes, $sep) {//분으로만 표현된 시간을 '09:00'이런형태로 바꿔주는 함수
     $hours = floor($minutes / 60);
     $mins = $minutes % 60;
-    return sprintf('%02d:%02d', $hours, $mins);
+    return sprintf('%02d' . $sep . '%02d', $hours, $mins);
 }
 
 
-function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version, $code, $key, $TF) {//이미지 생성 + 출력함수
+function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version, $code, $key, $TF, $timedata_all) {//이미지 생성 + 출력함수
     if($TF===false){
         echo "/" . $code . "::BW::" . $key . "/none_data/";
         return;
@@ -85,7 +85,7 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
     } elseif ($version == 2) {
         echo "/" . $code . "::BW::" . "/" . $hexString_2 . "0x11" . "/";
     } elseif ($version == 3) {
-        echo "/" . $code . "::BW::" . "/" . $startTime . "/" . $endTime . "/";
+        echo "/" . $code . "::SET::" . $timedata_all;
     } else {
         echo "/" . $code . "::BW::" . "/version_error/";
     }
@@ -203,16 +203,19 @@ if ($code_load_result->num_rows > 0) {
 
 $conn->close();
 
+$updatePeroid = 3; //업데이트 주기
+
 $key = $result_obj['key'] ?? null;
 $classname = $result_obj['classname'] ?? null;
 $professor = $result_obj['professor'] ?? null;
 $starttime = $result_obj['starttime'] ?? null;
 $endtime = $result_obj['endtime'] ?? null;
-$startTime_convert = convertMinutesToTime($starttime);
-$endTime_convert = convertMinutesToTime($endtime);
+$startTime_convert = convertMinutesToTime($starttime, ':');
+$endTime_convert = convertMinutesToTime($endtime, ':');
+$timedata_all = $updatePeroid . '/' . convertMinutesToTime($starttime, '/') . '/' . convertMinutesToTime($endtime, '/') . '/';
 
 //echo "교실명 : " . $classname . "," . "교수명 : " . $professor . "," . "수업시작 시간 : " . $startTime_convert . "," . "수업 끝나는 시간 : " .$endTime_convert . "," . "버전 : " . $version . "," . "기기코드 : " . $code . "," . "교실key(ID) : " . $key . "\n";
-drawClassInfo($classname, $professor, $startTime_convert, $endTime_convert, $version, $code, $key, $TF);
+drawClassInfo($classname, $professor, $startTime_convert, $endTime_convert, $version, $code, $key, $TF, $timedata_all);
 
 
 // 예제 데이터
