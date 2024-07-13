@@ -160,7 +160,6 @@ $TF=false;//데이터가 정상 여부 -> false:실패 -> true:정상
 if ($code_load_result->num_rows > 0) {
     // object_code 값을 추출
     $row = $code_load_result->fetch_assoc();
-    var_dump($row);
     $object_code = $row['object_code'];
     if($row['wifi']){
         // 두 번째 쿼리 실행
