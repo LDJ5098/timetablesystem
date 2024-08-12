@@ -329,7 +329,7 @@ function remove_classroomDB(code){
 //교실이 클릭되었을 때 이벤트 처리 함수 true == 같음
 function click_classroom(element) {
     element.addEventListener('click', function() {
-      if(activeButton===document.querySelectorAll('.menu_button')[1]){
+      if(activeButton===document.querySelectorAll('.menu_button')[1]){//내용수정
         searchdata = classroomDB(element.id);
         fix_number.value=searchdata.class_number;
         fix_name.value=searchdata.class_name;
@@ -343,7 +343,7 @@ function click_classroom(element) {
         fix_classroom_checkbox();
       }
 
-      else if(activeButton===document.querySelectorAll('.menu_button')[2]){
+      else if(activeButton===document.querySelectorAll('.menu_button')[2]){//위치이동
         if (element.classList.contains("choice_panel")) {
           element.classList.remove("choice_panel");
         } else {
@@ -351,15 +351,16 @@ function click_classroom(element) {
         }
       }
 
-      else if(activeButton===document.querySelectorAll('.menu_button')[3]){
+      else if(activeButton===document.querySelectorAll('.menu_button')[3]){//전력체크
+      }
+
+      else if(activeButton===document.querySelectorAll('.menu_button')[4]){//교실삭제
         if (element.classList.contains("choice_panel")) {
           element.classList.remove("choice_panel");
         } else {
           element.classList.add("choice_panel");
         }
       }
-      
-      else {}
     });
 }
 
