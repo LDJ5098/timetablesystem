@@ -557,6 +557,16 @@ function Menu_Operation(){
 
   else if(activeButton===document.querySelectorAll('.menu_button')[3]){
     activeButtonTF=true;
+    console.log('전력체크 활성화');
+    document.getElementById('create_classroom_background').style.display='none';
+    document.getElementById('fix_classroom_background').style.display='none';
+    document.getElementById('delete_button').style.display='none';
+    cancel_choice();
+  }
+
+
+  else if(activeButton===document.querySelectorAll('.menu_button')[4]){
+    activeButtonTF=true;
     console.log('교실 삭제 활성화');
     document.getElementById('create_classroom_background').style.display='none';
     document.getElementById('fix_classroom_background').style.display='none';
