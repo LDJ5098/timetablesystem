@@ -131,6 +131,7 @@ function create_chart(){
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+/**범위 1시간 간격 배열 생성 함수 */
 function generateHourlyTimeArray(startTime, endTime) {
   // 시작 시간과 끝나는 시간을 Date 객체로 변환
   let start = new Date(startTime); 
@@ -157,7 +158,17 @@ var optionYT_xAxis_Data = [];
 var optionYT_series_Data = [];
 var chart_start_index, chart_end_index;
 function array_porcessing(){
-  optionYT_xAxis_Data = generateHourlyTimeArray(startInput.value, endInput.value)
+  optionYT_xAxis_Data = generateHourlyTimeArray(startInput.value, endInput.value);
+  optionYT_xAxis_Data.forEach(function(time, index){
+    var result = null;
+    for(var i=0; i<powerData.length; i++){
+      if(time===(powerData[i].date + " " + powerData[i].time)){
+        result = parseFloat(powerData[i].power);
+        break;
+      }
+    }
+    optionYT_series_Data[index] = result;
+  });
 
   optionYT = {
     title: {
