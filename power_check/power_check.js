@@ -16,18 +16,18 @@ function inspect_code(){//기기 코드가 DB에 존재하는지 확인하는 �
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const now = new Date();
+var now = new Date();
 // 2주 전 시간 계산
-const twoWeeksAgo = new Date();
+var twoWeeksAgo = new Date();
 twoWeeksAgo.setDate(now.getDate() - 14);
 
 // 날짜 및 시간 형식을 YYYY-MM-DDTHH:MM으로 변환
 function formatDateTime(date, defaultTimeToMidnight = false) {
-    const padZero = (num) => String(num).padStart(2, '0');
+    var padZero = (num) => String(num).padStart(2, '0');
 
-    const year = date.getFullYear();
-    const month = padZero(date.getMonth() + 1); // 월은 0부터 시작하므로 1을 더함
-    const day = padZero(date.getDate());
+    var year = date.getFullYear();
+    var month = padZero(date.getMonth() + 1); // 월은 0부터 시작하므로 1을 더함
+    var day = padZero(date.getDate());
 
     var hours = padZero(date.getHours());
     var minutes = padZero(date.getMinutes());
@@ -41,8 +41,10 @@ function formatDateTime(date, defaultTimeToMidnight = false) {
 }
 
 // 요소 가져오기
-const startInput = document.getElementById('start');
-const endInput = document.getElementById('end');
+/**범위 시작 값*/
+var startInput = document.getElementById('start');
+/**범위 끝 값*/
+var endInput = document.getElementById('end');
 
 // 최소 및 최대 값 설정
 startInput.min = formatDateTime(twoWeeksAgo);
@@ -58,11 +60,11 @@ endInput.value = formatDateTime(now);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 document.addEventListener('DOMContentLoaded', function () {
-    const chartYT = document.getElementById('chartYT');
-    const chartYMD = document.getElementById('chartYMD');
+    var chartYT = document.getElementById('chartYT');
+    var chartYMD = document.getElementById('chartYMD');
     
-    const checkboxYT = document.querySelectorAll('.checkbox input[type="checkbox"]')[0];
-    const checkboxYMD = document.querySelectorAll('.checkbox input[type="checkbox"]')[1];
+    var checkboxYT = document.querySelectorAll('.checkbox input[type="checkbox"]')[0];
+    var checkboxYMD = document.querySelectorAll('.checkbox input[type="checkbox"]')[1];
 
     // 처음 로드될 때 체크 상태에 따라 chart를 숨기거나 표시
     toggleCharts();
@@ -99,10 +101,6 @@ function data_load(){
       var data = JSON.parse(xhr.responseText);
       
       powerData = data;
-
-      // 콘솔에 데이터를 출력 (디버깅용)
-      console.log('Fetched Data:', powerData);
-      
     } else {
       alert('Failed to fetch data. Status: ' + xhr.status);
     }
@@ -111,6 +109,7 @@ function data_load(){
 }
 
 function create_chart(){
+    data_load();
     var chartYT = echarts.init(document.getElementById('chartYT'));
     var chartYMD = echarts.init(document.getElementById('chartYMD'));
 
@@ -126,7 +125,24 @@ function create_chart(){
     var creation_time = document.getElementById('creation_time'); 
     creation_time.textContent = "생성시점 : " + formatDateTime(new Date());
 
-    data_load();
+    console.log('Fetched Data:', powerData);
+}
+
+var optionYT_xAxis_Data = [];
+var optionYT_series_Data = [];
+var chart_start_index, chart_end_index;
+function array_porcessing(){
+  powerData.foreach(function(data, index){
+    if((data.date + 'T' + data.time)===startInput.value) chart_start_index = index;
+    if((data.date + 'T' + data.time)===endInput.value) chart_end_index = index;
+  });
+
+  var count = 0;
+  for(var i = chart_start_index; i <= chart_end_index; i++){
+    optionYT_xAxis_Data[count] = data.date + " " + data.time;
+    optionYT_series_Data[count] = parseFloat(data.power)*220;//W표현은 220 곱해야함
+    count++;
+  }
 }
 
 optionYT = {
@@ -139,32 +155,7 @@ optionYT = {
     xAxis: {
       name: 'Y/T',
       type: 'category',
-      data: [
-             '(24.08.29 00)',
-             '(24.08.29 01)',
-             '(24.08.29 02)',
-             '(24.08.29 03)',
-             '(24.08.29 04)',
-             '(24.08.29 05)',
-             '(24.08.29 06)',
-             '(24.08.29 07)',
-             '(24.08.29 08)',
-             '(24.08.29 09)',
-             '(24.08.29 10)',
-             '(24.08.29 11)',
-             '(24.08.29 12)',
-             '(24.08.29 13)',
-             '(24.08.29 14)',
-             '(24.08.29 15)',
-             '(24.08.29 16)',
-             '(24.08.29 17)',
-             '(24.08.29 18)',
-             '(24.08.29 19)',
-             '(24.08.29 20)',
-             '(24.08.29 21)',
-             '(24.08.29 22)',
-             '(24.08.29 23)', 
-            ]
+      data: optionYT_xAxis_Data
     },
     yAxis: {
       name: 'W',
@@ -173,7 +164,7 @@ optionYT = {
     },
     series: [
       {
-        data: [150, 140, 180, 200, 210, 200, 205, 180, 180, 160, 150, 130, 130, 150, 150, 155, 160, 150, 140, 180, 50, 0, 0, 0, 0],
+        data: optionYT_series_Data,
         type: 'line'
       }
     ]
