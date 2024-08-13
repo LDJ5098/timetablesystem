@@ -240,6 +240,8 @@ function array_porcessing(){
   };
 
 optionYMD = {
+    animation: false,
+
     title: {
         text: '2주 동안 사용한 총 전력 소비량'
     },
