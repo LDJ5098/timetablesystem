@@ -132,12 +132,21 @@ function create_chart(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 function generateHourlyTimeArray(startTime, endTime) {
-  const start = new Date(startTime);
-  const end = new Date(endTime);
+  // 시작 시간과 끝나는 시간을 Date 객체로 변환
+  let start = new Date(startTime); 
+  const end = new Date(endTime);   
   const timeArray = [];
 
+  // 시작 시간이 끝나는 시간보다 작거나 같은 동안 반복
   while (start <= end) {
-      timeArray.push(start.toISOString().slice(0, 16).replace('T', ' '));
+      // 배열에 현재 시간을 한국 시간대로 추가
+      timeArray.push(
+          new Date(start.getTime() + 9 * 60 * 60 * 1000) // 한국 시간대로 변환
+              .toISOString()
+              .slice(0, 16)
+              .replace('T', ' ')
+      );
+      // 시간을 1시간씩 증가시킴
       start.setHours(start.getHours() + 1);
   }
 
