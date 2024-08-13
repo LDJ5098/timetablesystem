@@ -130,21 +130,25 @@ function create_chart(){
     console.log('Fetched Data:', powerData);
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////
+function generateHourlyTimeArray(startTime, endTime) {
+  const start = new Date(startTime);
+  const end = new Date(endTime);
+  const timeArray = [];
+
+  while (start <= end) {
+      timeArray.push(start.toISOString().slice(0, 16).replace('T', ' '));
+      start.setHours(start.getHours() + 1);
+  }
+
+  return timeArray;
+}
+/////////////////////////////////////////////////////////////////////////////////////////////
 var optionYT_xAxis_Data = [];
 var optionYT_series_Data = [];
 var chart_start_index, chart_end_index;
 function array_porcessing(){
-  powerData.foreach(function(data, index){
-    if((data.date + 'T' + data.time)===startInput.value) chart_start_index = index;
-    if((data.date + 'T' + data.time)===endInput.value) chart_end_index = index;
-  });
-
-  var count = 0;
-  for(var i = chart_start_index; i <= chart_end_index; i++){
-    optionYT_xAxis_Data[count] = powerData[i].date + " " + powerData[i].time;
-    optionYT_series_Data[count] = parseFloat(powerData[i].power)*220;//W표현은 220 곱해야함
-    count++;
-  }
+  optionYT_xAxis_Data = generateHourlyTimeArray(startInput.value, endInput.value)
 
   optionYT = {
     title: {
