@@ -141,8 +141,8 @@ function array_porcessing(){
 
   var count = 0;
   for(var i = chart_start_index; i <= chart_end_index; i++){
-    optionYT_xAxis_Data[count] = data.date + " " + data.time;
-    optionYT_series_Data[count] = parseFloat(data.power)*220;//W표현은 220 곱해야함
+    optionYT_xAxis_Data[count] = powerData[i].date + " " + powerData[i].time;
+    optionYT_series_Data[count] = parseFloat(powerData[i].power)*220;//W표현은 220 곱해야함
     count++;
   }
 
