@@ -138,6 +138,11 @@ function generateHourlyTimeArray(startTime, endTime) {
   const end = new Date(endTime);   
   const timeArray = [];
 
+  // 시작 시간이 정각이 아니면 다음 정각으로 이동
+  if (start.getMinutes() > 0 || start.getSeconds() > 0 || start.getMilliseconds() > 0) {
+      start.setHours(start.getHours() + 1, 0, 0, 0); // 시간을 다음 정각으로 설정
+  }
+
   // 시작 시간이 끝나는 시간보다 작거나 같은 동안 반복
   while (start <= end) {
       // 배열에 현재 시간을 한국 시간대로 추가
