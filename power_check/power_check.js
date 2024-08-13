@@ -89,7 +89,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var powerData;
+function data_load(){
+  var xhr = new XMLHttpRequest();
+  hr.open('GET', 'fetch_data.php?code=' + device_code, false); // 동기 요청
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      // 응답 데이터가 성공적으로 도착한 경우
+      var data = JSON.parse(xhr.responseText);
+      
+      powerData = data;
 
+      // 콘솔에 데이터를 출력 (디버깅용)
+      console.log('Fetched Data:', powerData);
+      
+    } else {
+      alert('Failed to fetch data. Status: ' + xhr.status);
+    }
+  };
+  xhr.send();
+}
 
 function create_chart(){
     var chartYT = echarts.init(document.getElementById('chartYT'));
@@ -106,6 +125,8 @@ function create_chart(){
 
     var creation_time = document.getElementById('creation_time'); 
     creation_time.textContent = "생성시점 : " + formatDateTime(new Date());
+
+    data_load();
 }
 
 optionYT = {
