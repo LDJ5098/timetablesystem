@@ -109,13 +109,15 @@ function data_load(){
 }
 
 function create_chart(){
-    data_load();
     var chartYT = echarts.init(document.getElementById('chartYT'));
     var chartYMD = echarts.init(document.getElementById('chartYMD'));
 
     if (chartYT) chartYT.dispose();
     if (chartYMD) chartYMD.dispose();
     
+    data_load();
+    array_porcessing();
+
     chartYT = echarts.init(document.getElementById('chartYT'));
     chartYMD = echarts.init(document.getElementById('chartYMD'));
 
@@ -143,9 +145,8 @@ function array_porcessing(){
     optionYT_series_Data[count] = parseFloat(data.power)*220;//W표현은 220 곱해야함
     count++;
   }
-}
 
-optionYT = {
+  optionYT = {
     title: {
         text: '범위 내에 사용한 전력 소비량'
     },
@@ -209,3 +210,5 @@ optionYMD = {
       }
     ]
   };
+
+}
