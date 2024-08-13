@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="Ko">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <title>전력체크</title>
+    <link rel="stylesheet" type="text/css" href="power_check.css?version=2408121956">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div id="title">
+        <h3 id="device_code">기기코드 : </h3>
+    </div>
+
+    <div id="range">
+        <label>범위 : </label>
+        <input type="datetime-local" id="start" name="start">
+        <label> ~ </label>
+        <input type="datetime-local" id="end" name="end">
+
+        <button id="create_chart" onclick="create_chart()">그래프 생성</button>
+        <label id="creation_time">생성시점 : </label>
+    </div>
+
+    <div id="checkbox_DIV">
+        <div class="checkbox">
+            <input type="checkbox">
+            <label>범위 내 사용 전력 소비량</label>
+        </div>
+        
+        <div class="checkbox">
+            <input type="checkbox">
+            <label>2주 각 일별간 총 전력 소비량</label>
+        </div>
+    </div>
+
+    <div id="chartYT"> 
+    </div>
+    <div id="chartYMD"> 
+    </div>
+
+    <script src="power_check.js?version=2408121956"></script>
+</body>
+</html>

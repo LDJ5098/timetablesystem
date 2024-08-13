@@ -1,0 +1,23 @@
+#range {
+    margin-bottom: 10px;
+}
+
+#chartYT{
+    background-color: rgb(255, 255, 255);
+    width: 700px;
+    height: 400px;
+}
+#chartYMD{
+    background-color: rgb(255, 255, 255);
+    width: 700px;
+    height: 400px;
+}
+
+#checkbox_DIV {
+    margin-bottom: 20px;
+}
+
+#create_chart {
+    width: 90px;
+    height: 30px;
+}
