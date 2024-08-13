@@ -154,21 +154,58 @@ function generateHourlyTimeArray(startTime, endTime) {
   return timeArray;
 }
 /////////////////////////////////////////////////////////////////////////////////////////////
+/**하루 간 간격으로 2주전 데이터까지 총합 배열 생성 함수 */
+function generateDailyDateArray() {
+  const dateArray = [];
+  const today = new Date();
+  
+  // 오늘 포함해서 2주 전까지 (14일간) 날짜 배열 생성
+  for (let i = 0; i < 14; i++) {
+      // 현재 날짜를 배열에 추가
+      const currentDate = new Date(today);
+      currentDate.setDate(today.getDate() - i);
+      
+      // 날짜를 'YYYY-MM-DD' 형식으로 포맷해서 배열에 추가
+      dateArray.push(currentDate.toISOString().slice(0, 10));
+  }
+  
+  // 배열을 역순으로 정렬
+  return dateArray.reverse();
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 var optionYT_xAxis_Data = [];
 var optionYT_series_Data = [];
-var chart_start_index, chart_end_index;
+
+var optionYMD_xAxis_Data = [];
+var optionYMD_series_Data = [];
+
 function array_porcessing(){
+  //범위 내 전력 소모량//////////////////////
   optionYT_xAxis_Data = generateHourlyTimeArray(startInput.value, endInput.value);
   optionYT_xAxis_Data.forEach(function(time, index){
     var result = null;
     for(var i=0; i<powerData.length; i++){
       if(time===(powerData[i].date + " " + powerData[i].time)){
-        result = parseFloat(powerData[i].power);
+        result = parseFloat(powerData[i].power) * 220;
         break;
       }
     }
     optionYT_series_Data[index] = result;
   });
+
+  //2주간 총합 전력 소모량//////////////////////
+  optionYMD_xAxis_Data = generateDailyDateArray();
+  optionYMD_xAxis_Data.forEach(function(time, index){
+    var result = null;
+    for(var i=0; i<powerData.length; i++){
+      if(time===powerData[i].date){
+        result += parseFloat(powerData[i].power) * 220;
+      }
+    }
+    optionYMD_series_Data[index] = result;
+  });
+  ////////////////////////////////////////////
 
   optionYT = {
     animation: false,
@@ -207,22 +244,7 @@ optionYMD = {
     xAxis: {
       name: 'Y/T',
       type: 'category',
-      data: [
-             '(24.07.29)',
-             '(24.07.30)',
-             '(24.07.31)',
-             '(24.08.01)',
-             '(24.08.03)',
-             '(24.08.04)',
-             '(24.08.05)',
-             '(24.08.06)',
-             '(24.08.07)',
-             '(24.08.08)',
-             '(24.08.09)',
-             '(24.08.10)',
-             '(24.08.11)',
-             '(24.08.12)',
-            ]
+      data: optionYMD_xAxis_Data
     },
     yAxis: {
       name: 'W',
@@ -231,7 +253,7 @@ optionYMD = {
     },
     series: [
       {
-        data: [700, 750, 720, 763, 720, 600, 300, 300, 720, 750, 780, 730, 743, 745],
+        data: optionYMD_xAxis_Data,
         type: 'line'
       }
     ]
