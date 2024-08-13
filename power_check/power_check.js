@@ -253,7 +253,7 @@ optionYMD = {
     },
     series: [
       {
-        data: optionYMD_xAxis_Data,
+        data: optionYMD_series_Data,
         type: 'line'
       }
     ]
