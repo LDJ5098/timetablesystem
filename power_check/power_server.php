@@ -59,27 +59,25 @@ if ($result_power->num_rows === 0) {
     }
 
 } else {
-    // 3. 기존 데이터를 불러와서 새로운 데이터를 추가하고, 크기가 336개를 넘으면 가장 오래된 데이터를 삭제
+    // 3. 기존 데이터를 불러와서 날짜와 시간이 같은 데이터를 찾아서 업데이트, 없으면 새 데이터 추가
     $row = $result_power->fetch_assoc();
     $power_data = json_decode($row['power'], true);
 
-    $data_found = false;
+    $found = false;
     foreach ($power_data as &$entry) {
-        if ($entry['date'] === $date && $entry['time'] === $time) {
-            // 날짜와 시간이 같은 데이터가 존재하면 power를 업데이트
-            $entry['power'] = $power;
-            $data_found = true;
+        if ($entry['date'] == $date && $entry['time'] == $time) {
+            $entry['power'] = $power; // 기존 데이터 업데이트
+            $found = true;
             break;
         }
     }
 
-    if (!$data_found) {
-        // 같은 날짜와 시간이 없으면 새 데이터 추가
+    if (!$found) {
         if (count($power_data) >= 336) {
             array_shift($power_data); // 가장 오래된 데이터 삭제
         }
         $new_entry = array("date" => $date, "time" => $time, "power" => $power);
-        $power_data[] = $new_entry;
+        $power_data[] = $new_entry; // 새로운 데이터 추가
     }
 
     // 4. 업데이트된 JSON 배열을 다시 JSON으로 인코딩하여 테이블에 저장
