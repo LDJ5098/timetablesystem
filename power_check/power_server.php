@@ -12,10 +12,28 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// GET 파라미터 수집
 $device_code = $_GET['code']; // "X1345247"
 $date = $_GET['date']; // "2024-08-13"
 $time = $_GET['time']; // "08:00"
 $power = $_GET['power']; // "100.5"
+
+// 입력 데이터 유효성 검증
+if (is_null($device_code) || is_null($date) || is_null($time) || is_null($power)) {
+    die("null값은 입력하면 안됩니다.");
+}
+
+if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $date)) {
+    die("날짜 형식이 올바르지 않습니다. 올바른 형식: YYYY-MM-DD");
+}
+
+if (!preg_match("/^\d{2}:\d{2}$/", $time)) {
+    die("시간 형식이 올바르지 않습니다. 올바른 형식: HH:MM");
+}
+
+if (!is_numeric($power)) {
+    die("파워 값은 숫자여야 합니다.");
+}
 
 // 1. device_code가 classroomDB에 있는지 확인
 $sql_check_classroom = "SELECT device_code FROM classroomDB WHERE device_code = '$device_code'";
