@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
 var powerData;
 function data_load(){
   var xhr = new XMLHttpRequest();
-  hr.open('GET', 'fetch_data.php?code=' + device_code, false); // 동기 요청
+  hr.open('GET', 'power_data_load.php?code=' + device_code, false); // 동기 요청
   xhr.onload = function() {
     if (xhr.status === 200) {
       // 응답 데이터가 성공적으로 도착한 경우
