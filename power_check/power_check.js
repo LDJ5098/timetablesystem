@@ -171,6 +171,8 @@ function array_porcessing(){
   });
 
   optionYT = {
+    animation: false,
+
     title: {
         text: '범위 내에 사용한 전력 소비량'
     },
