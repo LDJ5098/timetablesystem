@@ -330,7 +330,7 @@ function remove_classroomDB(code){
 function click_classroom(element) {
     element.addEventListener('click', function() {
       if(activeButton===document.querySelectorAll('.menu_button')[1]){//내용수정
-        searchdata = classroomDB(element.id);
+        var searchdata = classroomDB(element.id);
         fix_number.value=searchdata.class_number;
         fix_name.value=searchdata.class_name;
         fix_classroom_device_code.value=searchdata.device_code;
@@ -352,6 +352,14 @@ function click_classroom(element) {
       }
 
       else if(activeButton===document.querySelectorAll('.menu_button')[3]){//전력체크
+        var pre_check_powersite = classroomDB(element.id);
+        if(pre_check_powersite.device_code && pre_check_powersite.wifi){
+          window.open('powercheck/power_check.html?code=' + pre_check_powersite.device_code, '_blank');
+        }
+        else {
+          if(pre_check_powersite.device_code) alert("디바이스 코드를 확인해주십시오.");
+          else alert("(서버 통신 활성 여부)가 켜져있는지 확인해주십시오. ");
+        }
       }
 
       else if(activeButton===document.querySelectorAll('.menu_button')[4]){//교실삭제
