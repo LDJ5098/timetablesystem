@@ -136,7 +136,7 @@ function generateHourlyTimeArray(startTime, endTime) {
   // 시작 시간과 끝나는 시간을 Date 객체로 변환
   var start = new Date(startTime); 
   var end = new Date(endTime); 
-    
+  
   var timeArray = [];
 
   // 시작 시간이 정각이 아니면 다음 정각으로 이동
@@ -165,16 +165,14 @@ function generateDailyDateArray() {
   const today = new Date();
   
   // 오늘 포함해서 2주 전까지 (14일간) 날짜 배열 생성
-  for (let i = 13; i >= 0; i--) {
-      // 현재 날짜를 한국 시간대로 변환
-      const currentDate = new Date(today);
-      currentDate.setDate(today.getDate() - i);
+  for (var i = 0; i < 14; i++) {
+      dateArray.push(today.toISOString().slice(0, 10));
+      today.setDate(today.getDate() - 1);
       // 날짜를 'YYYY-MM-DD' 형식으로 포맷해서 배열에 추가
-      dateArray.push(currentDate.toISOString().slice(0, 10));
   }
   
   // 배열을 역순으로 정렬
-  return dateArray;
+  return dateArray.reverse();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
