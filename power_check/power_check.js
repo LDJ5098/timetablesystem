@@ -47,6 +47,12 @@ startInput.max = formatDateTime(now);
 endInput.min = formatDateTime(twoWeeksAgo);
 endInput.max = formatDateTime(now);
 
+//최소 및 최대 값 설정 백업(개발자모드에서 강제 변경 방지 검사 할 때 사용)
+var BstartInput_min = startInput.min;
+var BstartInput_max = startInput.max;
+var BendInput_min = endInput.min;
+var BendInput_max = endInput.max;
+
 // 기본 값 설정 (예: 최대 값으로 설정)
 startInput.value = formatDateTime(twoWeeksAgo);
 endInput.value = formatDateTime(now);
@@ -104,16 +110,15 @@ function data_load(){
 }
 
 function create_chart(){
-
-  if (!(startInput.value >= startInput.min&&startInput.value <= startInput.max && endInput.value >= endInput.min&&endInput.value <= endInput.max)){
-    alert('날짜는 2주 전까지만 선택이 가능합니다.');
-    startInput.min = formatDateTime(twoWeeksAgo);
-    startInput.max = formatDateTime(now);
-    endInput.min = formatDateTime(twoWeeksAgo);
-    endInput.max = formatDateTime(now);
-    startInput.value = formatDateTime(twoWeeksAgo);
-    endInput.value = formatDateTime(now);
-    return;
+  if (startInput.value < BstartInput_min || startInput.value > BstartInput_max || endInput.value < BendInput_min || endInput.value > BendInput_max) {
+      alert('날짜는 2주 전까지만 선택이 가능합니다.');
+      startInput.min = BstartInput_min;
+      startInput.max = BstartInput_max;
+      endInput.min = BendInput_min;
+      endInput.max = BendInput_max;
+      startInput.value = BstartInput_min;
+      endInput.value = BendInput_max;
+      return;
   }
   if (startInput.value > endInput.value){
     alert('시작 시간은 끝 시간보다 이하여야 합니다.');
