@@ -165,9 +165,9 @@ function generateDailyDateArray() {
   const today = new Date();
   
   // 오늘 포함해서 2주 전까지 (14일간) 날짜 배열 생성
-  for (let i = 0; i < 14; i++) {
+  for (let i = 13; i>=0; i--) {
       // 현재 날짜를 한국 시간대로 변환
-      const currentDate = new Date(today.getTime() + 9 * 60 * 60 * 1000); // UTC+9
+      const currentDate = new Date(today);
       currentDate.setDate(today.getDate() - i);
       
       // 날짜를 'YYYY-MM-DD' 형식으로 포맷해서 배열에 추가
@@ -175,7 +175,7 @@ function generateDailyDateArray() {
   }
   
   // 배열을 역순으로 정렬
-  return dateArray.reverse();
+  return dateArray;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////
