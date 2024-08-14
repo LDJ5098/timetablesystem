@@ -22,7 +22,7 @@ var twoWeeksAgo = new Date();
 twoWeeksAgo.setDate(now.getDate() - 14);
 
 // 날짜 및 시간 형식을 YYYY-MM-DDTHH:MM으로 변환
-function formatDateTime(date, defaultTimeToMidnight = false) {
+function formatDateTime(date) {
     var padZero = (num) => String(num).padStart(2, '0');
 
     var year = date.getFullYear();
@@ -31,11 +31,6 @@ function formatDateTime(date, defaultTimeToMidnight = false) {
 
     var hours = padZero(date.getHours());
     var minutes = padZero(date.getMinutes());
-
-    if (defaultTimeToMidnight) {
-        hours = '00';
-        minutes = '00';
-    }
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
 }
@@ -53,7 +48,7 @@ endInput.min = formatDateTime(twoWeeksAgo);
 endInput.max = formatDateTime(now);
 
 // 기본 값 설정 (예: 최대 값으로 설정)
-startInput.value = formatDateTime(twoWeeksAgo, true);
+startInput.value = formatDateTime(twoWeeksAgo);
 endInput.value = formatDateTime(now);
 
 
@@ -109,6 +104,21 @@ function data_load(){
 }
 
 function create_chart(){
+
+  if (!(startInput.value >= startInput.min&&startInput.value <= startInput.max && endInput.value >= endInput.min&&endInput.value <= endInput.max)){
+    alert('날짜는 2주 전까지만 선택이 가능합니다.');
+    startInput.min = formatDateTime(twoWeeksAgo);
+    startInput.max = formatDateTime(now);
+    endInput.min = formatDateTime(twoWeeksAgo);
+    endInput.max = formatDateTime(now);
+    return;
+  }
+  if (startInput.value > endInput.value){
+    alert('시작 시간은 끝 시간보다 이하여야 합니다.');
+    return;
+  }
+
+  
     var chartYT = echarts.init(document.getElementById('chartYT'));
     var chartYMD = echarts.init(document.getElementById('chartYMD'));
 
