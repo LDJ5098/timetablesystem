@@ -111,6 +111,8 @@ function create_chart(){
     startInput.max = formatDateTime(now);
     endInput.min = formatDateTime(twoWeeksAgo);
     endInput.max = formatDateTime(now);
+    startInput.value = formatDateTime(twoWeeksAgo);
+    endInput.value = formatDateTime(now);
     return;
   }
   if (startInput.value > endInput.value){
@@ -118,7 +120,7 @@ function create_chart(){
     return;
   }
 
-  
+
     var chartYT = echarts.init(document.getElementById('chartYT'));
     var chartYMD = echarts.init(document.getElementById('chartYMD'));
 
