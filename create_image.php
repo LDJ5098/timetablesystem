@@ -203,7 +203,7 @@ if ($code_load_result->num_rows > 0) {
 
 $conn->close();
 
-$updatePeroid = 3; //업데이트 주기
+$updatePeroid = $_GET['updatePeroid'];
 
 $key = $result_obj['key'] ?? null;
 $classname = $result_obj['classname'] ?? null;
