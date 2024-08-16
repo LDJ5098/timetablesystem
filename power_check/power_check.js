@@ -203,7 +203,7 @@ function array_porcessing(){
   //범위 내 전력 소모량//////////////////////
   optionYT_xAxis_Data = generateHourlyTimeArray(startInput.value, endInput.value);
   optionYT_xAxis_Data.forEach(function(time, index){
-    var result = null;
+    var result = 0;
     for(var i=0; i<powerData.length; i++){
       if(time===(powerData[i].date + " " + powerData[i].time)){
         result = parseFloat(powerData[i].power) * 220;
@@ -216,7 +216,7 @@ function array_porcessing(){
   //2주간 총합 전력 소모량//////////////////////
   optionYMD_xAxis_Data = generateDailyDateArray();
   optionYMD_xAxis_Data.forEach(function(time, index){
-    var result = null;
+    var result = 0;
     for(var i=0; i<powerData.length; i++){
       if(time===powerData[i].date){
         result += parseFloat(powerData[i].power) * 220;
