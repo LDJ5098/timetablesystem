@@ -12,15 +12,15 @@ function convertMinutesToTime($minutes, $sep) {//분으로만 표현된 시간�
 }
 
 
-function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version, $code, $key, $TF, $timedata_all) {//이미지 생성 + 출력함수
+function drawClassInfo($courseName, $professorName, $startTime, $endTime, $version, $code, $key, $TF, $timedata_all, $updatePeroid) {//이미지 생성 + 출력함수
     if($TF===false){
-        echo "/" . $code . "::BW::" . $key . "/none_data/";
+        echo "/" . $code . "::SET::" . $key . '/' . $updatePeroid . "/none_data/";
         return;
     }elseif($TF==='connect_fail'){
-        echo "/" . $code . "::BW::" . $key . "/Connection failed...Check whether WIFI is enabled on the Administrator page./";
+        echo "/" . $code . "::SET::" . $key . "/Connection failed...Check whether WIFI is enabled on the Administrator page./";
         return;
     }elseif($TF==='not_found_data'){
-        echo "/" . $code . "::BW::" . $key . "/It is necessary to ensure that the device code is correct./";
+        echo "/" . $code . "::SET::" . $key . "/It is necessary to ensure that the device code is correct./";
         return;
     }
 
@@ -87,7 +87,7 @@ function drawClassInfo($courseName, $professorName, $startTime, $endTime, $versi
     } elseif ($version == 3) {
         echo "/" . $code . "::SET::" . $timedata_all;
     } else {
-        echo "/" . $code . "::BW::" . "/version_error/";
+        echo "/" . $code . "::SET::" . "/version_error/";
     }
     
     // 이미지 저장 (원하는 경우)
@@ -201,9 +201,18 @@ if ($code_load_result->num_rows > 0) {
     $TF='not_found_data';
 }
 
-$conn->close();
+$UPsql = "SELECT update_Peroid FROM classroomDB WHERE device_code = '$code' AND (wifi = TRUE OR wifi = 1)";
+$UPresult = $conn->query($UPsql);
+if ($UPresult->num_rows > 0) {
+    // 결과가 있는 경우 첫 번째 행을 가져옴
+    $row = $UPresult->fetch_assoc();
+    $updatePeroid = $row['update_Peroid'];
+} else {
+    // 결과가 없는 경우
+    $updatePeroid = null; // 또는 적절한 기본값
+}
 
-$updatePeroid = $_GET['updatePeroid'];
+$conn->close();
 
 $key = $result_obj['key'] ?? null;
 $classname = $result_obj['classname'] ?? null;
@@ -215,7 +224,7 @@ $endTime_convert = convertMinutesToTime($endtime, ':');
 $timedata_all = '/' . $updatePeroid . '/' . convertMinutesToTime($starttime, '/') . '/' . convertMinutesToTime($endtime, '/') . '/';
 
 //echo "교실명 : " . $classname . "," . "교수명 : " . $professor . "," . "수업시작 시간 : " . $startTime_convert . "," . "수업 끝나는 시간 : " .$endTime_convert . "," . "버전 : " . $version . "," . "기기코드 : " . $code . "," . "교실key(ID) : " . $key . "\n";
-drawClassInfo($classname, $professor, $startTime_convert, $endTime_convert, $version, $code, $key, $TF, $timedata_all);
+drawClassInfo($classname, $professor, $startTime_convert, $endTime_convert, $version, $code, $key, $TF, $timedata_all, $updatePeroid);
 
 
 // 예제 데이터
