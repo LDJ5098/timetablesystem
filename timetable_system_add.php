@@ -16,6 +16,7 @@ $floor_select = $data['floor_select'];
 $class_number = $data['class_number'];
 $class_name = $data['class_name'];
 $device_code = $data['device_code'];
+$update_Peroid = $data['update_Peroid'];
 $width = $data['width'];
 $height = $data['height'];
 $other = $data['other'];
@@ -32,8 +33,8 @@ if ($conn->connect_error) {
 }
 
 // SQL 쿼리 작성
-$sql = "INSERT INTO classroomDB (object_code, which, floor, class_number, class_name, device_code, width, height, other, wifi, top_value, left_value) 
-VALUES ('$object_code', '$which_select', '$floor_select', '$class_number', '$class_name', '$device_code', '$width', '$height', '$other', '$wifi', '$top', '$left')";
+$sql = "INSERT INTO classroomDB (object_code, which, floor, class_number, class_name, device_code, update_Peroid, width, height, other, wifi, top_value, left_value) 
+VALUES ('$object_code', '$which_select', '$floor_select', '$class_number', '$class_name', '$device_code', '$update_Peroid', '$width', '$height', '$other', '$wifi', '$top', '$left')";
 
 // 쿼리 실행
 if ($conn->query($sql) === TRUE) {
