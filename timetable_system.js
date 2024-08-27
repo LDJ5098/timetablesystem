@@ -28,6 +28,7 @@ logincheck();
 var create_number = document.getElementById('create_number');
 var create_name = document.getElementById('create_name');
 var create_classroom_device_code = document.getElementById('create_device_code');
+var create_update_Peroid = document.getElementById('create_update_Peroid');
 var create_width = document.getElementById('create_width');
 var create_height = document.getElementById('create_height');
 var create_class_detail = document.getElementById('create_class_detail');
@@ -37,6 +38,7 @@ var create_classroom_WIFI_check = document.getElementById('create_class_WIFI_che
 var fix_number = document.getElementById('fix_number');
 var fix_name = document.getElementById('fix_name');
 var fix_classroom_device_code = document.getElementById('fix_device_code');
+var fix_update_Peroid = document.getElementById('fix_update_Peroid');
 var fix_width = document.getElementById('fix_width');
 var fix_height = document.getElementById('fix_height');
 var fix_class_detail = document.getElementById('fix_class_detail');
@@ -266,7 +268,7 @@ function classroomDB(objectcode) {
 
 
 //객체 정보 추가 함수
-function push_classroomDB(Which_, floor_, number, name, code, width, height, other, WIFI, Top, Left){
+function push_classroomDB(Which_, floor_, number, name, code, update, width, height, other, WIFI, Top, Left){
   var object = {
     object_code:randomCODE(),
 
@@ -276,6 +278,7 @@ function push_classroomDB(Which_, floor_, number, name, code, width, height, oth
     class_number:number.value,
     class_name:name.value,
     device_code:code.value,
+    update_Peroid:update.value,
     width:width.value,
     height:height.value,
     other:other.value,
@@ -288,7 +291,7 @@ function push_classroomDB(Which_, floor_, number, name, code, width, height, oth
 
 
 //객체 정보 수정 함수
-function fix_classroomDB(objectcode ,Which_, floor_, number, name, code, width, height, other, WIFI){
+function fix_classroomDB(objectcode ,Which_, floor_, number, name, code, update, width, height, other, WIFI){
   var object = {
     object_code:objectcode,
 
@@ -298,6 +301,7 @@ function fix_classroomDB(objectcode ,Which_, floor_, number, name, code, width, 
     class_number:number.value,
     class_name:name.value,
     device_code:code.value,
+    update_Peroid:update.value,
     width:width.value,
     height:height.value,
     other:other.value,
@@ -334,6 +338,7 @@ function click_classroom(element) {
         fix_number.value=searchdata.class_number;
         fix_name.value=searchdata.class_name;
         fix_classroom_device_code.value=searchdata.device_code;
+        fix_update_Peroid.value=searchdata.update_Peroid;
         fix_width.value=searchdata.width;
         fix_height.value=searchdata.height;
         fix_class_detail.value=searchdata.other;
@@ -354,7 +359,7 @@ function click_classroom(element) {
       else if(activeButton===document.querySelectorAll('.menu_button')[3]){//전력체크
         var pre_check_powersite = classroomDB(element.id);
         if(pre_check_powersite.device_code && pre_check_powersite.wifi){
-          window.open('powercheck/power_check.html?code=' + pre_check_powersite.device_code, '_blank');
+          window.open('power_check/power_check.html?code=' + pre_check_powersite.device_code, '_blank');
         }
         else {
           if(pre_check_powersite.device_code) alert("디바이스 코드를 확인해주십시오.");
@@ -402,7 +407,7 @@ function changeBackground() {
 }
 
 
-//object_code, which, floor, class_number, class_name, device_code, width, height, other, wifi, top_value, left_value
+//object_code, which, floor, class_number, class_name, device_code, update_Peroid, width, height, other, wifi, top_value, left_value
 function arr_compare(now, past){
   if(now.object_code!==past.object_code||
     now.which!==past.which||
@@ -410,6 +415,7 @@ function arr_compare(now, past){
     now.class_number!==past.class_number||
     now.class_name!==past.class_name||
     now.device_code!==past.device_code||
+    now.update_Peroid!==past.update_Peroid||
     now.width!==past.width||
     now.height!==past.height||
     now.other!==past.other||
@@ -664,8 +670,10 @@ function toggleButton(index) {
 function create_classroom_checkbox(){
   if (create_classroom_WIFI_check.checked) {
     create_classroom_device_code.disabled = false;
+    create_update_Peroid.disabled = false;
   } else {
     create_classroom_device_code.disabled = true;
+    create_update_Peroid.disabled = true;
   }
 }
 
@@ -674,8 +682,10 @@ function create_classroom_checkbox(){
 function fix_classroom_checkbox(){
   if (fix_classroom_WIFI_check.checked) {
     fix_classroom_device_code.disabled = false;
+    fix_update_Peroid.disabled = false;
   } else {
     fix_classroom_device_code.disabled = true;
+    fix_update_Peroid.disabled = true;
   }
 }
 
@@ -683,7 +693,7 @@ function fix_classroom_checkbox(){
 
 //새 교실 데이터 전송
 function creating_classroom(){
-  push_classroomDB(which, floor, create_number, create_name, create_classroom_device_code, create_width, create_height, create_class_detail, create_classroom_WIFI_check, String(563/2) + "px", "500px");
+  push_classroomDB(which, floor, create_number, create_name, create_classroom_device_code, create_update_Peroid, create_width, create_height, create_class_detail, create_classroom_WIFI_check, String(563/2) + "px", "500px");
 }
 
 
@@ -697,10 +707,15 @@ function create_new_classroom(){
       error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)\n";
       break;
     }
-    else if(create_classroom_device_code.value==database[i].device_code&&recent_choice_code!==database[i].object_code&&fix_classroom_device_code.value.replace(/\s/g, '')!==""){
+    if(create_classroom_device_code.value==database[i].device_code&&recent_choice_code!==database[i].object_code&&fix_classroom_device_code.value.replace(/\s/g, '')!==""&&database[i].wifi){
       error_log += "다른 교실에서 사용중인 기기코드는 입력할 수 없습니다.\n";
       break;
     }
+
+  }
+
+  if ((isNaN(create_update_Peroid.value) || !(Number(create_update_Peroid.value) >= 1)) && create_classroom_WIFI_check.checked) {
+    error_log += '갱신주기는 최소 1이상의 정수여야 합니다.(1:1분)\n';
   }
 
   var length_pattern = /\d\b/;
@@ -725,7 +740,7 @@ function create_new_classroom(){
 
 //수정하는 데이터 전송
 function fixing_classroom(){
-  fix_classroomDB(recent_choice_code ,which, floor, fix_number, fix_name, fix_classroom_device_code, fix_width, fix_height, fix_class_detail, fix_classroom_WIFI_check);
+  fix_classroomDB(recent_choice_code ,which, floor, fix_number, fix_name, fix_classroom_device_code, fix_update_Peroid, fix_width, fix_height, fix_class_detail, fix_classroom_WIFI_check);
 }
 
 //수정하기 전 검사
@@ -738,10 +753,14 @@ function fix_classroom(){
       error_log += "같은 건물에는 같은 호수의 교실을 입력할 수 없습니다(중복발생)\n";
       break;
     }
-    else if(fix_classroom_device_code.value==database[i].device_code&&recent_choice_code!==database[i].object_code&&fix_classroom_device_code.value.replace(/\s/g, '')!==""){
+    else if(fix_classroom_device_code.value==database[i].device_code&&recent_choice_code!==database[i].object_code&&fix_classroom_device_code.value.replace(/\s/g, '')!==""&&database[i].wifi){
       error_log += "다른 교실에서 사용중인 기기코드는 입력할 수 없습니다.\n";
       break;
     }
+  }
+
+  if ((isNaN(fix_update_Peroid.value) || !(Number(fix_update_Peroid.value) >= 1)) && fix_classroom_WIFI_check.checked ) {
+    error_log += '갱신주기는 최소 1이상의 정수여야 합니다.(1:1분)\n';
   }
 
   var length_pattern = /\d\b/;
