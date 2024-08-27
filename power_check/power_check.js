@@ -206,7 +206,7 @@ function array_porcessing(){
     var result = 0;
     for(var i=0; i<powerData.length; i++){
       if(time===(powerData[i].date + " " + powerData[i].time)){
-        result = parseFloat(powerData[i].power) * 220;
+        result = parseFloat(powerData[i].power) * 0.22;
         break;
       }
     }
@@ -219,7 +219,7 @@ function array_porcessing(){
     var result = 0;
     for(var i=0; i<powerData.length; i++){
       if(time===powerData[i].date){
-        result += parseFloat(powerData[i].power) * 220;
+        result += parseFloat(powerData[i].power) * 0.22;
       }
     }
     optionYMD_series_Data[index] = result;
