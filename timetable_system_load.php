@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 }
 
 // 쿼리 작성
-$sql = "SELECT which, floor, class_number, class_name, device_code, width, height, other, wifi, top_value, left_value, object_code FROM classroomDB";
+$sql = "SELECT which, floor, class_number, class_name, device_code, update_Peroid, width, height, other, wifi, top_value, left_value, object_code FROM classroomDB";
 
 // 쿼리 실행
 $result = $conn->query($sql);
