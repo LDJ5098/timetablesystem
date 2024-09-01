@@ -4,12 +4,14 @@ function logincheck(){
   if(sessionStorage.getItem('loginTF')==="true"){
     document.querySelectorAll('.menu_button').forEach(function(element){
       element.disabled = false;
+      element.style.display = "block";
     });
     login_button.textContent = "로그아웃";
   }
   else {
     document.querySelectorAll('.menu_button').forEach(function(element){
       element.disabled = true;
+      element.style.display = "none";
     });
   }
 

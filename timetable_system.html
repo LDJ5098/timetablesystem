@@ -1,39 +1,50 @@
 <!DOCTYPE html>
 <html lang="Ko">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.6, user-scalable=no">
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="timetable_system.css?version=2408121956">
+    <link rel="stylesheet" type="text/css" href="timetable_system.css?version=2409012233">
 </head>
 <body>
-    <div id="main">
-        <div id="menu">
-            <lable id="loginbutton">관리자 로그인</lable>
 
-            <div>
-                메뉴 : 
-                <button class=menu_button onclick="toggleButton(0)">교실 생성</button>
-                <button class=menu_button onclick="toggleButton(1)">내용 수정</button>
-                <button class=menu_button onclick="toggleButton(2)">위치 이동</button>
-                <button class=menu_button onclick="toggleButton(3)">전력 체크</button>
-                <button class=menu_button onclick="toggleButton(4)">교실 삭제</button>
+    <div id="menu">
+        <label id="loginbutton">로그인하기</label>
 
+        <div class="sub_title"> 
+            <label>건물 선택</label>
+            
+            <div id="select_menu">
                 <select id="which">
                     <option value="D3">D3</option>
                     <option value="D4">D4</option>
                 </select>
-
+    
                 <select id="floor">
                     <option value="1F">1F</option>
                     <option value="2F">2F</option>
                     <option value="3F">3F</option>
                 </select>
             </div>
+        
         </div>
 
-        <div>
-            <button onclick="delete_class()" id="delete_button">삭제하기</button>
+        
+        <div class="sub_title"> 
+            <label style="margin-bottom: 0px;">메뉴</label>
+            <label style="font-size: 10px;">미 선택시 기본모드 활성화됨</label>
+        
+            <button class=menu_button onclick="toggleButton(0)">교실 생성</button>
+            <button class=menu_button onclick="toggleButton(1)">내용 수정</button>
+            <button class=menu_button onclick="toggleButton(2)">위치 이동</button>
+            <button class=menu_button onclick="toggleButton(3)">전력 체크</button>
+            <button class=menu_button onclick="toggleButton(4)">교실 삭제</button>
         </div>
+
+        <button onclick="delete_class()" id="delete_button">삭제하기</button>
+    </div>
+
+    <div id="main">
+        <label id="floor_info"></label>
 
         <div id="background">
             <div class= "info_classroom_background" id="create_classroom_background">
@@ -56,6 +67,11 @@
                     </div>
 
                     <div>
+                        <label>갱신 주기 : </label>
+                        <input type="number" placeholder="숫자만 입력 가능" class="info_input" id="create_update_Peroid" value = "3">
+                    </div>
+
+                    <div>
                         <label>가로 길이 : </label>
                         <input type="text" placeholder="ex) 20px" class="info_input" id="create_width">
                     </div>
@@ -75,7 +91,9 @@
                         <input type="checkbox" value="WIFI활성여부" class="checkbox" id="create_class_WIFI_check" onclick="create_classroom_checkbox()">
                     </div>
 
-                    <button onclick="create_new_classroom()">생성하기</button>
+                    <div>
+                        <button onclick="create_new_classroom()">생성하기</button>
+                    </div>
                 </div>
             </div>
 
@@ -99,6 +117,11 @@
                         <label>기기 코드 : </label>
                         <input type="text" placeholder="연결 디바이스 코드 입력" class="info_input" id="fix_device_code">
                     </div>
+                    
+                    <div>
+                        <label>갱신 주기 : </label>
+                        <input type="number" placeholder="숫자만 입력 가능" class="info_input" id="fix_update_Peroid" value = "3">
+                    </div>
 
                     <div>
                         <label>가로 길이 : </label>
@@ -120,7 +143,9 @@
                         <input type="checkbox" value="WIFI활성여부" class="checkbox" id="fix_class_WIFI_check" onclick="fix_classroom_checkbox()">
                     </div>
 
-                    <button onclick="fix_classroom()">수정하기</button>
+                    <div>
+                        <button onclick="fix_classroom()">수정하기</button>
+                    </div>
                 </div>
             </div>
 
@@ -136,10 +161,8 @@
                 !-->
             </div>
         </div>
-
-        <label id="floor_info"></label>
     </div>
     <div id="classroom_list_focus_layer" class="iframe_background"></div>
 </body>
-<script src="timetable_system.js?version=2408121956"></script>
+<script src="timetable_system.js?version=2409012233"></script>
 </html>
