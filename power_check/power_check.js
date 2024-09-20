@@ -241,7 +241,7 @@ function array_porcessing(){
       data: optionYT_xAxis_Data
     },
     yAxis: {
-      name: 'W',
+      name: 'Wh',
       nameLocation: 'end',
       type: 'value'
     },
@@ -268,7 +268,7 @@ optionYMD = {
       data: optionYMD_xAxis_Data
     },
     yAxis: {
-      name: 'W',
+      name: 'Wh',
       nameLocation: 'end',
       type: 'value'
     },
